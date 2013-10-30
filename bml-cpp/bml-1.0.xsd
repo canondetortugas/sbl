@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 	targetNamespace="http://www.bml-initiative.org/bml/bml-1.0" 
+			xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+			xmlns="http://www.bml-initiative.org/bml/bml-1.0" 
+			elementFormDefault="qualified">
+    
+    
+    <xs:element name="bml">
+	    <xs:complexType>
+	    	<xs:annotation>
+	    		<xs:documentation>
+	    			All BML behaviors need to belong to a behavior
+	    			block. A behavior block is formed by placing one or
+	    			more BML behavior elements inside a top-level "bml"
+	    			element. Unless synchronization is specified (see
+	    			section on Synchronization), it is assumed that all
+	    			behaviors in a behavior block start at the same time
+	    			upon arrival in the behavior realizer.
+	    		</xs:documentation>
+	    	</xs:annotation>
+	    	<xs:choice minOccurs="1" maxOccurs="unbounded">
+	    	  <xs:element name="required" type="requiredType" minOccurs="0"
+	    			maxOccurs="unbounded"/>
+          <xs:group ref="behaviors" minOccurs="1" maxOccurs="unbounded"/>
+	    	</xs:choice>
+	    	<xs:attribute name="id" type="xs:ID" use="required">
+	    		<xs:annotation>
+	    			<xs:documentation>A reference towards the controlled character</xs:documentation>
+	    		</xs:annotation></xs:attribute>
+	    	<xs:attribute name="characterId" type="targetID">
+	    		<xs:annotation>
+	    			<xs:documentation>Unique ID that allows referencing to a particular bml block. The id 'bml' is reserved.</xs:documentation>
+	    		</xs:annotation></xs:attribute>
+	    	<xs:attribute name="composition" type="openSetItem" default="MERGE">
+	    		<xs:annotation>
+	    			<xs:documentation>One among [MERGE,APPEND,REPLACE], defines the composition policy to apply if the current bml block overlaps with previous bml blocks (see below).</xs:documentation>
+	    		</xs:annotation></xs:attribute>
+	    </xs:complexType>
+    </xs:element>
+    
+    <xs:group name="behaviors">
+      <xs:choice>
+          <xs:element name="constraint" type="constraintType" minOccurs="0"
+	    			maxOccurs="unbounded"/>
+	    		<xs:element name="gaze" type="gazeType" minOccurs="0"
+	    			maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="wait" type="waitType" minOccurs="0"
+	    			maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="headOrientation"
+	    			type="xs:string" minOccurs="0"
+	    			maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="posture" type="postureType"
+	    			minOccurs="0" maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="postureShift" type="postureType"
+	    			minOccurs="0" maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="speech" type="speech" minOccurs="0"
+	    			maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="gesture" type="gestureType"
+	    			minOccurs="0" maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="pointing"
+	    			type="pointingType" minOccurs="0"
+	    			maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="face" type="faceAbstractType" minOccurs="0"
+	    			maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="faceLexeme" type="faceLexemeType"
+	    			minOccurs="0" maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="locomotion" type="locomotionType"
+	    			minOccurs="0" maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="head" type="headType" minOccurs="0"
+	    			maxOccurs="unbounded">
+	    		</xs:element>
+	    		<xs:element name="headDirectionShift"
+	    			type="headDirectionShiftType" minOccurs="0" maxOccurs="unbounded">
+	    		</xs:element>
+	    		</xs:choice>
+    </xs:group>
+    
+    <xs:complexType name="requiredType">      
+          <xs:group ref="behaviors"/>	     
+    </xs:complexType>
+    
+    <xs:complexType name="behaviorType" abstract="true" mixed="false">
+    	<xs:attribute name="id" type="xs:string" use="required" />
+
+
+    	<xs:attribute name="start" type="xs:string" />
+
+
+
+
+
+
+
+
+
+
+
+
+    	<xs:attribute name="end" type="xs:string"></xs:attribute>
+
+
+
+    </xs:complexType>
+    
+    <xs:complexType name="constraintType">
+      
+        <xs:choice>
+        <xs:element name="synchronize" type="synchronizeType"
+	    			minOccurs="1" maxOccurs="1">
+	    	</xs:element>
+	    	<xs:element name="before" type="beforeType"
+	    			minOccurs="1" maxOccurs="1">
+	    	</xs:element>
+	    	<xs:element name="after" type="afterType"
+	    			minOccurs="1" maxOccurs="1">
+	    	</xs:element>
+	    	</xs:choice>
+      
+    </xs:complexType>
+    
+    <xs:complexType name="synchronizeType">
+      <xs:sequence>
+        <xs:element name="sync" type="syncRefType" minOccurs="0" maxOccurs="unbounded"/>	    	
+      </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="beforeType">
+      
+      <xs:complexContent>
+        <xs:extension base="synchronizeType">  
+          <xs:attribute name="ref" type="xs:string"/>
+        </xs:extension>
+      </xs:complexContent>      
+    </xs:complexType>
+    
+    <xs:complexType name="afterType">
+      <xs:complexContent>
+        <xs:extension base="synchronizeType">  
+          <xs:attribute name="ref" type="xs:string"/>
+        </xs:extension>
+      </xs:complexContent>      
+    </xs:complexType>
+    
+    <xs:complexType name="syncRefType">
+        <xs:attribute name="ref" type="xs:string" />
+    </xs:complexType>
+    
+    <xs:complexType name="waitType">
+      <xs:complexContent>
+    		<xs:extension base="behaviorType">
+    		  <xs:attribute name="duration" type="xs:float"/>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+      
+    <xs:complexType name="gazeType">
+    	<xs:complexContent>
+    		<xs:extension base="behaviorType">
+
+    			<xs:attribute name="target" type="xs:string">
+    				<xs:annotation>
+    					<xs:documentation>
+    						The world ID of the reference target
+    					</xs:documentation>
+    				</xs:annotation>
+    			</xs:attribute>
+
+
+    			<xs:attribute name="influence" type="closedSetItem">
+    				<xs:annotation>
+    					<xs:documentation>
+    						One of of EYES, HEAD, NECK, TORSO and LEGS
+    					</xs:documentation>
+    				</xs:annotation>
+    			</xs:attribute>
+
+
+    			<!-- 
+    				The polar attribute is only looked at if the offsetdirection is set to POLAR 
+    			-->
+
+
+    			<xs:attribute name="ready" type="xs:string"></xs:attribute>
+    			<xs:attribute name="relax" type="xs:string"></xs:attribute>
+    			<xs:attribute name="offsetAngle" type="xs:float"></xs:attribute>
+    			<xs:attribute name="offsetDirection" type="closedSetItem"></xs:attribute>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+
+
+
+
+
+
+
+
+    <xs:complexType name="gestureType">
+    	<xs:complexContent>
+    		<xs:extension base="behaviorType">
+    			<xs:attribute name="lexeme" type="openSetItem"></xs:attribute>
+    			<xs:attribute name="mode" type="closedSetItem"></xs:attribute>
+    			<xs:attribute name="strokeStart" type="xs:string"></xs:attribute>
+    			<xs:attribute name="stroke" type="xs:string"></xs:attribute>
+    			<xs:attribute name="strokeEnd" type="xs:string"></xs:attribute>
+    			<xs:attribute name="relax" type="xs:string"></xs:attribute>
+
+    			<xs:attribute name="ready" type="xs:string"></xs:attribute>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="syncType">
+        <xs:attribute name="id" type="xs:string" />
+    </xs:complexType>
+    <xs:complexType name="textType" mixed="true">
+        <xs:sequence>
+            <xs:element name="sync" type="syncType" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="speech" mixed="true">
+    	<xs:annotation>
+    		<xs:documentation>
+    			Words to be spoken by a character. Generates both speech
+    			audio (or text) and speech movement (for example using a
+    			speech synthesizer and viseme morphing).
+
+    			Unlike many of the other behavior elements, the "speech"
+    			element requires a sub-element. This sub-element is a
+    			"text" element that contains the text to be spoken, with
+    			optionally embedded synchronization elements for
+    			alignment with other behaviors. No other elements or
+    			attributes are specified for this core level.
+
+    			This is an example of a complete speech behavior,
+    			synchronized to a beat gesture (striking on “speech”):
+
+    		</xs:documentation>
+    	</xs:annotation>
+    	<xs:complexContent>
+    		<xs:extension base="behaviorType">
+    			<!--<sequence>
+    				<element name="text" type="string" />
+    				</sequence>-->
+    			<xs:sequence>
+    				<xs:element name="text" type="textType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+    			</xs:sequence>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+
+
+
+    <xs:complexType name="postureType">
+    	<xs:annotation>
+    		<xs:documentation>
+    			Only One posture active at a time
+    		</xs:documentation>
+    	</xs:annotation>
+    	<xs:complexContent>
+    		<xs:extension base="behaviorType">
+    				<xs:choice>
+    				  <xs:sequence>
+    				    <xs:element name="pose" type="poseType" minOccurs="1" maxOccurs="unbounded"/>
+    				  </xs:sequence>		
+    				  
+    				  <xs:sequence>
+    				    <xs:element name="stance" type="stanceType" minOccurs="1"/>
+    				    <xs:element name="pose" type="poseType" minOccurs="0" maxOccurs="unbounded"/>    				    
+    				  </xs:sequence>    		  				    
+    				</xs:choice>
+    				  
+    				  
+    				
+    			<xs:attribute name="ready" type="xs:string"></xs:attribute>
+    			<xs:attribute name="relax" type="xs:string"></xs:attribute>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+
+
+
+
+    <xs:complexType name="faceAbstractType" abstract="true">
+    	<xs:annotation>
+    		<xs:documentation>
+    			Facial features, such as the eyebrows, are assumed to
+    			follow the standard synchronization points.
+    			Specifically, for the eyebrows we envision two types of
+    			curves: An attack (or onset), sustain and release (or
+    			offset) and an attack, decay, sustain, release. The
+    			first models a simple onset period to a peak amplitude
+    			that is sustained until the release. The second models
+    			also incorporates an initial attack that overshoots and
+    			then decays to the sustain level. See pictures below. A
+    			key question is how the standard synch point align with
+    			these phases. We are considering two options, depending
+    			on whether the sustain is to be considered to be part of
+    			the post stroke hold or part of the stroke and also
+    			whether the stroke_start is associated with start of the
+    			entire behavior or the end of the attack. (Should we
+    			bother to give the specific variants at this point).
+    		</xs:documentation>
+    	</xs:annotation>
+    	<xs:complexContent>
+    		<xs:extension base="behaviorType">
+    			<xs:attribute name="amount" type="xs:float"
+    				use="optional" default="0.5">
+    			</xs:attribute>
+    			<xs:attribute name="attackPeak" type="xs:string"></xs:attribute>
+    			<xs:attribute name="relax" type="xs:string"></xs:attribute>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="faceLexemeType">
+      <xs:complexContent>
+    		<xs:extension base="faceAbstractType">
+    		    <xs:attribute name="lexeme" type="openSetItem" use="required">
+    		    <xs:annotation>
+    					<xs:documentation>One of [OBLIQUE_BROWS, RAISE_BROWS, RAISE_LEFT_BROW, RAISE_RIGHT_BROW, LOWER_BROWS, LOWER_LEFT_BROW, LOWER_RIGHT_BROW, LOWER_MOUTH_CORNERS, LOWER_LEFT_MOUTH_CORNER, LOWER_RIGHT_MOUTH_CORNER, RAISE_MOUTH_CORNERS, RAISE_RIGHT_MOUTH_CORNER, RAISE_LEFT_MOUTH_CORNER, OPEN_MOUTH, OPEN_LIPS, WIDEN_EYES, CLOSE_EYES]</xs:documentation>
+    				</xs:annotation>    			
+    		    </xs:attribute>    		      	      
+    		</xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+      
+    <xs:complexType name="syncBlock">
+        <xs:sequence>
+            <xs:element name="sync" type="syncType" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="ref" type="xs:string" />
+    </xs:complexType>
+
+   
+    <xs:attribute name="value" type="xs:string"></xs:attribute>
+
+
+
+
+    <xs:simpleType name="targetID">
+    	<xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="id">
+    	<xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+
+
+
+    <xs:simpleType name="openSetItem">
+    	<xs:list itemType="xs:string"></xs:list></xs:simpleType>
+
+    <xs:simpleType name="closedSetItem">
+    	<xs:list itemType="xs:string"></xs:list></xs:simpleType>
+
+    
+
+    
+
+
+
+
+
+
+    <xs:element name="posture" type="postureType"></xs:element>
+
+    <xs:element name="gesture" type="gestureType"></xs:element>
+
+
+
+    <xs:complexType name="pointingType">
+    	<xs:complexContent>
+    		<xs:extension base="behaviorType">
+    			<xs:attribute name="target" type="targetID"></xs:attribute>
+    			<xs:attribute name="mode" type="closedSetItem"></xs:attribute>
+    			<xs:attribute name="ready" type="xs:string"></xs:attribute>
+    			<xs:attribute name="strokeStart" type="xs:string"></xs:attribute>
+    			<xs:attribute name="stroke" type="xs:string"></xs:attribute>
+    			<xs:attribute name="strokeEnd" type="xs:string"></xs:attribute>
+    			<xs:attribute name="relax" type="xs:string"></xs:attribute>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="pointing" type="pointingType"></xs:element>
+
+
+
+    <xs:element name="locomotion" type="locomotionType"></xs:element>
+
+    <xs:element name="faceAbstract" type="faceAbstractType"></xs:element>
+
+
+
+    <xs:element name="gaze" type="gazeType"></xs:element>
+
+    <xs:complexType name="locomotionType">
+    	<xs:complexContent>
+    		<xs:extension base="behaviorType">
+    			<xs:attribute name="manner" type="xs:string"></xs:attribute>
+    			<xs:attribute name="target" type="targetID"></xs:attribute>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="headDirectionShiftType">
+    	<xs:complexContent>
+    		<xs:extension base="behaviorType">
+    			<xs:attribute name="target" type="targetID" use="required"></xs:attribute>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+    
+    <xs:element name="headDirectionShift" type="headDirectionShiftType"></xs:element>
+
+    <xs:element name="faceLexeme" type="faceLexemeType"></xs:element>
+
+    <xs:complexType name="faceFacs">
+    	<xs:complexContent>
+    		<xs:extension base="faceAbstractType">
+    			<xs:attribute name="au" type="xs:int" use="required"></xs:attribute>
+    			<xs:attribute name="side" type="closedSetItem" default="BOTH"></xs:attribute>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="faceType">
+    	<xs:complexContent>
+    		<xs:extension base="faceAbstractType">
+    			<xs:sequence>
+    				<xs:element name="lexeme" type="lexemeType"></xs:element>
+    			</xs:sequence>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="face" type="faceType"></xs:element>
+
+    <xs:complexType name="faceShiftType">
+    	<xs:complexContent>
+    		<xs:extension base="faceAbstractType">
+    			<xs:sequence>
+    				<xs:element name="lexeme" type="lexemeType"></xs:element>
+    			</xs:sequence>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+    
+    <xs:element name="faceShift" type="faceShiftType"></xs:element>
+
+    <xs:complexType name="lexemeType">
+    	<xs:attribute name="lexeme" type="openSetItem" use="required"></xs:attribute>
+    	<xs:attribute name="amount" type="xs:float" use="required"></xs:attribute>
+    </xs:complexType>
+
+
+    <xs:element name="lexeme" type="lexemeType"></xs:element>
+
+
+
+    <xs:element name="head" type="headType"></xs:element>
+
+    <xs:complexType name="headType">
+    	<xs:complexContent>
+    		<xs:extension base="behaviorType">
+    			<xs:attribute name="ready" type="xs:string"></xs:attribute>
+    			<xs:attribute name="strokeStart" type="xs:string"></xs:attribute>
+    			<xs:attribute name="stroke" type="xs:string"></xs:attribute>
+    			<xs:attribute name="strokeEnd" type="xs:string"></xs:attribute>
+    			<xs:attribute name="relax" type="xs:string"></xs:attribute>
+    			<xs:attribute name="lexeme" type="xs:string"></xs:attribute>
+    			<xs:attribute name="repetition" type="xs:int"></xs:attribute>
+    			<xs:attribute name="amount" type="xs:float"></xs:attribute>
+    			<xs:attribute name="target" type="xs:string"></xs:attribute>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+    
+
+    <xs:element name="postureShift" type="postureType"></xs:element>
+
+    <xs:complexType name="stanceType">
+    	<xs:attribute name="type" type="closedSetItem"></xs:attribute>    	
+    </xs:complexType>
+    
+    <xs:complexType name="poseType">
+    	<xs:attribute name="type" type="closedSetItem"></xs:attribute>    	
+    	<xs:attribute name="lexeme" type="openSetItem"></xs:attribute>    	
+    </xs:complexType>
+    
+    <xs:element name="stance" type="stanceType"></xs:element>
+</xs:schema>
