@@ -1,0 +1,44 @@
+- interjection:
+    priority: 1
+    behaviors:
+      [head_nod, head_shake, head_tilt]
+- negation:
+    prioriy: 1
+    behaviors:
+      [head_shake, brow_frown]
+- affirmation:
+    priority: 2
+    behaviors:
+      [head_nod, brow_raise]
+- assumption:
+    priority: 3
+    behaviors:
+      [head_nod, brow_frown]
+- obligation:
+    priority: 3
+    behaviors:
+      [head_nod]
+- contrast:
+    priority: 4
+    behaviors:
+      [head_move_side, brow_raise]
+- inclusivity:
+    priority: 4
+    behaviors:
+      [head_sweep]
+- intensification:
+    priority: 4
+    behaviors:
+      [head_nod, brow_frown]
+- listing:
+    priority: 4
+    behaviors:
+      [head_move_side]
+- response_request:
+    priority: 4
+    behaviors:
+      [head_move_side, brow_raise]
+- word_search:
+    priority: 4
+    behaviors:
+      [head_tilt, brow_raise, gaze_away]

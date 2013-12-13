@@ -1,0 +1,10 @@
+<launch>
+
+  <group ns="nvbg" >
+    
+    <rosparam command="load" file="$(find nvbg)/params/words.yaml" param="words" />
+    <rosparam command="load" file="$(find nvbg)/params/behaviors.yaml" param="behaviors" />
+    
+  </group>
+  
+</launch>

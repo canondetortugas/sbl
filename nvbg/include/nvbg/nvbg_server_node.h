@@ -46,6 +46,7 @@
 #include <uscauv_common/base_node.h>
 #include <uscauv_common/multi_reconfigure.h>
 #include <uscauv_common/macros.h>
+#include <uscauv_common/param_loader.h>
 
 #include <sbl_msgs/SimpleNVBGRequest.h>
 
