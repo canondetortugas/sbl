@@ -9,6 +9,8 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/nvbg</url>
 
+  <depend package="uscauv_common" />
+
   <depend package="roscpp" />
   <depend package="sbl_msgs" />
   <depend package="bml_cpp" />

@@ -11,7 +11,7 @@ from sbl_msgs.msg import SimpleNVBGRequest
 
 def spin_up():
     # Start ROS features
-    pub = rospy.Publisher( 'nvbg_server/simple_requests', SimpleNVBGRequest )
+    pub = rospy.Publisher( '/nvbg_server/simple_requests', SimpleNVBGRequest )
     rospy.init_node('simple_nvbg_client')
 
     # Argument parsing
@@ -34,6 +34,9 @@ def spin_up():
     msg.text = parsed_args.text
     if parsed_args.affect != None:
         msg.affect = parsed_args.affect
+        
+    # Hack-y - We need to give the publisher time to register with the master or else publish will silently fail
+    rospy.sleep(1)
     
     pub.publish( msg )
 

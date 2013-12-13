@@ -44,12 +44,23 @@
 
 // uscauv
 #include <uscauv_common/base_node.h>
+#include <uscauv_common/multi_reconfigure.h>
+#include <uscauv_common/macros.h>
 
-class NVBGServerNode: public BaseNode
+#include <sbl_msgs/SimpleNVBGRequest.h>
+
+typedef sbl_msgs::SimpleNVBGRequest _SimpleNVBGRequest;
+
+
+class NVBGServerNode: public BaseNode, public MultiReconfigure
 {
+ private:
+  ros::Subscriber simple_request_sub_;
+  ros::NodeHandle nh_rel_;
   
+
  public:
-  NVBGServerNode(): BaseNode("NVBGServer")
+ NVBGServerNode(): BaseNode("NVBGServer"), nh_rel_("~")
    {
    }
 
@@ -58,7 +69,8 @@ class NVBGServerNode: public BaseNode
   // Running spin() will cause this function to be called before the node begins looping the spinOnce() function.
   void spinFirst()
      {
-	 
+       simple_request_sub_ = nh_rel_.subscribe<_SimpleNVBGRequest>("simple_requests", 10,
+								   &NVBGServerNode::simpleRequestCallback, this);
      }  
 
   // Running spin() will cause this function to get called at the loop rate until this node is killed.
@@ -66,6 +78,11 @@ class NVBGServerNode: public BaseNode
      {
 
      }
+
+  void simpleRequestCallback( _SimpleNVBGRequest::ConstPtr const & msg )
+  {
+    ROS_INFO_STREAM("Got request for ECA " << brk( msg->eca ) << " with text " << brk( msg->text) );
+  }
 
 };
 

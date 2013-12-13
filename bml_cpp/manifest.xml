@@ -14,7 +14,7 @@
 
   <!-- Export build flags for our library -->
   <export>
-    <cpp cflags="-I${prefix}/include" lflags="-L${prefix}/lib -Wl,-rpath,${prefix}/lib -bml_cpp"/>
+    <cpp cflags="-I${prefix}/include" lflags="-L${prefix}/lib -Wl,-rpath,${prefix}/lib -lbml_cpp"/>
   </export>
 
 </package>
