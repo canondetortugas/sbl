@@ -1,0 +1,19 @@
+<package>
+  <description brief="xerces">
+
+    Dummy package for the Apache Xerces library. Only Exports linker flags. 
+    Assumes that libxerces-c2-dev is installed.
+
+  </description>
+  <author>nalyd</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/xerces</url>
+
+    <export>
+      <cpp lflags="-lxerces-c"/>
+    </export>
+
+</package>
+
+
