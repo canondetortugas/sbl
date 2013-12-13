@@ -1,0 +1,14 @@
+<package>
+  <description brief="bml_cpp">
+
+     bml_cpp
+
+  </description>
+  <author>nalyd</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/bml_cpp</url>
+
+</package>
+
+
