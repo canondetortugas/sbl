@@ -1,0 +1,14 @@
+<package>
+  <description brief="nvbg">
+
+     nvbg
+
+  </description>
+  <author>nalyd</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/nvbg</url>
+
+</package>
+
+
