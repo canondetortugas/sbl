@@ -1,0 +1,7 @@
+<stack>
+  <description brief="sbl">seabee3-ros-pkg</description>
+  <author>Maintained by Dylan Foster (turtlecannon@gmail.com)</author>
+  <license>BSD</license>  
+  <review status="unreviewed" notes=""/>
+  <depend stack="ros" /> <!-- roslib, std_msgs, roscpp -->
+</stack>
