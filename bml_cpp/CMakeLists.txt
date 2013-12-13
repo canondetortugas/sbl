@@ -22,9 +22,24 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_gensrv()
 
 #common commands for building c++ executables and libraries
-#rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
-#target_link_libraries(${PROJECT_NAME} another_library)
-#rosbuild_add_boost_directories()
-#rosbuild_link_boost(${PROJECT_NAME} thread)
-#rosbuild_add_executable(example examples/example.cpp)
-#target_link_libraries(example ${PROJECT_NAME})
+
+set_directory_properties(PROPERTIES 
+  ADDITIONAL_MAKE_CLEAN_FILES bml-1.0.cpp
+  ADDITIONAL_MAKE_CLEAN_FILES bml-1.0.h )
+
+add_custom_target(BML_SOURCE ALL
+  xsd cxx-tree --hxx-suffix .h --cxx-suffix .cpp --include-with-brackets 
+  --include-prefix "bml_cpp/" --generate-serialization --root-element bml 
+  --namespace-map "http://www.bml-initiative.org/bml/bml-1.0=bml" 
+  ${PROJECT_SOURCE_DIR}/xsd/bml-1.0.xsd && 
+  mv bml-1.0.h ${PROJECT_SOURCE_DIR}/include/bml_cpp && 
+  mv bml-1.0.cpp ${PROJECT_SOURCE_DIR}/src
+  DEPENDS xsd/bml-1.0.xsd
+  COMMENT "Generating BML parser source code"
+  VERBATIM)
+add_custom_target(BML_SOURCE_TARGET DEPENDS BML_SOURCE)
+
+# Ensure that BML_SOURCE is generated before we try to build anything
+add_dependencies(rosbuild_precompile BML_SOURCE)
+
+rosbuild_add_library(${PROJECT_NAME} src/bml-1.0.cpp)
