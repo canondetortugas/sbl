@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+
+import string
+import sys
+import argparse
+
+# ROS libraries (need to call load_manifest so that custom packages can be found)
+import roslib; roslib.load_manifest('nvbg')
+import rospy
+from sbl_msgs.msg import SimpleNVBGRequest
+
+def spin_up():
+    # Start ROS features
+    pub = rospy.Publisher( 'nvbg_server/simple_requests', SimpleNVBGRequest )
+    rospy.init_node('simple_nvbg_client')
+
+    # Argument parsing
+    args = rospy.myargv(argv=sys.argv)
+
+    parser = argparse.ArgumentParser(prog=args[0], 
+                                     description = 'Request ECA behavior based on speech string')
+
+    parser.add_argument('eca', help='The embodied conversational agent that will act out the speech')
+    parser.add_argument('text', help='Speech to act out')
+    parser.add_argument('-a', '--affect', help='Affect of the speech')
+    parsed_args = parser.parse_args( args[1:] ) # Discard program name
+
+    # Populate request message and send it off
+    msg = SimpleNVBGRequest()
+
+    msg.header.stamp = rospy.Time.now()
+
+    msg.eca = parsed_args.eca
+    msg.text = parsed_args.text
+    if parsed_args.affect != None:
+        msg.affect = parsed_args.affect
+    
+    pub.publish( msg )
+
+if __name__=='__main__':
+    try: 
+        spin_up()
+    except rospy.ROSInterruptException:
+        pass
