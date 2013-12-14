@@ -54,6 +54,9 @@
 #include <sbl_msgs/SimpleNVBGRequest.h>
 #include <bml_cpp/bml-1.0.h>
 
+/// boost
+#include <boost/tokenizer.hpp>
+
 typedef sbl_msgs::SimpleNVBGRequest _SimpleNVBGRequest;
 typedef XmlRpc::XmlRpcValue _XmlVal;
 
@@ -135,17 +138,25 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 	tree->characterId( msg->eca );
 
 	/// Very simple parsing
-	std::vector<std::string> tokens;
-	std::istringstream iss( msg->text );
-	std::copy(std::istream_iterator<std::string>(iss),
-		  std::istream_iterator<std::string>(),
-		  std::back_inserter<std::vector<std::string> >(tokens) );
+	/* std::vector<std::string> tokens; */
+	/* std::istringstream iss( msg->text ); */
+	/* std::copy(std::istream_iterator<std::string>(iss), */
+	/* 	  std::istream_iterator<std::string>(), */
+	/* 	  std::back_inserter<std::vector<std::string> >(tokens) ); */
+	
+	boost::tokenizer<> tokenizer(msg->text);
 	
 	unsigned id_idx = 0;
-	for( std::string const & token : tokens )
+	for( boost::tokenizer<>::iterator token = tokenizer.begin(); token != tokenizer.end(); ++token )
 	  {
+	    std::string match_string = *token;
+	    std::transform( match_string.begin(), match_string.end(), 
+			    match_string.begin(), ::tolower );
+	    
+	    std::cout << match_string << std::endl;
+	    
 	    std::pair<_MultiStringMap::iterator, _MultiStringMap::iterator> match_range = 
-	      word_behavior_map_.equal_range( token );
+	      word_behavior_map_.equal_range( match_string );
 
 	    if( match_range.first != match_range.second )
 	      {
