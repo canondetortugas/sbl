@@ -29,7 +29,7 @@ set_directory_properties(PROPERTIES
 
 add_custom_target(BML_SOURCE ALL
   xsd cxx-tree --hxx-suffix .h --cxx-suffix .cpp --include-with-brackets 
-  --include-prefix "bml_cpp/" --generate-serialization --root-element bml 
+  --include-prefix "bml_cpp/" --generate-serialization --root-element bml
   --namespace-map "http://www.bml-initiative.org/bml/bml-1.0=bml" 
   ${PROJECT_SOURCE_DIR}/xsd/bml-1.0.xsd && 
   mv bml-1.0.h ${PROJECT_SOURCE_DIR}/include/bml_cpp && 

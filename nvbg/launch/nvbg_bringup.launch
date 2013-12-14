@@ -1,0 +1,7 @@
+<launch>
+
+  <include file="$(find nvbg)/launch/nvbg_server.launch" />
+
+  <include file="$(find nvbg)/launch/upload_behaviors.launch" />
+
+</launch>
