@@ -16,30 +16,22 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-#uncomment if you have defined services
-#rosbuild_gensrv()
-
-#common commands for building c++ executables and libraries
-
-set_directory_properties(PROPERTIES 
-  ADDITIONAL_MAKE_CLEAN_FILES bml-1.0.cpp
-  ADDITIONAL_MAKE_CLEAN_FILES bml-1.0.h )
-
-add_custom_target(BML_SOURCE ALL
-  xsd cxx-tree --hxx-suffix .h --cxx-suffix .cpp --include-with-brackets 
+################################################################
+# Call XSD to generate C++ BMl parser from XML Schema ##########
+################################################################
+# Not using an absolute path for the output causes weird behavior where the output is relative to
+# WORKING_DIRECTORY but the later call to rosbuild_add_library assumes that it is in
+add_custom_command(OUTPUT ${PROJECT_SOURCE_DIR}/src/bml-1.0.cpp
+  ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/bml-1.0.h
+  COMMAND xsd cxx-tree --hxx-suffix .h --cxx-suffix .cpp --include-with-brackets 
   --include-prefix "bml_cpp/" --generate-serialization --root-element bml
   --namespace-map "http://www.bml-initiative.org/bml/bml-1.0=bml" 
-  ${PROJECT_SOURCE_DIR}/xsd/bml-1.0.xsd && 
-  mv bml-1.0.h ${PROJECT_SOURCE_DIR}/include/bml_cpp && 
-  mv bml-1.0.cpp ${PROJECT_SOURCE_DIR}/src
+  ${PROJECT_SOURCE_DIR}/xsd/bml-1.0.xsd
+  COMMAND mv bml-1.0.h ${PROJECT_SOURCE_DIR}/include/bml_cpp
+  COMMAND mv bml-1.0.cpp ${PROJECT_SOURCE_DIR}/src
   DEPENDS xsd/bml-1.0.xsd
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
   COMMENT "Generating BML parser source code"
   VERBATIM)
-add_custom_target(BML_SOURCE_TARGET DEPENDS BML_SOURCE)
-
-# Ensure that BML_SOURCE is generated before we try to build anything
-add_dependencies(rosbuild_precompile BML_SOURCE)
 
 rosbuild_add_library(${PROJECT_NAME} src/bml-1.0.cpp)
