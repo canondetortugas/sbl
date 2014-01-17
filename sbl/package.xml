@@ -2,7 +2,7 @@
   <name>sbl</name>
   <version>0.0.0</version>
   <description>sbl</description>
-  <maintainer email="">Maintained by Dylan Foster (turtlecannon@gmail.com)</maintainer>
+  <maintainer email="turtlecannon@gmail.com">Dylan Foster</maintainer>
 
   <license>BSD</license>
 
@@ -26,7 +26,7 @@
   <!-- Dependencies needed only for running tests. -->
 
   <export>
-    <metapackage\>
+    <metapackage/>
   </export>
 
 
