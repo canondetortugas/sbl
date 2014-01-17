@@ -21,7 +21,6 @@ add_custom_command(OUTPUT ${PROJECT_SOURCE_DIR}/src/bml-1.0.cpp
   COMMENT "Generating BML parser source code"
   VERBATIM)
 
-add_definitions(-lxerces-c)
 include_directories(include)
 
 catkin_package(
@@ -32,3 +31,4 @@ catkin_package(
 )
 
 add_library(${PROJECT_NAME} src/bml-1.0.cpp)
+target_link_libraries(${PROJECT_NAME} xerces-c)

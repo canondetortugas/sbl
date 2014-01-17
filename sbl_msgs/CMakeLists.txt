@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(sbl_msgs)
 # Load catkin and all dependencies required for this package
-find_package(catkin REQUIRED COMPONENTS roscpp std_msgs)
+find_package(catkin REQUIRED COMPONENTS message_generation roscpp std_msgs)
 
 #uncomment if you have defined messages
 add_message_files(
@@ -16,7 +16,7 @@ generate_messages(
 
 catkin_package(
     DEPENDS
-    CATKIN_DEPENDS roscpp std_msgs
+    CATKIN_DEPENDS message_runtime roscpp std_msgs
     INCLUDE_DIRS
     LIBRARIES
 )
