@@ -1,5 +1,5 @@
 /***************************************************************************
- *  nodes/NVBG_server_node.cpp
+ *  nodes/nvbg_server_node.cpp
  *  --------------------
  *
  *  Software License Agreement (BSD License)

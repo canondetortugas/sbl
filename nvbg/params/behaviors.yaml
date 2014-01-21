@@ -1,44 +1,69 @@
-interjection:
-    priority: 1
-    behaviors:
-      [head_nod, head_shake, head_tilt]
-negation:
-    priority: 1
-    behaviors:
-      [head_shake, brow_frown]
-affirmation:
-    priority: 2
-    behaviors:
-      [head_nod, brow_raise]
-assumption:
-    priority: 3
-    behaviors:
-      [head_nod, brow_frown]
-obligation:
-    priority: 3
-    behaviors:
-      [head_nod]
-contrast:
-    priority: 4
-    behaviors:
-      [head_move_side, brow_raise]
-inclusivity:
-    priority: 4
-    behaviors:
-      [head_sweep]
-intensification:
-    priority: 4
-    behaviors:
-      [head_nod, brow_frown]
-listing:
-    priority: 4
-    behaviors:
-      [head_move_side]
-response_request:
-    priority: 4
-    behaviors:
-      [head_move_side, brow_raise]
-word_search:
-    priority: 4
-    behaviors:
-      [head_tilt, brow_raise, gaze_away]
+{
+
+#####################################################################################################
+# Syntax ############################################################################################
+#####################################################################################################
+# Key: Name of the behavior. This is how it will be referred to from the rules file
+# Type: BML Class. One of [gesture, head, face]
+# Lexeme: Name of the behavior in our library that this corresponds to. Defaults to the key name.
+
+
+#####################################################################################################
+# Gestures ##########################################################################################
+#####################################################################################################
+# Mode: One of [LEFT_HAND, RIGHT_HAND, BOTH_HANDS]
+
+# Example gestures
+wave_right_arm:
+  type: gesture
+  lexeme: wave_right_arm
+  mode: RIGHT_HAND
+
+wave_left_arm:
+  type: gesture
+  lexeme: wave_left_arm
+  mode: LEFT_HAND
+
+
+##################################################################################################
+# Face ###########################################################################################
+##################################################################################################
+# This get converted into faceLexeme elements for now. No support for <faceFacs> or <face>
+# Amount: How strongly the expression should be shown on the face. In range [0, 1]
+
+intense_brow_raise:
+  type: face
+  lexeme: brow_raise
+  amount: 1                     # A very intense brow raise
+
+brow_raise:
+  type: face
+  lexeme: brow_raise
+  amount: 0.5                     # A medium brow raise
+
+
+##################################################################################################
+# Head movements #################################################################################
+##################################################################################################
+# Amount: Strength of head movement. In range [0,1]
+# Repetition: How many times the movement should be repeated
+  
+head_nod:
+  type: head
+  lexeme: head_nod
+  amount: 0.5
+  repetition: 1
+
+head_shake:
+  type: head
+  lexeme: head_shake
+  amount: 0.5
+  repetition: 1
+
+head_tilt:
+  type: head
+  lexeme: head_tilt
+  amount: 0.5
+  repetition: 1
+  
+}

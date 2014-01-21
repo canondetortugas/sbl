@@ -1,0 +1,23 @@
+# Timings
+# Format [ {scope: <speech/sentence/phrase>, sync: <start/stop/strokeStart/...>, arg: <begin/end/N>}, ...]
+# Scope: What part of the speech is the sync argument relative to? One of [speech, sentence, phrase]
+# Sync: BML syncpoint type
+# Arg: Determines what part of the speech the behavior is bound to. If scope is speech or sentence, it can be one of [begin, end]. If the scope is phrase, it is a non-negative word index.
+
+##############################################################################################
+# TODO: Figure out if ignoring the list for a single timing works ############################
+# Author: Dylan Foster, Date: 2014-01-20 #####################################################
+##############################################################################################
+
+interjection:
+  priority: 1
+  rules:
+    "yes":
+      - {behavior: head_nod, timing: [{scope: phrase, sync: start, arg: 0}] }
+      
+affirmation:
+  priority: 2
+  rules:
+    "yes": 
+      - {behavior: head_nod, timing: [{scope: phrase, sync: start, arg: 0}] }
+      - {behavior: brow_raise, timing: [{scope: sentence, sync: start, arg: begin}]}
