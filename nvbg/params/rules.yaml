@@ -13,11 +13,11 @@ interjection:
   priority: 1
   rules:
     "yes":
-      - {behavior: head_nod, timing: [{scope: phrase, sync: start, arg: 0}] }
+      head_nod: [{scope: phrase, sync: start, arg: 0}] }
       
 affirmation:
   priority: 2
   rules:
     "yes": 
-      - {behavior: head_nod, timing: [{scope: phrase, sync: start, arg: 0}] }
-      - {behavior: brow_raise, timing: [{scope: sentence, sync: start, arg: begin}]}
+      head_nod: [{scope: phrase, sync: start, arg: 0}] }
+      brow_raise: [{scope: sentence, sync: start, arg: begin}]}

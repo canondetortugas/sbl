@@ -57,33 +57,56 @@ namespace nvbg
 
   namespace rules
   {
-  
-    struct Rule
-    {
-      std::string behavior;
-      
-      timing::Timing timing;
-    };
-  
+    /// Mapping from behavior name to timing
+    typedef std::map<std::string, timing::Timing> Rule;
+
+    /// Mapping from strings to behaviors and rules
+    typedef std::map<std::string, Rule> RuleMap;
+    
+
     struct RuleClass
     {
       size_t priority;
 
-      std::vector<Rule> rules;
+      RuleMap rules;
     };
+
+    typedef std::map<std::string, RuleClass> RuleClassMap;
   }
 
-  struct Behavior
-  {
-    std::string type;
-    std::string lexeme;
-    std::string mode;
-    double amount;
-    size_t repitition;
-  };
 
-  typedef std::map<std::string, Behavior> BehaviorMap;
+  namespace behavior
+  {
+    struct Behavior
+    {
+      std::string type;
+      std::string lexeme;
+      std::string mode;
+      double amount;
+      size_t repetition;
+    };
+
+    typedef std::map<std::string, Behavior> BehaviorMap;
+  }
+
     
 } // nvbg
+
+namespace nvbg
+{
+
+  namespace behavior
+  {
+    extern std::set<std::string> const TYPES;
+
+    extern std::set<std::string> const GESTURE_MODES;
+  }
+  
+  namespace timing
+  {
+    extern std::set<std::string> const SCOPE_TYPES;
+    extern std::set<std::string> const VALID_STRING_ARGS;
+  }
+}
 
 #endif // SBL_NVBG_TYPES

@@ -1,5 +1,5 @@
 /***************************************************************************
- *  src/types.cpp
+ *  src/param_conversions.cpp
  *  --------------------
  *
  *  Software License Agreement (BSD License)
@@ -36,22 +36,4 @@
  **************************************************************************/
 
 
-#include <nvbg/types.h>
-#include <set>
-
-namespace nvbg
-{
-
-  namespace behavior
-  {
-    std::set<std::string> const TYPES = {"gesture", "face", "head"};
-
-    std::set<std::string> const GESTURE_MODES = {"LEFT_HANDS", "RIGHT_HANDS", "BOTH_HANDS"};
-  }
-  
-  namespace timing
-  {
-    std::set<std::string> const SCOPE_TYPES = {"speech", "sentence", "phrase"};
-    std::set<std::string> const VALID_STRING_ARGS = {"begin", "end"};
-  }
-}
+#include <nvbg/param_conversions.h>
