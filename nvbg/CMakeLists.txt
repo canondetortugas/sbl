@@ -4,13 +4,13 @@ cmake_minimum_required(VERSION 2.8.3)
 project(nvbg)
 # Load catkin and all dependencies required for this package
 # TODO: remove all from COMPONENTS that are not catkin packages.
-find_package(catkin REQUIRED COMPONENTS uscauv_common roscpp sbl_msgs bml_cpp)
+find_package(catkin REQUIRED COMPONENTS uscauv_common roscpp sbl_msgs bml_cpp std_msgs)
 find_package(Boost REQUIRED)
 include_directories(include ${Boost_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 
 catkin_package(
     DEPENDS 
-    CATKIN_DEPENDS uscauv_common roscpp sbl_msgs bml_cpp
+    CATKIN_DEPENDS uscauv_common roscpp sbl_msgs bml_cpp std_msgs
     INCLUDE_DIRS include 
     LIBRARIES ${PROJECT_NAME}
 )

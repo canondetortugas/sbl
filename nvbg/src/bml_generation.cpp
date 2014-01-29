@@ -54,12 +54,11 @@ namespace nvbg
  * 
  * @return 
  */
-std::auto_ptr<bml::bml> generateBML(std::string const & text, std::string const & eca,
-				    nvbg::behavior::BehaviorMap const &behaviors,
-				    nvbg::rules::RuleClassMap const &rule_classes)
+std::shared_ptr<bml::bml> generateBML(std::string const & text, std::string const & eca,
+				      nvbg::behavior::BehaviorMap const &behaviors,
+				      nvbg::rules::RuleClassMap const &rule_classes,
+				      std::string request_id)
 {
-
-
   /// Stores the number of occurrences of each behavior type
   std::map<std::string, size_t> behavior_idx;
   /// Initialize the count to zero for each behavior type
@@ -70,7 +69,7 @@ std::auto_ptr<bml::bml> generateBML(std::string const & text, std::string const 
     }
 
   /// Arbitrary top-level BML element ID
-  std::auto_ptr<bml::bml> tree( new bml::bml("server_request") );
+  std::shared_ptr<bml::bml> tree( new bml::bml("server_request") );
   
   tree->characterId( eca );
 

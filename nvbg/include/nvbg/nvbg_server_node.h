@@ -43,6 +43,7 @@
 
 // ROS
 #include <ros/ros.h>
+#include <std_msgs/String.h>
 
 // uscauv
 #include <uscauv_common/base_node.h>
@@ -71,14 +72,17 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
  private:
   
   ros::Subscriber simple_request_sub_;
+  ros::Publisher bml_pub_;
   ros::NodeHandle nh_base_, nh_rel_;
 
   rules::RuleClassMap rules_;
   behavior::BehaviorMap behaviors_;
+  
+  size_t request_idx;
 
 
  public:
- NVBGServerNode(): BaseNode("NVBGServer"), nh_rel_("~")
+  NVBGServerNode(): BaseNode("NVBGServer"), nh_rel_("~"), request_idx(0)
    {
    }
 
@@ -90,6 +94,8 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
        simple_request_sub_ = nh_rel_.subscribe<_SimpleNVBGRequest>("simple_requests", 10,
 								   &NVBGServerNode::simpleRequestCallback, this);
 
+       bml_pub_ = nh_rel_.advertise<std_msgs::String>("bml", 10);
+       
        rules_ = uscauv::param::load<rules::RuleClassMap>(nh_base_, "nvbg/rules");
        behaviors_ = uscauv::param::load<behavior::BehaviorMap>(nh_base_, "nvbg/behaviors");
 
@@ -104,11 +110,15 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 
   void simpleRequestCallback( _SimpleNVBGRequest::ConstPtr const & msg )
   {
-    ROS_INFO_STREAM("Got request for ECA " << brk( msg->eca ) << " with text " << brk( msg->text) );
+    ROS_INFO_STREAM("Got request for ECA " << brk( msg->eca ) << " with text " << brk( quote(msg->text) ) );
 
     try
       {
-	std::auto_ptr<bml::bml> tree = nvbg::generateBML(msg->text, msg->eca, behaviors_, rules_ );
+	std::stringstream id;
+	id << "request" << request_idx;
+	
+	std::shared_ptr<bml::bml> tree = nvbg::generateBML(msg->text, msg->eca, 
+							   behaviors_, rules_, id.str() );
 
 
 	// std::auto_ptr<bml::bml> tree( new bml::bml("server_request") );
@@ -157,8 +167,15 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 	map[""].name = "";
 	map[""].schema = "bml-1.0.xsd";
 
-	bml::bml_( std::cout, *tree, map);
+	std::stringstream ss;
+	bml::bml_( ss, *tree, map);
+	
+	std_msgs::String output;
+	output.data = ss.str();
+	
+	bml_pub_.publish(output);
 		
+	ROS_INFO_STREAM(ss.str());		
       }
     catch (const xml_schema::exception& e)
       {
@@ -166,6 +183,7 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 	return;
       }
 
+    ++request_idx;
   }
 
 };
