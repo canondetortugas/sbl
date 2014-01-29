@@ -44,6 +44,9 @@
 
 #include <nvbg/types.h>
 
+/// TODO: Figure out why these only work if I define them in CMakeLists
+// #define USCAUV_PARAM_LOADER_DISALLOW_EMPTY_VECTORS
+// #define USCAUV_PARAM_LOADER_DISALLOW_EMPTY_MAPS
 #include <uscauv_common/param_loader.h>
 
 using namespace uscauv;

@@ -53,6 +53,8 @@
 /// sbl
 #include <sbl_msgs/SimpleNVBGRequest.h>
 #include <bml_cpp/bml-1.0.h>
+#include <nvbg/types.h>
+#include <nvbg/param_conversions.h>
 
 /// boost
 #include <boost/tokenizer.hpp>
@@ -76,7 +78,7 @@ USCAUV_DECLARE_PARAM_LOADER_CONVERSION( BehaviorType, param,
 typedef std::map<std::string, BehaviorType> _NamedBehaviorMap;
 typedef std::multimap<std::string, std::string> _MultiStringMap;
 
-
+using namespace nvbg;
 
 /// TODO: Make sure behavior clases actually have behaviors in them
 class NVBGServerNode: public BaseNode, public MultiReconfigure
@@ -102,22 +104,25 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
        simple_request_sub_ = nh_rel_.subscribe<_SimpleNVBGRequest>("simple_requests", 10,
 								   &NVBGServerNode::simpleRequestCallback, this);
 
-       /// Load parameters
-       _XmlVal words = uscauv::param::load<_XmlVal>(nh_base_, "nvbg/words");
+       rules::RuleClassMap rules = uscauv::param::load<rules::RuleClassMap>(nh_base_, "nvbg/rules");
+       behavior::BehaviorMap behaviors = uscauv::param::load<behavior::BehaviorMap>(nh_base_, "nvbg/behaviors");
 
-       /// Create mapping from words to behavior types
-       for( _XmlVal::ValueStruct::value_type & elem : words )
-	 {
-	   std::vector<std::string> behavior_names = 
-	     uscauv::param::XmlRpcValueConverter<std::vector<std::string> >::convert( elem.second );
-	   for( std::string const & behavior_name : behavior_names )
-	     {
-	       word_behavior_map_.insert( std::make_pair( elem.first, behavior_name ));
-	     }
-	 }
+       // /// Load parameters
+       // _XmlVal words = uscauv::param::load<_XmlVal>(nh_base_, "nvbg/words");
+
+       // /// Create mapping from words to behavior types
+       // for( _XmlVal::ValueStruct::value_type & elem : words )
+       // 	 {
+       // 	   std::vector<std::string> behavior_names = 
+       // 	     uscauv::param::XmlRpcValueConverter<std::vector<std::string> >::convert( elem.second );
+       // 	   for( std::string const & behavior_name : behavior_names )
+       // 	     {
+       // 	       word_behavior_map_.insert( std::make_pair( elem.first, behavior_name ));
+       // 	     }
+       // 	 }
        
-       /// This is possible because we declared a conversion for the value type earlier
-       behaviors_ = uscauv::param::load<_NamedBehaviorMap>( nh_base_, "nvbg/behaviors");
+       // /// This is possible because we declared a conversion for the value type earlier
+       // behaviors_ = uscauv::param::load<_NamedBehaviorMap>( nh_base_, "nvbg/behaviors");
        
      }  
 

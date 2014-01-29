@@ -58,7 +58,8 @@ namespace nvbg
   namespace rules
   {
     /// Mapping from behavior name to timing
-    typedef std::map<std::string, timing::Timing> Rule;
+    // typedef std::map<std::string, std::vector<timing::Timing> > Rule;
+    typedef std::map<std::string, std::vector<timing::Timing> > Rule;
 
     /// Mapping from strings to behaviors and rules
     typedef std::map<std::string, Rule> RuleMap;

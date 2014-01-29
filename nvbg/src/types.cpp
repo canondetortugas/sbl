@@ -46,7 +46,7 @@ namespace nvbg
   {
     std::set<std::string> const TYPES = {"gesture", "face", "head"};
 
-    std::set<std::string> const GESTURE_MODES = {"LEFT_HANDS", "RIGHT_HANDS", "BOTH_HANDS"};
+    std::set<std::string> const GESTURE_MODES = {"LEFT_HAND", "RIGHT_HAND", "BOTH_HANDS"};
   }
   
   namespace timing
