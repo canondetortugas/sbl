@@ -18,7 +18,7 @@ catkin_package(
 add_definitions(-DUSCAUV_PARAM_LOADER_DISALLOW_EMPTY_MAPS)
 add_definitions(-DUSCAUV_PARAM_LOADER_DISALLOW_EMPTY_VECTORS)
 
-add_library(${PROJECT_NAME} src/types.cpp src/param_conversions.cpp )
+add_library(${PROJECT_NAME} src/types.cpp src/param_conversions.cpp src/bml_generation.cpp )
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${catkin_LIBRARIES} xerces-c)
 
 add_executable(nvbg_server nodes/nvbg_server_node.cpp )

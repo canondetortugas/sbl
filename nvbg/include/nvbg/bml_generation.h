@@ -1,5 +1,5 @@
 /***************************************************************************
- *  include/nvbg/types.h
+ *  include/nvbg/bml_generation.h
  *  --------------------
  *
  *  Software License Agreement (BSD License)
@@ -36,77 +36,24 @@
  **************************************************************************/
 
 
-#ifndef SBL_NVBG_TYPES
-#define SBL_NVBG_TYPES
+#ifndef SBL_NVBG_BMLGENERATION
+#define SBL_NVBG_BMLGENERATION
 
 // ROS
 #include <ros/ros.h>
 
-namespace nvbg
-{
-  namespace timing
-  {
-    struct Timing
-    {
-      std::string scope;
-      std::string sync;
-      std::string arg_str;
-      size_t arg_idx;
-    };
-  }
+/// BML parsing
+#include <bml_cpp/bml-1.0.h>
 
-  namespace rules
-  {
-    /// Mapping from behavior name to timings
-    typedef std::map<std::string, std::vector<timing::Timing> > Rule;
-
-    /// Mapping from strings to behaviors and rules
-    typedef std::map<std::string, Rule> RuleMap;
-    
-
-    struct RuleClass
-    {
-      size_t priority;
-
-      RuleMap rules;
-    };
-
-    typedef std::map<std::string, RuleClass> RuleClassMap;
-  }
-
-
-  namespace behavior
-  {
-    struct Behavior
-    {
-      std::string type;
-      std::string lexeme;
-      std::string mode;
-      double amount;
-      size_t repetition;
-    };
-
-    typedef std::map<std::string, Behavior> BehaviorMap;
-  }
-
-    
-} // nvbg
+#include <nvbg/types.h>
 
 namespace nvbg
 {
+std::auto_ptr<bml::bml> generateBML(std::string const & text, std::string const & eca,
+				    nvbg::behavior::BehaviorMap const &behaviors,
+				    nvbg::rules::RuleClassMap const &rule_classes);  
 
-  namespace behavior
-  {
-    extern std::set<std::string> const TYPES;
-
-    extern std::set<std::string> const GESTURE_MODES;
-  }
   
-  namespace timing
-  {
-    extern std::set<std::string> const SCOPE_TYPES;
-    extern std::set<std::string> const VALID_STRING_ARGS;
-  }
 }
 
-#endif // SBL_NVBG_TYPES
+#endif // SBL_NVBG_BMLGENERATION

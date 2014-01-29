@@ -55,6 +55,7 @@
 #include <bml_cpp/bml-1.0.h>
 #include <nvbg/types.h>
 #include <nvbg/param_conversions.h>
+#include <nvbg/bml_generation.h>
 
 /// boost
 #include <boost/tokenizer.hpp>
@@ -62,33 +63,18 @@
 typedef sbl_msgs::SimpleNVBGRequest _SimpleNVBGRequest;
 typedef XmlRpc::XmlRpcValue _XmlVal;
 
-struct BehaviorType
-{
-  unsigned int priority_;
-  std::vector<std::string> behaviors_;
-};
-
-/// Param loader will deal with exceptions automatically so we don't have to check success directly
-USCAUV_DECLARE_PARAM_LOADER_CONVERSION( BehaviorType, param,
-					BehaviorType behavior_type;
-					behavior_type.priority_ = uscauv::param::lookup<int>(param, "priority");
-					behavior_type.behaviors_ = uscauv::param::lookup<std::vector<std::string> >(param, "behaviors");
-					return behavior_type; )
-
-typedef std::map<std::string, BehaviorType> _NamedBehaviorMap;
-typedef std::multimap<std::string, std::string> _MultiStringMap;
-
 using namespace nvbg;
 
 /// TODO: Make sure behavior clases actually have behaviors in them
 class NVBGServerNode: public BaseNode, public MultiReconfigure
 {
  private:
+  
   ros::Subscriber simple_request_sub_;
   ros::NodeHandle nh_base_, nh_rel_;
 
-  _NamedBehaviorMap behaviors_;
-  _MultiStringMap word_behavior_map_;
+  rules::RuleClassMap rules_;
+  behavior::BehaviorMap behaviors_;
 
 
  public:
@@ -104,26 +90,10 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
        simple_request_sub_ = nh_rel_.subscribe<_SimpleNVBGRequest>("simple_requests", 10,
 								   &NVBGServerNode::simpleRequestCallback, this);
 
-       rules::RuleClassMap rules = uscauv::param::load<rules::RuleClassMap>(nh_base_, "nvbg/rules");
-       behavior::BehaviorMap behaviors = uscauv::param::load<behavior::BehaviorMap>(nh_base_, "nvbg/behaviors");
+       rules_ = uscauv::param::load<rules::RuleClassMap>(nh_base_, "nvbg/rules");
+       behaviors_ = uscauv::param::load<behavior::BehaviorMap>(nh_base_, "nvbg/behaviors");
 
-       // /// Load parameters
-       // _XmlVal words = uscauv::param::load<_XmlVal>(nh_base_, "nvbg/words");
-
-       // /// Create mapping from words to behavior types
-       // for( _XmlVal::ValueStruct::value_type & elem : words )
-       // 	 {
-       // 	   std::vector<std::string> behavior_names = 
-       // 	     uscauv::param::XmlRpcValueConverter<std::vector<std::string> >::convert( elem.second );
-       // 	   for( std::string const & behavior_name : behavior_names )
-       // 	     {
-       // 	       word_behavior_map_.insert( std::make_pair( elem.first, behavior_name ));
-       // 	     }
-       // 	 }
-       
-       // /// This is possible because we declared a conversion for the value type earlier
-       // behaviors_ = uscauv::param::load<_NamedBehaviorMap>( nh_base_, "nvbg/behaviors");
-       
+       /// TODO: Verify that all behaviors referenced in the rules are actually loaded
      }  
 
   // Running spin() will cause this function to get called at the loop rate until this node is killed.
@@ -138,9 +108,12 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 
     try
       {
-	std::auto_ptr<bml::bml> tree( new bml::bml("server_request") );
+	std::auto_ptr<bml::bml> tree = nvbg::generateBML(msg->text, msg->eca, behaviors_, rules_ );
 
-	tree->characterId( msg->eca );
+
+	// std::auto_ptr<bml::bml> tree( new bml::bml("server_request") );
+
+	// tree->characterId( msg->eca );
 
 	/// Very simple parsing
 	/* std::vector<std::string> tokens; */
@@ -149,35 +122,35 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 	/* 	  std::istream_iterator<std::string>(), */
 	/* 	  std::back_inserter<std::vector<std::string> >(tokens) ); */
 	
-	boost::tokenizer<> tokenizer(msg->text);
+	// boost::tokenizer<> tokenizer(msg->text);
 	
-	unsigned id_idx = 0;
-	for( boost::tokenizer<>::iterator token = tokenizer.begin(); token != tokenizer.end(); ++token )
-	  {
-	    std::string match_string = *token;
-	    std::transform( match_string.begin(), match_string.end(), 
-			    match_string.begin(), ::tolower );
+	// unsigned id_idx = 0;
+	// for( boost::tokenizer<>::iterator token = tokenizer.begin(); token != tokenizer.end(); ++token )
+	//   {
+	//     std::string match_string = *token;
+	//     std::transform( match_string.begin(), match_string.end(), 
+	// 		    match_string.begin(), ::tolower );
 	    
-	    std::cout << match_string << std::endl;
+	//     std::cout << match_string << std::endl;
 	    
-	    std::pair<_MultiStringMap::iterator, _MultiStringMap::iterator> match_range = 
-	      word_behavior_map_.equal_range( match_string );
+	//     std::pair<_MultiStringMap::iterator, _MultiStringMap::iterator> match_range = 
+	//       word_behavior_map_.equal_range( match_string );
 
-	    if( match_range.first != match_range.second )
-	      {
-		BehaviorType matched_type = (behaviors_.find(match_range.first->second ))->second;
-		std::stringstream id;
-		id << "gesture" << id_idx;
-		bml::gestureType gesture ( id.str() );
-		bml::openSetItem item (1,  matched_type.behaviors_[0] );
-		gesture.lexeme(item);
+	//     if( match_range.first != match_range.second )
+	//       {
+	// 	BehaviorType matched_type = (behaviors_.find(match_range.first->second ))->second;
+	// 	std::stringstream id;
+	// 	id << "gesture" << id_idx;
+	// 	bml::gestureType gesture ( id.str() );
+	// 	bml::openSetItem item (1,  matched_type.behaviors_[0] );
+	// 	gesture.lexeme(item);
 
-		tree->gesture().push_back( gesture );
+	// 	tree->gesture().push_back( gesture );
 
-		++id_idx;
-	      }
+	// 	++id_idx;
+	//       }
 
-	  }
+	//   }
 	
 	/// Wrap everything up and send it off
 	xml_schema::namespace_infomap map;
