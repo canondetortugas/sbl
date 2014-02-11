@@ -68,11 +68,35 @@ std::shared_ptr<bml::bml> generateBML(std::string const & text, std::string cons
       behavior_idx.insert( std::make_pair( *behavior_type_it, 0 ) );
     }
 
-  /// Arbitrary top-level BML element ID
-  std::shared_ptr<bml::bml> tree( new bml::bml("server_request") );
+  /// Top-level BML element ID
+  std::shared_ptr<bml::bml> tree( new bml::bml(request_id) );
   
   tree->characterId( eca );
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Add speech block////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  // How to add plaintext to textType? Alternatively, how to cast 'syncType's into plaintext
+  
+  bml::speech speech ( "primary" ); /// arbitrary id
+
+  bml::textType speech_text;
+  // speech_text.string( text );
+
+  // the 'textType' has a vector of 'syncType's. 
+  bml::syncType speech_sync;
+  speech_sync.id( text );
+  speech_text.sync().push_back( speech_sync );
+  
+  speech.text().push_back( speech_text );
+  
+  tree->speech().push_back( speech );
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Match rules//////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
   for( rules::RuleClassMap::const_iterator rule_class_it = rule_classes.begin();
        rule_class_it != rule_classes.end(); ++rule_class_it )
     {
@@ -160,7 +184,7 @@ std::shared_ptr<bml::bml> generateBML(std::string const & text, std::string cons
 		    }
 		  else
 		    {
-		      ROS_ASSERT(false);
+		      ROS_ASSERT_MSG(false, "Invalid behavior type");
 		    }
 		  
 		}

@@ -164,7 +164,10 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 	
 	/// Wrap everything up and send it off
 	xml_schema::namespace_infomap map;
-	map[""].name = "";
+	// Note: Leaving the name field blank will work,
+	// but will preventthis bml namespace from being set as the default namespace
+	// so all elements will have a prefix. This is not ideal
+	map[""].name = "http://www.bml-initiative.org/bml/bml-1.0";
 	map[""].schema = "bml-1.0.xsd";
 
 	std::stringstream ss;

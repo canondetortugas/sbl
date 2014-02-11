@@ -52,9 +52,7 @@ namespace nvbg
 std::shared_ptr<bml::bml> generateBML(std::string const & text, std::string const & eca,
 				      nvbg::behavior::BehaviorMap const &behaviors,
 				      nvbg::rules::RuleClassMap const &rule_classes,
-				      std::string request_id = "request");  
-
-  
+				      std::string request_id = "request");    
 }
 
 #endif // SBL_NVBG_BMLGENERATION

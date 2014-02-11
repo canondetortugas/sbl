@@ -51,6 +51,7 @@ namespace nvbg
       std::string scope;
       std::string sync;
       std::string arg_str;
+      double offset;
       size_t arg_idx;
     };
   }
