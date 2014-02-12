@@ -38,8 +38,18 @@
 #include <ros/ros.h>
 #include <nvbg/bml_generation.h>
 
+/// xerces and pals
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMImplementation.hpp>
+#include <xercesc/dom/DOMImplementationLS.hpp>
+#include <xercesc/dom/DOMWriter.hpp>
+
 namespace nvbg
 {
+  namespace parse
+  {
+    
+  }
 
   /** 
    * This must be run before any other BML functions are called
@@ -70,6 +80,47 @@ namespace nvbg
     return map;
   }
   
+  std::string serializeXMLDocument( xercesc::DOMDocument & doc )
+  {
+    using namespace xercesc;
+    
+    /// LS - Load/Save
+    XMLCh tempStr[100];
+    XMLString::transcode("LS", tempStr, 99);
+    DOMImplementation *impl          = DOMImplementationRegistry::getDOMImplementation(tempStr);
+    DOMWriter         *theSerializer = ((DOMImplementationLS*)impl)->createDOMWriter();
+
+    /// Pretty print
+    if (theSerializer->canSetFeature(XMLUni::fgDOMWRTFormatPrettyPrint, true))
+      theSerializer->setFeature(XMLUni::fgDOMWRTFormatPrettyPrint, true);
+
+    /// Print document type definition
+    if (theSerializer->canSetFeature(XMLUni::fgDocTypeString, true))
+      theSerializer->setFeature(XMLUni::fgDocTypeString, true);
+
+    DOMElement* root = doc.getDocumentElement();
+
+    XMLCh * output_ch = theSerializer->writeToString( *root );
+    std::string output ( XMLString::transcode( output_ch ) );
+    
+    return output;
+  }
+
+  std::string serializeXMLDocument( bml::bml & tree )
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > doc = 
+      bml::bml_( tree, getBMLInfoMap());
+
+    return serializeXMLDocument( *doc );
+  }
+
+  parse::ParsedSpeech parseSpeech(std::string const & speech)
+  {
+    
+    
+    
+  }
+
   /** 
    * Hack around XSD's poor support for mixed text XML elements
    * 
@@ -78,25 +129,50 @@ namespace nvbg
    * 
    * @return 
    */
-  std::shared_ptr<bml::bml> addSpeech(std::shared_ptr<bml::bml> tree, std::string const & text)
+  std::shared_ptr<xercesc::DOMDocument> addSpeech(std::shared_ptr<bml::bml> tree, std::string const & text)
   {
-    
+    /// All xerces APIs use this c-strings 16-bit XMLCh type, so we use this buffer to convert all
+    /// noncompatible strings that we want to pass to the API.
     XMLCh text_buffer[1000];
    
     /// Serialize tree structure to Xerces DOM Document object
     ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > doc = 
       bml::bml_( *tree, getBMLInfoMap());
-    
-    bml::textType speech_text;
-   
-    xercesc::XMLString::transcode("SpeechElement", text_buffer, 999);
-    xercesc::DOMElement* speech_element = doc->createElement(text_buffer);
-    *speech_element << speech_text;
 
-    doc->appendChild( speech_element );
-   
+    xercesc::DOMElement* root = doc->getDocumentElement();
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    bml::speech speech( "primary" );
+    bml::textType speech_text;
+    
+    /// element names aren't preserved when we serialize xsd::bml types
+    xercesc::XMLString::transcode("speech", text_buffer, 999);
+    // May be doing the createElement part wrong
+    xercesc::DOMElement* speech_element = doc->createElement(text_buffer);
+    *speech_element << speech;
+    root->appendChild( speech_element );
+
+    xercesc::XMLString::transcode("text", text_buffer, 999);
+    xercesc::DOMElement* text_element = doc->createElement(text_buffer);
+    *text_element << speech_text;
+    speech_element->appendChild(text_element);
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Test out xerces text nodes
+    xercesc::XMLString::transcode("This is a test string", text_buffer, 999);
+    xercesc::DOMText* str_element = doc->createTextNode(text_buffer);
+    text_element->appendChild(str_element);
+
+
+
+    /// Try out BML doc
+    // std::string dom_str = serializeXMLDocument( *doc );
+    // ROS_INFO_STREAM( dom_str );
     /// Convert from stupid auto_ptr to nice shared_ptr
-    std::shared_ptr<bml::bml> result( bml::bml_( doc ).release() );
+    // std::shared_ptr<bml::bml> bml_res( bml::bml_( doc ).release() );
+    // ROS_INFO_STREAM( serializeXMLDocument(*bml_res));
+
+    std::shared_ptr<xercesc::DOMDocument> result( doc.release() );
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // TODO: Return real results//////////////////////////////////////////////////////////////////////
@@ -118,7 +194,7 @@ namespace nvbg
  * 
  * @return 
  */
-std::shared_ptr<bml::bml> generateBML(std::string const & text, std::string const & eca,
+  std::string generateBML(std::string const & text, std::string const & eca,
 				      nvbg::behavior::BehaviorMap const &behaviors,
 				      nvbg::rules::RuleClassMap const &rule_classes,
 				      std::string request_id)
@@ -158,7 +234,7 @@ std::shared_ptr<bml::bml> generateBML(std::string const & text, std::string cons
   
   // tree->speech().push_back( speech );
 
-  tree = addSpeech(tree, text);
+  // tree = addSpeech(tree, text);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Match rules//////////////////////////////////////////////////////////////////////////////////////
@@ -259,8 +335,10 @@ std::shared_ptr<bml::bml> generateBML(std::string const & text, std::string cons
     }
   
   /// TODO: Add anything to the tree that's not directly related to rules
-
-  return tree;
+  std::shared_ptr<xercesc::DOMDocument> doc = addSpeech(tree, text);
+  std::string output = serializeXMLDocument( *doc );
+  
+  return output;
 }
 
 }

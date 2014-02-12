@@ -1,5 +1,5 @@
 /***************************************************************************
- *  include/nvbg/bml_generation.h
+ *  include/nvbg/parsing.h
  *  --------------------
  *
  *  Software License Agreement (BSD License)
@@ -36,36 +36,26 @@
  **************************************************************************/
 
 
-#ifndef SBL_NVBG_BMLGENERATION
-#define SBL_NVBG_BMLGENERATION
+#ifndef SBL_NVBG_PARSING
+#define SBL_NVBG_PARSING
 
 // ROS
 #include <ros/ros.h>
 
-/// BML parsing
-#include <bml_cpp/bml-1.0.h>
-
-#include <nvbg/types.h>
+#include <set>
 
 namespace nvbg
 {
-  int initializeXMLPlatform();
-  xml_schema::namespace_infomap getBMLInfoMap();
-  std::shared_ptr<xercesc::DOMDocument> addSpeech(std::shared_ptr<bml::bml> tree, std::string const & text);
-
-  std::string generateBML(std::string const & text, std::string const & eca,
-					nvbg::behavior::BehaviorMap const &behaviors,
-					nvbg::rules::RuleClassMap const &rule_classes,
-					std::string request_id = "request");
-
-  std::string serializeXMLDocument( xercesc::DOMDocument & doc );
-  std::string serializeXMLDocument( bml::bml & tree );
-
-  parse::ParsedSpeech parseSpeech(std::string const & speech);
-
-  namespace parse
+    namespace parse
   {
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // Datatypes etc.////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    
     extern std::string const DELIMITERS;
+    /// delimiters that don't count as words
+    extern std::set<char> const IGNORED_DELIMITERS;
     
     /// Map string index to the token containing this index
     typedef std::map<size_t, size_t> IndexTokenMap;
@@ -80,9 +70,15 @@ namespace nvbg
       IndexTokenMap word_to_sentence_;
       std::vector<std::string> tokens_;
     };
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // Functions//////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    parse::ParsedSpeech parseSpeech(std::string const & speech);
     
   }
-  
-}
 
-#endif // SBL_NVBG_BMLGENERATION
+} // nvbg
+
+#endif // SBL_NVBG_PARSING

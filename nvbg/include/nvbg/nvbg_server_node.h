@@ -120,8 +120,8 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 	std::stringstream id;
 	id << "request" << request_idx;
 	
-	std::shared_ptr<bml::bml> tree = nvbg::generateBML(msg->text, msg->eca, 
-							   behaviors_, rules_, id.str() );
+	// std::shared_ptr<bml::bml> tree = nvbg::generateBML(msg->text, msg->eca, 
+	// 						   behaviors_, rules_, id.str() );
 
 
 	// std::auto_ptr<bml::bml> tree( new bml::bml("server_request") );
@@ -170,19 +170,23 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 	// Note: Leaving the name field blank will work,
 	// but will prevent this bml namespace from being set as the default namespace
 	// so all elements will have a prefix. This is not ideal
-	xml_schema::namespace_infomap map;
-	map[""].name = "http://www.bml-initiative.org/bml/bml-1.0";
-	map[""].schema = "bml-1.0.xsd";
 
-	std::stringstream ss;
-	bml::bml_( ss, *tree, map);
+	std::string output_str = nvbg::generateBML(msg->text, msg->eca, 
+							   behaviors_, rules_, id.str() );
+
+	// xml_schema::namespace_infomap map;
+	// map[""].name = "http://www.bml-initiative.org/bml/bml-1.0";
+	// map[""].schema = "bml-1.0.xsd";
+
+	// std::stringstream ss;
+	// bml::bml_( ss, *tree, map);
 	
 	std_msgs::String output;
-	output.data = ss.str();
+	output.data = output_str;
 	
 	bml_pub_.publish(output);
 		
-	ROS_INFO_STREAM(ss.str());		
+	ROS_INFO_STREAM(output_str);		
       }
     catch (const xml_schema::exception& e)
       {
