@@ -100,6 +100,9 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
        behaviors_ = uscauv::param::load<behavior::BehaviorMap>(nh_base_, "nvbg/behaviors");
 
        /// TODO: Verify that all behaviors referenced in the rules are actually loaded
+
+       /// Must be run before any BML functionality
+       nvbg::initializeXMLPlatform();
      }  
 
   // Running spin() will cause this function to get called at the loop rate until this node is killed.
@@ -163,10 +166,11 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 	//   }
 	
 	/// Wrap everything up and send it off
-	xml_schema::namespace_infomap map;
+
 	// Note: Leaving the name field blank will work,
-	// but will preventthis bml namespace from being set as the default namespace
+	// but will prevent this bml namespace from being set as the default namespace
 	// so all elements will have a prefix. This is not ideal
+	xml_schema::namespace_infomap map;
 	map[""].name = "http://www.bml-initiative.org/bml/bml-1.0";
 	map[""].schema = "bml-1.0.xsd";
 

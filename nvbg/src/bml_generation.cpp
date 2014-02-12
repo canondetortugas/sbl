@@ -41,6 +41,70 @@
 namespace nvbg
 {
 
+  /** 
+   * This must be run before any other BML functions are called
+   * or else anything using the xerces API will fail
+   * 
+   * @return Zero if successful, non-zero otherwise
+   */
+  int initializeXMLPlatform()
+  {
+    try {
+      xercesc::XMLPlatformUtils::Initialize();
+    }
+    catch (const xercesc::XMLException& toCatch) {
+      char* message = xercesc::XMLString::transcode(toCatch.getMessage());
+      ROS_ERROR_STREAM("Error during initialization! :\n"
+		       << message );
+      xercesc::XMLString::release(&message);
+      return 1;
+    }
+    return 0;
+  }
+
+  xml_schema::namespace_infomap getBMLInfoMap()
+  {
+    xml_schema::namespace_infomap map;
+    map[""].name = "http://www.bml-initiative.org/bml/bml-1.0";
+    map[""].schema = "bml-1.0.xsd";
+    return map;
+  }
+  
+  /** 
+   * Hack around XSD's poor support for mixed text XML elements
+   * 
+   * @param tree BML document data structure to add speech element to
+   * @param text Speech to add
+   * 
+   * @return 
+   */
+  std::shared_ptr<bml::bml> addSpeech(std::shared_ptr<bml::bml> tree, std::string const & text)
+  {
+    
+    XMLCh text_buffer[1000];
+   
+    /// Serialize tree structure to Xerces DOM Document object
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > doc = 
+      bml::bml_( *tree, getBMLInfoMap());
+    
+    bml::textType speech_text;
+   
+    xercesc::XMLString::transcode("SpeechElement", text_buffer, 999);
+    xercesc::DOMElement* speech_element = doc->createElement(text_buffer);
+    *speech_element << speech_text;
+
+    doc->appendChild( speech_element );
+   
+    /// Convert from stupid auto_ptr to nice shared_ptr
+    std::shared_ptr<bml::bml> result( bml::bml_( doc ).release() );
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // TODO: Return real results//////////////////////////////////////////////////////////////////////
+    // Author: Dylan Foster, Date: 2014-02-12////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    return result;
+  }
+
 /** 
  * For now this function does a simplified version of BML generation. It doesn't insert any timing
  * constraints or speech. Instead, it simply checks to see if phrases have been
@@ -80,19 +144,21 @@ std::shared_ptr<bml::bml> generateBML(std::string const & text, std::string cons
   
   // How to add plaintext to textType? Alternatively, how to cast 'syncType's into plaintext
   
-  bml::speech speech ( "primary" ); /// arbitrary id
+  // bml::speech speech ( "primary" ); /// arbitrary id
 
-  bml::textType speech_text;
-  // speech_text.string( text );
+  // bml::textType speech_text;
+  // // speech_text.string( text );
 
-  // the 'textType' has a vector of 'syncType's. 
-  bml::syncType speech_sync;
-  speech_sync.id( text );
-  speech_text.sync().push_back( speech_sync );
+  // // the 'textType' has a vector of 'syncType's. 
+  // bml::syncType speech_sync;
+  // speech_sync.id( text );
+  // speech_text.sync().push_back( speech_sync );
   
-  speech.text().push_back( speech_text );
+  // speech.text().push_back( speech_text );
   
-  tree->speech().push_back( speech );
+  // tree->speech().push_back( speech );
+
+  tree = addSpeech(tree, text);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Match rules//////////////////////////////////////////////////////////////////////////////////////
