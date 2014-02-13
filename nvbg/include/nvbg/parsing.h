@@ -65,7 +65,7 @@ namespace nvbg
     /// Need some way to store indices for sentences
     struct ParsedSpeech
     {
-      /// Map index of character in the original string to the index of the word it corresponds to
+      /// Map index of character in the original string to the index of the non-ignored word it corresponds to
       IndexMap char_to_word_;
       /// Map index of character in the original string to the index of the sentence it corresponds to
       IndexMap char_to_sentence_;
@@ -73,8 +73,10 @@ namespace nvbg
       /// containing word
       IndexMap word_to_sentence_;
       /// Map from sentence index to the index of the first word in the sentence
-      IndexMap sentence_to_word_;
-      std::vector<std::string> tokens_;
+      // IndexMap sentence_to_word_;
+
+      /// Non-ignored tokens, all tokens
+      std::vector<std::string> tokens_, all_tokens_;
       std::string speech_;
     };
 
@@ -84,6 +86,7 @@ namespace nvbg
     //////////////////////////////////////////////////////////////////////////////////////////////////
     parse::ParsedSpeech parseSpeech(std::string const & speech);
     std::string toLower(std::string const & input);
+    bool isIgnored(std::string const & word);
     
   }
 

@@ -177,8 +177,8 @@ namespace nvbg
     /// added_word_idx tracks words for which we've added syncpoints
     size_t word_idx = 0, added_word_idx = 0, sentence_idx = 0;
     bool closed = false;
-    for( std::vector<std::string>::const_iterator token_it = ps.tokens_.begin();
-	 token_it != ps.tokens_.end(); ++token_it )
+    for( std::vector<std::string>::const_iterator token_it = ps.all_tokens_.begin();
+	 token_it != ps.all_tokens_.end(); ++token_it )
       {
 	std::string const & token = *token_it;
 
@@ -187,7 +187,7 @@ namespace nvbg
 	xercesc::DOMText* str_element = doc->createTextNode(text_buffer);
 
 	/// We don't give word tags to spaces etc.
-	if( !(token.size() == 1 && parse::IGNORED_DELIMITERS.count(token.c_str()[0]) ) )
+	if( !parse::isIgnored(token) )
 	  {
 	    /// sync point for the current word
 	    std::stringstream ws;
@@ -226,7 +226,7 @@ namespace nvbg
 		text_element->appendChild(send_element);
 		
 		/// Don't start a new sentence if this is the last token
-		if( token_it + 1 == ps.tokens_.end() )
+		if( token_it + 1 == ps.all_tokens_.end() )
 		  {
 		    closed = true;
 		  }
@@ -354,7 +354,8 @@ namespace nvbg
       for( rules::RuleMap::const_iterator rule_it = rules.begin();
 	   rule_it != rules.end(); ++rule_it )
 	{
-	  std::string const & rule_phrase = rule_it->first;
+	  /// TODO: Do this one time only instead of for every match
+	  std::string const & rule_phrase = parse::toLower(rule_it->first);
 	  /// Mapping from behaviors to timings
 	  rules::Rule const & rule = rule_it->second;
 	  
@@ -435,48 +436,59 @@ namespace nvbg
 			}
 		      else if( timing.scope == "phrase" )
 			{
+			  /// Get which sentence we're in
 			  parse::IndexMap::iterator sentence_it = ps.char_to_sentence_.find(phrase_idx);
 			  /// these maps should have an entry for every character in the speech
 			  /// so this shouldn't happen ever
 			  ROS_ASSERT( sentence_it != ps.char_to_sentence_.end() );
 			  size_t sentence_idx = sentence_it->second;
 
-			  parse::IndexMap::iterator word_it = ps.sentence_to_word_.find(sentence_idx);
-			  ROS_ASSERT( word_it != ps.sentence_to_word_.end() );
+			  /// Get which word the phrase starts with
+			  parse::IndexMap::iterator word_it = ps.char_to_word_.find(phrase_idx);
+			  ROS_ASSERT( word_it != ps.char_to_word_.end() );
 			  /// first word in the sentence the phrase occurs in
-			  size_t word_idx = word_it->second, offset = -1;
+			  /// TODO: Modify char_to_word so that we only count non-ignored words
+			  // size_t word_idx = word_it->second, base_word_idx = word_it->second,
+			  //   offset = -1;
 			  
-			  while(true)
-			    {
-			      parse::IndexMap::iterator nsentence_it = ps.word_to_sentence_.find(phrase_idx);
+			  // while(true)
+			  //   {
+			  //     ///TODO: Fails on first run through for "who are you"
+			  //     parse::IndexMap::iterator nsentence_it = ps.word_to_sentence_.find(word_idx);
 
-			      /// If the index argument given causes us to move to the next sentence or out
-			      /// of the speech entirely
-			      if( word_idx >= ps.tokens_.size() || nsentence_it == ps.word_to_sentence_.end() ||
-				  nsentence_it->second != sentence_idx )
-				{
-				  ROS_ERROR_STREAM("Invalid word index argument for rule with phrase " <<
-						   brk(rule_phrase) << ", gesture " << brk(behavior_name) <<
-						   ", syncpoint " << brk(timing.sync) );
-				  continue;
-				}
+			  //     /// If the index argument given causes us to move to the next sentence or out
+			  //     /// of the speech entirely
+			  //     /// TODO: Look into word to sentence generation.
+			  //     if( word_idx >= ps.tokens_.size() || nsentence_it == ps.word_to_sentence_.end() ||
+			  // 	  nsentence_it->second != sentence_idx )
+			  // 	{
+			  // 	  ROS_ERROR_STREAM("Invalid word index argument for rule with phrase " <<
+			  // 			   brk(rule_phrase) << ", gesture " << brk(behavior_name) <<
+			  // 			   ", syncpoint " << brk(timing.sync) );
+			  // 	  ROS_ERROR("Error code: %d%d%d", word_idx >= ps.tokens_.size(), 
+			  // 		    nsentence_it == ps.word_to_sentence_.end(),
+			  // 		    nsentence_it->second != sentence_idx );
+			  // 	  goto escape;
+			  // 	}
 			      
-			      std::string word = ps.tokens_[word_idx];
-			      /// Not an ignored token
-			      if ( !(word.size() == 1 && parse::IGNORED_DELIMITERS.count(word.c_str()[0]) ))
-				{
-				  ++offset;
-				}
+			  //     std::string word = ps.tokens_[word_idx];
+			  //     /// Not an ignored token
+			  //     if (!parse::isIgnored(word))
+			  // 	{
+			  // 	  ++offset;
+			  // 	}
 			      
-			      if( offset == timing.arg_idx )
-				break;
-			      else
-				++word_idx;
-			    }
+			  //     if( offset == timing.arg_idx )
+			  // 	break;
+			  //     else
+			  // 	++word_idx;
+			  //   }
+
+			  size_t ref_word_idx = word_it->second + timing.arg_idx;
 
 			  /// word idx should now be set correctly
 			  std::stringstream ts;
-			  ts << PRIMARY_SPEECH_ID << ":w" << word_idx;
+			  ts << PRIMARY_SPEECH_ID << ":w" << ref_word_idx;
 			  if( timing.offset )
 			    ts << " + " << timing.offset;
 
@@ -487,7 +499,9 @@ namespace nvbg
 			  /// This should have already been validated
 			  ROS_ASSERT_MSG(false, "Invalid scope argument");
 			}
-		      
+
+		    escape:
+		      ;
 		    }
 		  
 		  /////////////////////////////////////////////////////////////////////////////////////////

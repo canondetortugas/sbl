@@ -67,36 +67,44 @@ namespace nvbg
 
       std::stringstream ss;
 
-      size_t token_idx = 0, sentence_idx = 0, char_idx = 0;
-      bool first_word = true;
+      size_t atoken_idx = 0, sentence_idx = 0, char_idx = 0, token_idx = 0;
+      // bool first_word = true;
       for( _Tokenizer::iterator token_it = tokenizer.begin(); token_it != tokenizer.end(); ++token_it)
 	{
 	  std::string const & token = *token_it;
 	  ss << token;
-	  ps.tokens_.push_back(token);
+	  ps.all_tokens_.push_back(token);
 
-	  ps.word_to_sentence_.insert( std::make_pair( token_idx, sentence_idx ) );
+	  ps.word_to_sentence_.insert( std::make_pair( atoken_idx, sentence_idx ) );
 	  
 	  for( size_t idx = char_idx; idx < char_idx + token.size(); ++idx )
 	    {
 	      ps.char_to_word_.insert( std::make_pair( idx, token_idx ));
 	      ps.char_to_sentence_.insert( std::make_pair( idx, sentence_idx ));
 	    }
+	  char_idx += token.size();
 	  
-	  if (first_word)
+	  // if (first_word)
+	  //   {
+	  //     ps.sentence_to_word_.insert( std::make_pair( sentence_idx, atoken_idx ) );
+	  //     first_word = false;
+	  //   }
+
+	  if (!isIgnored( token ))
 	    {
-	      ps.sentence_to_word_.insert( std::make_pair( sentence_idx, token_idx ) );
-	      first_word = false;
+	      ps.tokens_.push_back(token);
+	      ++token_idx;
 	    }
 	  
 	  if( token == SENTENCE_END )
 	    {
-	      first_word = true;
+	      // first_word = true;
 	      ++sentence_idx;
 	    }
 	  
-	  ++token_idx;
+	  ++atoken_idx;
 	}
+      ROS_ASSERT(char_idx == input.size());
       
       ps.speech_ = ss.str();
       
@@ -109,6 +117,11 @@ namespace nvbg
       std::transform( output.begin(), output.end(), 
 		      output.begin(), ::tolower );
       return output;
+    }
+
+    bool isIgnored(std::string const & word)
+    {
+      return word.size() == 1 && parse::IGNORED_DELIMITERS.count(word.c_str()[0]);
     }
 
   }
