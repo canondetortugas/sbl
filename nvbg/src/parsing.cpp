@@ -38,19 +38,76 @@
 
 #include <nvbg/parsing.h>
 
+/// boost
+#include <boost/tokenizer.hpp>
+
+
 namespace nvbg
 {
   namespace parse
   {
     std::string const DELIMITERS = " ,;'.:\"!?";
     std::set<char> const IGNORED_DELIMITERS = {' ', '\"'};
-  }
+    std::string const SENTENCE_END = ".";
 
-  parse::ParsedSpeech parseSpeech(std::string const & speech)
-  {
-    
-    
-    
+    parse::ParsedSpeech parseSpeech(std::string const & speech)
+    {
+      typedef boost::tokenizer<boost::char_separator<char> > _Tokenizer;
+      
+      std::string input = toLower(speech);
+
+      /// Tokenize input using DELIMITERS. These arguments make it so that
+      /// all of the delimiters are kept as tokens.
+      boost::char_separator<char> sep( "", DELIMITERS.c_str());
+      _Tokenizer tokenizer(input, sep);
+
+      ParsedSpeech ps;
+
+      std::stringstream ss;
+
+      size_t token_idx = 0, sentence_idx = 0, char_idx = 0;
+      bool first_word = true;
+      for( _Tokenizer::iterator token_it = tokenizer.begin(); token_it != tokenizer.end(); ++token_it)
+	{
+	  std::string const & token = *token_it;
+	  ss << token;
+	  ps.tokens_.push_back(token);
+
+	  ps.word_to_sentence_.insert( std::make_pair( token_idx, sentence_idx ) );
+	  
+	  for( size_t idx = char_idx; idx < char_idx + token.size(); ++idx )
+	    {
+	      ps.char_to_word_.insert( std::make_pair( idx, token_idx ));
+	      ps.char_to_word_.insert( std::make_pair( idx, sentence_idx ));
+	    }
+	  
+	  if (first_word)
+	    {
+	      ps.sentence_to_word_.insert( std::make_pair( sentence_idx, token_idx ) );
+	      first_word = false;
+	    }
+	  
+	  if( token == SENTENCE_END )
+	    {
+	      first_word = true;
+	      ++sentence_idx;
+	    }
+	  
+	  ++token_idx;
+	}
+      
+      ps.speech_ = ss.str();
+      
+      return ps;
+    }
+
+    std::string toLower(std::string const & input)
+    {
+      std::string output = input;
+      std::transform( output.begin(), output.end(), 
+		      output.begin(), ::tolower );
+      return output;
+    }
+
   }
-  
 }

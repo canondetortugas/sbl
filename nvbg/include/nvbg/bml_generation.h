@@ -46,12 +46,13 @@
 #include <bml_cpp/bml-1.0.h>
 
 #include <nvbg/types.h>
+#include <nvbg/parsing.h>
 
 namespace nvbg
 {
   int initializeXMLPlatform();
   xml_schema::namespace_infomap getBMLInfoMap();
-  std::shared_ptr<xercesc::DOMDocument> addSpeech(std::shared_ptr<bml::bml> tree, std::string const & text);
+  std::shared_ptr<xercesc::DOMDocument> addSpeech(std::shared_ptr<bml::bml> tree, std::string const & ps);
 
   std::string generateBML(std::string const & text, std::string const & eca,
 					nvbg::behavior::BehaviorMap const &behaviors,
@@ -61,28 +62,6 @@ namespace nvbg
   std::string serializeXMLDocument( xercesc::DOMDocument & doc );
   std::string serializeXMLDocument( bml::bml & tree );
 
-  parse::ParsedSpeech parseSpeech(std::string const & speech);
-
-  namespace parse
-  {
-    extern std::string const DELIMITERS;
-    
-    /// Map string index to the token containing this index
-    typedef std::map<size_t, size_t> IndexTokenMap;
-
-    /// Need some way to store indices for sentences
-    struct ParsedSpeech
-    {
-      IndexTokenMap word_indices_;
-      IndexTokenMap sentence_indices_;
-      /// Map from the index of a word to the index of the sentence
-      /// starting with the word, if such a sentence exists.
-      IndexTokenMap word_to_sentence_;
-      std::vector<std::string> tokens_;
-    };
-    
-  }
-  
 }
 
 #endif // SBL_NVBG_BMLGENERATION

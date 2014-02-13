@@ -56,19 +56,26 @@ namespace nvbg
     extern std::string const DELIMITERS;
     /// delimiters that don't count as words
     extern std::set<char> const IGNORED_DELIMITERS;
+    /// delimiter denoting the end of a sentence (.)
+    extern std::string const SENTENCE_END;
     
     /// Map string index to the token containing this index
-    typedef std::map<size_t, size_t> IndexTokenMap;
+    typedef std::map<size_t, size_t> IndexMap;
 
     /// Need some way to store indices for sentences
     struct ParsedSpeech
     {
-      IndexTokenMap word_indices_;
-      IndexTokenMap sentence_indices_;
+      /// Map index of character in the original string to the index of the word it corresponds to
+      IndexMap char_to_word_;
+      /// Map index of character in the original string to the index of the sentence it corresponds to
+      IndexMap char_to_sentence__;
       /// Map from the index of a word to the index of the sentence
-      /// starting with the word, if such a sentence exists.
-      IndexTokenMap word_to_sentence_;
+      /// starting containing word, if such a sentence exists.
+      IndexMap word_to_sentence_;
+      /// Map from sentence index to the index of the first word in the sentence
+      IndexMap sentence_to_word_;
       std::vector<std::string> tokens_;
+      std::string speech_;
     };
 
 
@@ -76,6 +83,7 @@ namespace nvbg
     // Functions//////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
     parse::ParsedSpeech parseSpeech(std::string const & speech);
+    std::string toLower(std::string const & input);
     
   }
 

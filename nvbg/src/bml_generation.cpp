@@ -46,10 +46,6 @@
 
 namespace nvbg
 {
-  namespace parse
-  {
-    
-  }
 
   /** 
    * This must be run before any other BML functions are called
@@ -114,13 +110,6 @@ namespace nvbg
     return serializeXMLDocument( *doc );
   }
 
-  parse::ParsedSpeech parseSpeech(std::string const & speech)
-  {
-    
-    
-    
-  }
-
   /** 
    * Hack around XSD's poor support for mixed text XML elements
    * 
@@ -129,11 +118,14 @@ namespace nvbg
    * 
    * @return 
    */
-  std::shared_ptr<xercesc::DOMDocument> addSpeech(std::shared_ptr<bml::bml> tree, std::string const & text)
+  std::shared_ptr<xercesc::DOMDocument> addSpeech(std::shared_ptr<bml::bml> tree, 
+						  parse::ParsedSpeech const & ps)
   {
+    size_t const BUFFER_LEN = 1000;
+
     /// All xerces APIs use this c-strings 16-bit XMLCh type, so we use this buffer to convert all
-    /// noncompatible strings that we want to pass to the API.
-    XMLCh text_buffer[1000];
+    /// noncompatible strings that we want to pass to the API. XMLCh text_buffer[BUFFER_LEN];
+    XMLCh text_buffer[BUFFER_LEN];
    
     /// Serialize tree structure to Xerces DOM Document object
     ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > doc = 
@@ -146,24 +138,48 @@ namespace nvbg
     bml::textType speech_text;
     
     /// element names aren't preserved when we serialize xsd::bml types
-    xercesc::XMLString::transcode("speech", text_buffer, 999);
+    xercesc::XMLString::transcode("speech", text_buffer, BUFFER_LEN-1);
     // May be doing the createElement part wrong
     xercesc::DOMElement* speech_element = doc->createElement(text_buffer);
     *speech_element << speech;
     root->appendChild( speech_element );
 
-    xercesc::XMLString::transcode("text", text_buffer, 999);
+    xercesc::XMLString::transcode("text", text_buffer, BUFFER_LEN-1);
     xercesc::DOMElement* text_element = doc->createElement(text_buffer);
     *text_element << speech_text;
     speech_element->appendChild(text_element);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     /// Test out xerces text nodes
-    xercesc::XMLString::transcode("This is a test string", text_buffer, 999);
-    xercesc::DOMText* str_element = doc->createTextNode(text_buffer);
-    text_element->appendChild(str_element);
+    // xercesc::XMLString::transcode("This is a test string", text_buffer, BUFFER_LEN-1);
+    // xercesc::DOMText* str_element = doc->createTextNode(text_buffer);
+    // text_element->appendChild(str_element);
 
+    size_t word_idx = 0, added_word_idx = 0;
+    for( std::vector<std::string>::const_iterator token_it = ps.tokens_.begin();
+	 token_it != ps.tokens_.end(); ++token_it )
+      {
+	std::string const & token = *token_it;
 
+	/// We don't give word tags to spaces etc.
+	if( !(token.size() == 1 && parse::IGNORED_DELIMITERS.count(token.c_str()[0]) ) )
+	  {
+	    
+	    if( token == parse::SENTENCE_END)
+	      {
+	      }
+	    else
+	      {
+	      }
+	  }
+	
+	ROS_ASSERT( token.size() <= BUFFER_LEN -1);
+	xercesc::XMLString::transcode(token.c_str(), text_buffer, BUFFER_LEN-1);
+	xercesc::DOMText* str_element = doc->createTextNode(text_buffer);
+	text_element->appendChild(str_element);
+	
+	++word_idx;
+      }
 
     /// Try out BML doc
     // std::string dom_str = serializeXMLDocument( *doc );
@@ -217,6 +233,8 @@ namespace nvbg
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Add speech block////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  parse::ParsedSpeech ps = parse::parseSpeech( text );
   
   // How to add plaintext to textType? Alternatively, how to cast 'syncType's into plaintext
   
@@ -335,7 +353,7 @@ namespace nvbg
     }
   
   /// TODO: Add anything to the tree that's not directly related to rules
-  std::shared_ptr<xercesc::DOMDocument> doc = addSpeech(tree, text);
+  std::shared_ptr<xercesc::DOMDocument> doc = addSpeech(tree, ps);
   std::string output = serializeXMLDocument( *doc );
   
   return output;
