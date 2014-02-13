@@ -366,9 +366,9 @@ namespace nvbg
 	  // TODO: Approximate matching
 	  // Author: Dylan Foster, Date: 2014-01-29/////////////////////////////////////////////////////////
 	  //////////////////////////////////////////////////////////////////////////////////////////////////
-	  size_t phrase_idx = text.find(rule_phrase);
+	  size_t phrase_idx = ps.processed_speech_.find(rule_phrase);
 	  
-	  if(phrase_idx  != std::string::npos )
+	  if(phrase_idx != std::string::npos )
 	    {
 	      /// Iterate over all of the behaviors that this rule activates
 	      for( rules::Rule::const_iterator rule_behavior_it = rule.begin(); 
@@ -443,50 +443,14 @@ namespace nvbg
 			  ROS_ASSERT( sentence_it != ps.char_to_sentence_.end() );
 			  size_t sentence_idx = sentence_it->second;
 
-			  /// Get which word the phrase starts with
+			  /// Get which non-ignored word the phrase starts with
 			  parse::IndexMap::iterator word_it = ps.char_to_word_.find(phrase_idx);
 			  ROS_ASSERT( word_it != ps.char_to_word_.end() );
-			  /// first word in the sentence the phrase occurs in
-			  /// TODO: Modify char_to_word so that we only count non-ignored words
-			  // size_t word_idx = word_it->second, base_word_idx = word_it->second,
-			  //   offset = -1;
-			  
-			  // while(true)
-			  //   {
-			  //     ///TODO: Fails on first run through for "who are you"
-			  //     parse::IndexMap::iterator nsentence_it = ps.word_to_sentence_.find(word_idx);
 
-			  //     /// If the index argument given causes us to move to the next sentence or out
-			  //     /// of the speech entirely
-			  //     /// TODO: Look into word to sentence generation.
-			  //     if( word_idx >= ps.tokens_.size() || nsentence_it == ps.word_to_sentence_.end() ||
-			  // 	  nsentence_it->second != sentence_idx )
-			  // 	{
-			  // 	  ROS_ERROR_STREAM("Invalid word index argument for rule with phrase " <<
-			  // 			   brk(rule_phrase) << ", gesture " << brk(behavior_name) <<
-			  // 			   ", syncpoint " << brk(timing.sync) );
-			  // 	  ROS_ERROR("Error code: %d%d%d", word_idx >= ps.tokens_.size(), 
-			  // 		    nsentence_it == ps.word_to_sentence_.end(),
-			  // 		    nsentence_it->second != sentence_idx );
-			  // 	  goto escape;
-			  // 	}
-			      
-			  //     std::string word = ps.tokens_[word_idx];
-			  //     /// Not an ignored token
-			  //     if (!parse::isIgnored(word))
-			  // 	{
-			  // 	  ++offset;
-			  // 	}
-			      
-			  //     if( offset == timing.arg_idx )
-			  // 	break;
-			  //     else
-			  // 	++word_idx;
-			  //   }
-
+			  /// TODO: Check that arg offset doesn't place us outside the sentence or
+			  /// speech.
 			  size_t ref_word_idx = word_it->second + timing.arg_idx;
 
-			  /// word idx should now be set correctly
 			  std::stringstream ts;
 			  ts << PRIMARY_SPEECH_ID << ":w" << ref_word_idx;
 			  if( timing.offset )

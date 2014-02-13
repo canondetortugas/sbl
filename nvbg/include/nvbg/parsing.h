@@ -77,7 +77,7 @@ namespace nvbg
 
       /// Non-ignored tokens, all tokens
       std::vector<std::string> tokens_, all_tokens_;
-      std::string speech_;
+      std::string speech_, processed_speech_;
     };
 
 

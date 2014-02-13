@@ -56,7 +56,8 @@ namespace nvbg
     {
       typedef boost::tokenizer<boost::char_separator<char> > _Tokenizer;
       
-      std::string input = toLower(speech);
+      // std::string input = toLower(speech);
+      std::string input = speech;
 
       /// Tokenize input using DELIMITERS. These arguments make it so that
       /// all of the delimiters are kept as tokens.
@@ -65,14 +66,14 @@ namespace nvbg
 
       ParsedSpeech ps;
 
-      std::stringstream ss;
+      // std::stringstream ss;
 
       size_t atoken_idx = 0, sentence_idx = 0, char_idx = 0, token_idx = 0;
       // bool first_word = true;
       for( _Tokenizer::iterator token_it = tokenizer.begin(); token_it != tokenizer.end(); ++token_it)
 	{
 	  std::string const & token = *token_it;
-	  ss << token;
+	  // ss << token;
 	  ps.all_tokens_.push_back(token);
 
 	  ps.word_to_sentence_.insert( std::make_pair( atoken_idx, sentence_idx ) );
@@ -106,7 +107,8 @@ namespace nvbg
 	}
       ROS_ASSERT(char_idx == input.size());
       
-      ps.speech_ = ss.str();
+      ps.processed_speech_ = toLower(speech);
+      ps.speech_ = speech;
       
       return ps;
     }

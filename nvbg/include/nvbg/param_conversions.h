@@ -43,6 +43,7 @@
 #include <ros/ros.h>
 
 #include <nvbg/types.h>
+#include <nvbg/parsing.h>
 
 /// TODO: Figure out why these only work if I define them in CMakeLists
 // #define USCAUV_PARAM_LOADER_DISALLOW_EMPTY_VECTORS
@@ -51,7 +52,6 @@
 
 using namespace uscauv;
 using namespace nvbg;
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // TODO: Ensure that phrases don't span multiple sentences (or add support for ones that do //////////
@@ -101,6 +101,17 @@ USCAUV_DECLARE_PARAM_LOADER_CONVERSION(rules::RuleClass, param,
 				       rule_class.priority = param::lookup<int>(param, "priority");
 
 				       rule_class.rules = param::lookup<rules::RuleMap>(param, "rules");
+				       ;
+				       /// Preprocess all of the rule strings
+				       rules::RuleMap lrules = rule_class.rules;
+				       for( rules::RuleMap::const_iterator rule_it = rule_class.rules.begin();
+					    rule_it != rule_class.rules.begin(); ++rule_it )
+					 {
+					   lrules.insert( std::make_pair( parse::toLower( rule_it->first),
+									  rule_it->second ) );
+					 }
+				       
+				       rule_class.rules = lrules;
 
 				       return rule_class;
 				       )
