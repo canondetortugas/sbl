@@ -46,6 +46,7 @@
 
 namespace nvbg
 {
+  std::string const PRIMARY_SPEECH_ID = "speech0";
 
   /** 
    * This must be run before any other BML functions are called
@@ -118,6 +119,7 @@ namespace nvbg
    * 
    * @return 
    */
+  /// TODO: Properly handle sentence tags at the end of the sentence
   std::shared_ptr<xercesc::DOMDocument> addSpeech(std::shared_ptr<bml::bml> tree, 
 						  parse::ParsedSpeech const & ps)
   {
@@ -134,7 +136,7 @@ namespace nvbg
     xercesc::DOMElement* root = doc->getDocumentElement();
     
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    bml::speech speech( "primary" );
+    bml::speech speech( PRIMARY_SPEECH_ID );
     bml::textType speech_text;
     
     /// element names aren't preserved when we serialize xsd::bml types
@@ -155,31 +157,111 @@ namespace nvbg
     // xercesc::DOMText* str_element = doc->createTextNode(text_buffer);
     // text_element->appendChild(str_element);
 
-    size_t word_idx = 0, added_word_idx = 0;
+    /// Add sync point for sentence beginning
+    bml::syncType begin_sync, end_sync, s0begin_sync;
+    begin_sync.id("begin");
+    end_sync.id("end");
+    s0begin_sync.id("s0_begin");
+
+    xercesc::XMLString::transcode("sync", text_buffer, BUFFER_LEN-1);
+    xercesc::DOMElement* begin_element = doc->createElement(text_buffer);
+    xercesc::DOMElement* end_element = doc->createElement(text_buffer);
+    xercesc::DOMElement* s0begin_element = doc->createElement(text_buffer);
+    *begin_element << begin_sync;
+    *end_element << end_sync;
+    *s0begin_element << s0begin_sync;
+    text_element->appendChild(begin_element);
+    text_element->appendChild(s0begin_element);
+
+    /// added_word_idx tracks words for which we've added syncpoints
+    size_t word_idx = 0, added_word_idx = 0, sentence_idx = 0;
+    bool closed = false;
     for( std::vector<std::string>::const_iterator token_it = ps.tokens_.begin();
 	 token_it != ps.tokens_.end(); ++token_it )
       {
 	std::string const & token = *token_it;
 
-	/// We don't give word tags to spaces etc.
-	if( !(token.size() == 1 && parse::IGNORED_DELIMITERS.count(token.c_str()[0]) ) )
-	  {
-	    
-	    if( token == parse::SENTENCE_END)
-	      {
-	      }
-	    else
-	      {
-	      }
-	  }
-	
 	ROS_ASSERT( token.size() <= BUFFER_LEN -1);
 	xercesc::XMLString::transcode(token.c_str(), text_buffer, BUFFER_LEN-1);
 	xercesc::DOMText* str_element = doc->createTextNode(text_buffer);
-	text_element->appendChild(str_element);
+
+	/// We don't give word tags to spaces etc.
+	if( !(token.size() == 1 && parse::IGNORED_DELIMITERS.count(token.c_str()[0]) ) )
+	  {
+	    /// sync point for the current word
+	    std::stringstream ws;
+	    ws << "w" << added_word_idx;
+	    bml::syncType word_sync;
+	    word_sync.id( ws.str() );
+	    
+	    xercesc::XMLString::transcode("sync", text_buffer, BUFFER_LEN-1);
+	    xercesc::DOMElement* ws_element = doc->createElement(text_buffer);
+	    *ws_element << word_sync;
+
+	    /// word syncpoint
+	    text_element->appendChild(ws_element);
+	    /// word
+	    text_element->appendChild(str_element);	
+
+	    /// Add sentence tags for the current sentence
+	    if( token == parse::SENTENCE_END)
+	      {
+		std::stringstream bstream, estream;
+		estream << "s" << sentence_idx << "_end";
+		++sentence_idx;
+		bstream << "s" << sentence_idx << "_begin";
+		
+		bml::syncType sbegin_sync, send_sync;
+		send_sync.id( estream.str() );
+		sbegin_sync.id( bstream.str() );
+
+		xercesc::XMLString::transcode("sync", text_buffer, BUFFER_LEN-1);
+		xercesc::DOMElement* sbegin_element = doc->createElement(text_buffer);
+		xercesc::DOMElement* send_element = doc->createElement(text_buffer);
+
+		*sbegin_element << sbegin_sync;
+		*send_element << send_sync;
+
+		text_element->appendChild(send_element);
+		
+		/// Don't start a new sentence if this is the last token
+		if( token_it + 1 == ps.tokens_.end() )
+		  {
+		    closed = true;
+		  }
+		else
+		  {
+		    text_element->appendChild(sbegin_element);
+		  }
+	      }
+
+	    ++added_word_idx;
+	  }
+	else
+	  {
+	    text_element->appendChild(str_element);
+	  }
 	
 	++word_idx;
       }
+
+    if( !closed )
+      {
+	/// final sentence sync
+	bml::syncType sf_end_sync;
+	std::stringstream id;
+	id << "s" << sentence_idx << "_end";
+	sf_end_sync.id( id.str() );
+	
+	xercesc::XMLString::transcode("sync", text_buffer, BUFFER_LEN-1);
+	xercesc::DOMElement* sf_element = doc->createElement(text_buffer);
+	*sf_element << sf_end_sync;
+	
+	text_element->appendChild(sf_element);
+      }
+
+    /// Add end-of-sentence sync point
+    text_element->appendChild(end_element);
 
     /// Try out BML doc
     // std::string dom_str = serializeXMLDocument( *doc );

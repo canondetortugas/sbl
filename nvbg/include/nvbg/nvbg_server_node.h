@@ -58,9 +58,6 @@
 #include <nvbg/param_conversions.h>
 #include <nvbg/bml_generation.h>
 
-/// boost
-#include <boost/tokenizer.hpp>
-
 typedef sbl_msgs::SimpleNVBGRequest _SimpleNVBGRequest;
 typedef XmlRpc::XmlRpcValue _XmlVal;
 
