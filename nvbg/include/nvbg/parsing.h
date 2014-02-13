@@ -68,9 +68,9 @@ namespace nvbg
       /// Map index of character in the original string to the index of the word it corresponds to
       IndexMap char_to_word_;
       /// Map index of character in the original string to the index of the sentence it corresponds to
-      IndexMap char_to_sentence__;
+      IndexMap char_to_sentence_;
       /// Map from the index of a word to the index of the sentence
-      /// starting containing word, if such a sentence exists.
+      /// containing word
       IndexMap word_to_sentence_;
       /// Map from sentence index to the index of the first word in the sentence
       IndexMap sentence_to_word_;

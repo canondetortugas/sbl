@@ -245,6 +245,7 @@ namespace nvbg
 	++word_idx;
       }
 
+    /// Add end tag for final sentence if we haven't already
     if( !closed )
       {
 	/// final sentence sync
@@ -297,6 +298,9 @@ namespace nvbg
 				      nvbg::rules::RuleClassMap const &rule_classes,
 				      std::string request_id)
 {
+  /// Map from a sync point type (e.g. stokeStart) to a sync point
+  typedef std::map<std::string, std::string> _SyncMap;
+  
   /// Stores the number of occurrences of each behavior type
   std::map<std::string, size_t> behavior_idx;
   /// Initialize the count to zero for each behavior type
@@ -358,10 +362,12 @@ namespace nvbg
 	  // Try to match phrase in the speech /////////////////////////////////////////////////////////////
 	  //////////////////////////////////////////////////////////////////////////////////////////////////
 	  //////////////////////////////////////////////////////////////////////////////////////////////////
-	  // TODO: More sophisticated matching - need to at least be able to get point where match occurred
+	  // TODO: Approximate matching
 	  // Author: Dylan Foster, Date: 2014-01-29/////////////////////////////////////////////////////////
 	  //////////////////////////////////////////////////////////////////////////////////////////////////
-	  if( text.find(rule_phrase) != std::string::npos )
+	  size_t phrase_idx = text.find(rule_phrase);
+	  
+	  if(phrase_idx  != std::string::npos )
 	    {
 	      /// Iterate over all of the behaviors that this rule activates
 	      for( rules::Rule::const_iterator rule_behavior_it = rule.begin(); 
@@ -369,6 +375,8 @@ namespace nvbg
 		{
 		  /// TODO: Incorporate timings
 		  std::string const & behavior_name = rule_behavior_it->first;
+		  /// The timing constraints for this behavior
+		  std::vector<timing::Timing> timings = rule_behavior_it->second;
 		  
 		  behavior::BehaviorMap::const_iterator behavior_it = behaviors.find( behavior_name );
 		  /// We should have already pruned behaviors without definitions
@@ -376,6 +384,99 @@ namespace nvbg
 		  
 		  behavior::Behavior const & behavior = behavior_it->second;
 		  
+		  /////////////////////////////////////////////////////////////////////////////////////////
+		  // Resolve behavior syncpoints //////////////////////////////////////////////////////////
+		  /////////////////////////////////////////////////////////////////////////////////////////
+		  _SyncMap sync;
+		  
+		  /// TODO: Add offset
+		  for( std::vector<timing::Timing>::const_iterator timing_it = timings.begin(); 
+		       timing_it != timings.end(); ++timing_it )
+		    {
+		      timing::Timing const & timing = *timing_it;
+		      
+		      if ( timing.scope == "speech" )
+			{
+			  std::stringstream ts;
+			  /// arg_str is either 'begin' or 'end'
+			  ts << PRIMARY_SPEECH_ID << ":" << timing.arg_str;
+			  if( timing.offset )
+			    ts << " + " << timing.offset;
+			  
+			  sync.insert (std::make_pair( timing.sync, ts.str() ) );
+			}
+		      else if( timing.scope == "sentence" )
+			{
+			  std::stringstream ts;
+			  
+			  /// Find which sentence our phrase is in
+			  parse::IndexMap::iterator index_it = ps.char_to_sentence_.find(phrase_idx);
+			  /// this map should have an entry for every character in the speech
+			  /// so this shouldn't happen ever
+			  ROS_ASSERT( index_it != ps.char_to_sentence_.end() );
+			  size_t sentence_idx = index_it->second;
+			  
+			  ts << PRIMARY_SPEECH_ID << ":s" << sentence_idx 
+			     << "_" << timing.arg_str;
+			  if( timing.offset )
+			    ts << " + " << timing.offset;
+			  
+			  sync.insert (std::make_pair( timing.sync, ts.str() ) );
+			}
+		      else if( timing.scope == "phrase" )
+			{
+			  std::stringstream ts;
+
+			  parse::IndexMap::iterator sentence_it = ps.char_to_sentence_.find(phrase_idx);
+			  /// these maps should have an entry for every character in the speech
+			  /// so this shouldn't happen ever
+			  ROS_ASSERT( sentence_it != ps.char_to_sentence_.end() );
+			  size_t sentence_idx = sentence_it->second;
+
+			  parse::IndexMap::iterator word_it = ps.sentence_to_word_.find(sentence_idx);
+			  ROS_ASSERT( word_it != ps.sentence_to_word_.end() );
+			  /// first word in the sentence the phrase occurs in
+			  size_t word_idx = word_it->second, offset = -1;
+			  
+			  while(true)
+			    {
+			      parse::IndexMap::iterator nsentence_it = ps.word_to_sentence_.find(phrase_idx);
+			      /// If the index argument given causes us to move to the next sentence
+			      if( nsentence_it == ps.word_to_sentence_.end() ||
+				  nsentence_it->second != sentence_idx )
+				{
+				  ROS_ERROR_STREAM("Invalid word index argument for rule with phrase " <<
+						   brk(rule_phrase) << ", gesture " << brk(behavior_name) <<
+						   ", syncpoint " << brk(timing.sync) );
+				  continue;
+				}
+			      
+			      ROS_ASSERT( word_idx < ps.tokens_.size() );
+			      std::string word = tokens_[word_idx];
+			      /// Not an ignored token
+			      if ( !(token.size() == 1 && parse::IGNORED_DELIMITERS.count(token.c_str()[0]) ))
+				{
+				  ++offset;
+				}
+			      
+			      if( offset == timing.arg_idx )
+				break;
+			      else
+				++word_idx;
+			    } 
+
+			}
+		      else
+			{
+			  /// This should have already been validated
+			  ROS_ASSERT_MSG(false, "Invalid scope argument");
+			}
+		      
+		    }
+		  
+		  /////////////////////////////////////////////////////////////////////////////////////////
+		  // Add behavior to BML document //////////////////////////////////////////////////////////
+		  /////////////////////////////////////////////////////////////////////////////////////////
 		  if( behavior.type == "gesture" )
 		    {
 		      size_t & idx = behavior_idx.at("gesture");
