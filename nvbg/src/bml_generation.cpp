@@ -37,6 +37,7 @@
 
 #include <ros/ros.h>
 #include <nvbg/bml_generation.h>
+#include <uscauv_common/macros.h>
 
 /// xerces and pals
 #include <xercesc/dom/DOM.hpp>
@@ -357,7 +358,6 @@ namespace nvbg
 	  /// Mapping from behaviors to timings
 	  rules::Rule const & rule = rule_it->second;
 	  
-
 	  //////////////////////////////////////////////////////////////////////////////////////////////////
 	  // Try to match phrase in the speech /////////////////////////////////////////////////////////////
 	  //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -395,6 +395,16 @@ namespace nvbg
 		    {
 		      timing::Timing const & timing = *timing_it;
 		      
+		      /// Can only have one syncpoint of each type
+		      /// TODO: Move this check to initial param loading block
+		      if( sync.find( timing.sync ) != sync.end() )
+			{
+			  ROS_WARN_STREAM("Duplicated syncpoint of type " << brk(timing.sync)
+				   << " in rule " << brk(rule_phrase) << ", behavior "
+				   << brk(behavior_name) );
+			  continue;
+			}
+		      
 		      if ( timing.scope == "speech" )
 			{
 			  std::stringstream ts;
@@ -425,8 +435,6 @@ namespace nvbg
 			}
 		      else if( timing.scope == "phrase" )
 			{
-			  std::stringstream ts;
-
 			  parse::IndexMap::iterator sentence_it = ps.char_to_sentence_.find(phrase_idx);
 			  /// these maps should have an entry for every character in the speech
 			  /// so this shouldn't happen ever
@@ -441,8 +449,10 @@ namespace nvbg
 			  while(true)
 			    {
 			      parse::IndexMap::iterator nsentence_it = ps.word_to_sentence_.find(phrase_idx);
-			      /// If the index argument given causes us to move to the next sentence
-			      if( nsentence_it == ps.word_to_sentence_.end() ||
+
+			      /// If the index argument given causes us to move to the next sentence or out
+			      /// of the speech entirely
+			      if( word_idx >= ps.tokens_.size() || nsentence_it == ps.word_to_sentence_.end() ||
 				  nsentence_it->second != sentence_idx )
 				{
 				  ROS_ERROR_STREAM("Invalid word index argument for rule with phrase " <<
@@ -451,10 +461,9 @@ namespace nvbg
 				  continue;
 				}
 			      
-			      ROS_ASSERT( word_idx < ps.tokens_.size() );
-			      std::string word = tokens_[word_idx];
+			      std::string word = ps.tokens_[word_idx];
 			      /// Not an ignored token
-			      if ( !(token.size() == 1 && parse::IGNORED_DELIMITERS.count(token.c_str()[0]) ))
+			      if ( !(word.size() == 1 && parse::IGNORED_DELIMITERS.count(word.c_str()[0]) ))
 				{
 				  ++offset;
 				}
@@ -463,8 +472,15 @@ namespace nvbg
 				break;
 			      else
 				++word_idx;
-			    } 
+			    }
 
+			  /// word idx should now be set correctly
+			  std::stringstream ts;
+			  ts << PRIMARY_SPEECH_ID << ":w" << word_idx;
+			  if( timing.offset )
+			    ts << " + " << timing.offset;
+
+			  sync.insert( std::make_pair( timing.sync, ts.str() ) );
 			}
 		      else
 			{
@@ -491,6 +507,31 @@ namespace nvbg
 		      bml::closedSetItem mode(1, behavior.mode );
 		      gesture.mode( mode );
 
+		      for( _SyncMap::const_iterator sync_it = sync.begin(); sync_it != sync.end();
+			   ++sync_it)
+			{
+			  std::string const & sync_type = sync_it->first;
+			  std::string const & sync_ref = sync_it->second;
+
+			  /// Gross
+			  if( sync_type == "start" )
+			    gesture.start( sync_ref );
+			  else if( sync_type == "ready" )
+			    gesture.ready( sync_ref );
+			  else if( sync_type == "strokeStart" )
+			    gesture.strokeStart( sync_ref );
+			  else if( sync_type == "stroke" )
+			    gesture.stroke( sync_ref );
+			  else if( sync_type == "strokeEnd" )
+			    gesture.strokeEnd( sync_ref );
+			  else if( sync_type == "relax" )
+			    gesture.relax( sync_ref );
+			  else if( sync_type == "end" )
+			    gesture.end( sync_ref );
+			  else
+			    ROS_ASSERT_MSG(false, "Invalid gesture sync type.");
+			}
+
 		      tree->gesture().push_back( gesture );
 		      ++idx;
 		    }
@@ -504,6 +545,25 @@ namespace nvbg
 		      bml::faceLexemeType face(id.str(), lexeme );
 		      
 		      face.amount( behavior.amount );
+
+		      for( _SyncMap::const_iterator sync_it = sync.begin(); sync_it != sync.end();
+			   ++sync_it)
+			{
+			  std::string const & sync_type = sync_it->first;
+			  std::string const & sync_ref = sync_it->second;
+
+			  /// Gross
+			  if( sync_type == "start" )
+			    face.start( sync_ref );
+			  else if( sync_type == "attackPeak" )
+			    face.attackPeak( sync_ref );
+			  else if( sync_type == "relax" )
+			    face.relax( sync_ref );
+			  else if( sync_type == "end" )
+			    face.end( sync_ref );
+			  else
+			    ROS_ASSERT_MSG(false, "Invalid face sync type.");
+			}
 
 		      tree->faceLexeme().push_back( face );
 
@@ -521,6 +581,31 @@ namespace nvbg
 		      
 		      head.repetition( behavior.repetition );
 		      head.amount( behavior.amount );
+
+		      for( _SyncMap::const_iterator sync_it = sync.begin(); sync_it != sync.end();
+			   ++sync_it)
+			{
+			  std::string const & sync_type = sync_it->first;
+			  std::string const & sync_ref = sync_it->second;
+
+			  /// Gross
+			  if( sync_type == "start" )
+			    head.start( sync_ref );
+			  else if( sync_type == "ready" )
+			    head.ready( sync_ref );
+			  else if( sync_type == "strokeStart" )
+			    head.strokeStart( sync_ref );
+			  else if( sync_type == "stroke" )
+			    head.stroke( sync_ref );
+			  else if( sync_type == "strokeEnd" )
+			    head.strokeEnd( sync_ref );
+			  else if( sync_type == "relax" )
+			    head.relax( sync_ref );
+			  else if( sync_type == "end" )
+			    head.end( sync_ref );
+			  else
+			    ROS_ASSERT_MSG(false, "Invalid head sync type.");
+			}
 
 		      tree->head().push_back( head );
 		      ++idx;

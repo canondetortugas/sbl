@@ -80,7 +80,7 @@ namespace nvbg
 	  for( size_t idx = char_idx; idx < char_idx + token.size(); ++idx )
 	    {
 	      ps.char_to_word_.insert( std::make_pair( idx, token_idx ));
-	      ps.char_to_word_.insert( std::make_pair( idx, sentence_idx ));
+	      ps.char_to_sentence_.insert( std::make_pair( idx, sentence_idx ));
 	    }
 	  
 	  if (first_word)
