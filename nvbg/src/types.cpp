@@ -47,6 +47,12 @@ namespace nvbg
     std::set<std::string> const TYPES = {"gesture", "face", "head"};
 
     std::set<std::string> const GESTURE_MODES = {"LEFT_HAND", "RIGHT_HAND", "BOTH_HANDS"};
+
+    extern std::set<std::string> const GESTURE_SYNC_TYPES = {"start", "ready", "strokeStart",
+							     "stroke", "strokeEnd", "relax", "end"};
+    extern std::set<std::string> const FACE_SYNC_TYPES = {"start", "attackPeak", "relax", "end"};
+    extern std::set<std::string> const HEAD_SYNC_TYPES = {"start", "ready", "strokeStart",
+							  "stroke", "strokeEnd", "relax", "end"};
   }
   
   namespace timing

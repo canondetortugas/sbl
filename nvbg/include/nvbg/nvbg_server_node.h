@@ -63,7 +63,6 @@ typedef XmlRpc::XmlRpcValue _XmlVal;
 
 using namespace nvbg;
 
-/// TODO: Make sure behavior clases actually have behaviors in them
 class NVBGServerNode: public BaseNode, public MultiReconfigure
 {
  private:
@@ -96,9 +95,13 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
        rules_ = uscauv::param::load<rules::RuleClassMap>(nh_base_, "nvbg/rules");
        behaviors_ = uscauv::param::load<behavior::BehaviorMap>(nh_base_, "nvbg/behaviors");
 
+       /// Various preprocessing things that should be done
        /// TODO: Verify that all behaviors referenced in the rules are actually loaded
-
-       /// Must be run before any BML functionality
+       /// TODO: Check that scope arguments for timings are valid
+       /// TODO: Check for duplicate syncpoint assignments in each timing
+       /// (this is currently done in bml_gen.cpp - change that to an assert)
+       
+       /// Must be run before any BML functionality where we use xerces directly
        nvbg::initializeXMLPlatform();
      }  
 
@@ -116,67 +119,9 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
       {
 	std::stringstream id;
 	id << "request" << request_idx;
-	
-	// std::shared_ptr<bml::bml> tree = nvbg::generateBML(msg->text, msg->eca, 
-	// 						   behaviors_, rules_, id.str() );
-
-
-	// std::auto_ptr<bml::bml> tree( new bml::bml("server_request") );
-
-	// tree->characterId( msg->eca );
-
-	/// Very simple parsing
-	/* std::vector<std::string> tokens; */
-	/* std::istringstream iss( msg->text ); */
-	/* std::copy(std::istream_iterator<std::string>(iss), */
-	/* 	  std::istream_iterator<std::string>(), */
-	/* 	  std::back_inserter<std::vector<std::string> >(tokens) ); */
-	
-	// boost::tokenizer<> tokenizer(msg->text);
-	
-	// unsigned id_idx = 0;
-	// for( boost::tokenizer<>::iterator token = tokenizer.begin(); token != tokenizer.end(); ++token )
-	//   {
-	//     std::string match_string = *token;
-	//     std::transform( match_string.begin(), match_string.end(), 
-	// 		    match_string.begin(), ::tolower );
-	    
-	//     std::cout << match_string << std::endl;
-	    
-	//     std::pair<_MultiStringMap::iterator, _MultiStringMap::iterator> match_range = 
-	//       word_behavior_map_.equal_range( match_string );
-
-	//     if( match_range.first != match_range.second )
-	//       {
-	// 	BehaviorType matched_type = (behaviors_.find(match_range.first->second ))->second;
-	// 	std::stringstream id;
-	// 	id << "gesture" << id_idx;
-	// 	bml::gestureType gesture ( id.str() );
-	// 	bml::openSetItem item (1,  matched_type.behaviors_[0] );
-	// 	gesture.lexeme(item);
-
-	// 	tree->gesture().push_back( gesture );
-
-	// 	++id_idx;
-	//       }
-
-	//   }
-	
-	/// Wrap everything up and send it off
-
-	// Note: Leaving the name field blank will work,
-	// but will prevent this bml namespace from being set as the default namespace
-	// so all elements will have a prefix. This is not ideal
 
 	std::string output_str = nvbg::generateBML(msg->text, msg->eca, 
 							   behaviors_, rules_, id.str() );
-
-	// xml_schema::namespace_infomap map;
-	// map[""].name = "http://www.bml-initiative.org/bml/bml-1.0";
-	// map[""].schema = "bml-1.0.xsd";
-
-	// std::stringstream ss;
-	// bml::bml_( ss, *tree, map);
 	
 	std_msgs::String output;
 	output.data = output_str;

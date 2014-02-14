@@ -53,11 +53,6 @@
 using namespace uscauv;
 using namespace nvbg;
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-// TODO: Ensure that phrases don't span multiple sentences (or add support for ones that do //////////
-// Author: Dylan Foster, Date: 2014-02-13/////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
 USCAUV_DECLARE_PARAM_LOADER_CONVERSION(timing::Timing, param,
 
 				       timing::Timing time;
@@ -68,7 +63,6 @@ USCAUV_DECLARE_PARAM_LOADER_CONVERSION(timing::Timing, param,
 					   throw std::invalid_argument("Invalid scope type");
 					 }
 				       
-
 				       /// We will check if this a valid sync type later when we have context as to the behavior type later.
 				       time.sync = param::lookup<std::string>(param, "sync");
 				       
@@ -101,7 +95,7 @@ USCAUV_DECLARE_PARAM_LOADER_CONVERSION(rules::RuleClass, param,
 				       rule_class.priority = param::lookup<int>(param, "priority");
 
 				       rule_class.rules = param::lookup<rules::RuleMap>(param, "rules");
-				       ;
+
 				       /// Preprocess all of the rule strings
 				       rules::RuleMap lrules = rule_class.rules;
 				       for( rules::RuleMap::const_iterator rule_it = rule_class.rules.begin();
@@ -153,4 +147,3 @@ USCAUV_DECLARE_PARAM_LOADER_CONVERSION(behavior::Behavior, param,
 
 
 #endif // SBL_NVBG_PARAMCONVERSIONS
- 

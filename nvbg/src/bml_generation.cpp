@@ -120,7 +120,6 @@ namespace nvbg
    * 
    * @return 
    */
-  /// TODO: Properly handle sentence tags at the end of the sentence
   std::shared_ptr<xercesc::DOMDocument> addSpeech(std::shared_ptr<bml::bml> tree, 
 						  parse::ParsedSpeech const & ps)
   {
@@ -265,19 +264,8 @@ namespace nvbg
     /// Add end-of-sentence sync point
     text_element->appendChild(end_element);
 
-    /// Try out BML doc
-    // std::string dom_str = serializeXMLDocument( *doc );
-    // ROS_INFO_STREAM( dom_str );
-    /// Convert from stupid auto_ptr to nice shared_ptr
-    // std::shared_ptr<bml::bml> bml_res( bml::bml_( doc ).release() );
-    // ROS_INFO_STREAM( serializeXMLDocument(*bml_res));
-
     std::shared_ptr<xercesc::DOMDocument> result( doc.release() );
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    // TODO: Return real results//////////////////////////////////////////////////////////////////////
-    // Author: Dylan Foster, Date: 2014-02-12////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
     return result;
   }
 
@@ -323,24 +311,6 @@ namespace nvbg
   
   parse::ParsedSpeech ps = parse::parseSpeech( text );
   
-  // How to add plaintext to textType? Alternatively, how to cast 'syncType's into plaintext
-  
-  // bml::speech speech ( "primary" ); /// arbitrary id
-
-  // bml::textType speech_text;
-  // // speech_text.string( text );
-
-  // // the 'textType' has a vector of 'syncType's. 
-  // bml::syncType speech_sync;
-  // speech_sync.id( text );
-  // speech_text.sync().push_back( speech_sync );
-  
-  // speech.text().push_back( speech_text );
-  
-  // tree->speech().push_back( speech );
-
-  // tree = addSpeech(tree, text);
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Match rules//////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -354,17 +324,12 @@ namespace nvbg
       for( rules::RuleMap::const_iterator rule_it = rules.begin();
 	   rule_it != rules.end(); ++rule_it )
 	{
-	  /// TODO: Do this one time only instead of for every match
 	  std::string const & rule_phrase = parse::toLower(rule_it->first);
 	  /// Mapping from behaviors to timings
 	  rules::Rule const & rule = rule_it->second;
 	  
 	  //////////////////////////////////////////////////////////////////////////////////////////////////
 	  // Try to match phrase in the speech /////////////////////////////////////////////////////////////
-	  //////////////////////////////////////////////////////////////////////////////////////////////////
-	  //////////////////////////////////////////////////////////////////////////////////////////////////
-	  // TODO: Approximate matching
-	  // Author: Dylan Foster, Date: 2014-01-29/////////////////////////////////////////////////////////
 	  //////////////////////////////////////////////////////////////////////////////////////////////////
 	  size_t phrase_idx = ps.processed_speech_.find(rule_phrase);
 	  
@@ -374,7 +339,6 @@ namespace nvbg
 	      for( rules::Rule::const_iterator rule_behavior_it = rule.begin(); 
 		   rule_behavior_it != rule.end(); ++rule_behavior_it )
 		{
-		  /// TODO: Incorporate timings
 		  std::string const & behavior_name = rule_behavior_it->first;
 		  /// The timing constraints for this behavior
 		  std::vector<timing::Timing> timings = rule_behavior_it->second;
@@ -390,14 +354,12 @@ namespace nvbg
 		  /////////////////////////////////////////////////////////////////////////////////////////
 		  _SyncMap sync;
 		  
-		  /// TODO: Add offset
 		  for( std::vector<timing::Timing>::const_iterator timing_it = timings.begin(); 
 		       timing_it != timings.end(); ++timing_it )
 		    {
 		      timing::Timing const & timing = *timing_it;
 		      
 		      /// Can only have one syncpoint of each type
-		      /// TODO: Move this check to initial param loading block
 		      if( sync.find( timing.sync ) != sync.end() )
 			{
 			  ROS_WARN_STREAM("Duplicated syncpoint of type " << brk(timing.sync)
@@ -447,9 +409,15 @@ namespace nvbg
 			  parse::IndexMap::iterator word_it = ps.char_to_word_.find(phrase_idx);
 			  ROS_ASSERT( word_it != ps.char_to_word_.end() );
 
-			  /// TODO: Check that arg offset doesn't place us outside the sentence or
-			  /// speech.
 			  size_t ref_word_idx = word_it->second + timing.arg_idx;
+
+			  if( ref_word_idx >= ps.tokens_.size() )
+			    {
+			      ROS_ERROR_STREAM("Invalid word offset for syncpoint" << brk(timing.sync)
+				   << " in rule " << brk(rule_phrase) << ", behavior "
+				   << brk(behavior_name) );
+			      continue;
+			    }
 
 			  std::stringstream ts;
 			  ts << PRIMARY_SPEECH_ID << ":w" << ref_word_idx;
@@ -464,8 +432,6 @@ namespace nvbg
 			  ROS_ASSERT_MSG(false, "Invalid scope argument");
 			}
 
-		    escape:
-		      ;
 		    }
 		  
 		  /////////////////////////////////////////////////////////////////////////////////////////
@@ -598,7 +564,6 @@ namespace nvbg
 	}
     }
   
-  /// TODO: Add anything to the tree that's not directly related to rules
   std::shared_ptr<xercesc::DOMDocument> doc = addSpeech(tree, ps);
   std::string output = serializeXMLDocument( *doc );
   

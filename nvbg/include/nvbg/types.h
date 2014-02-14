@@ -42,11 +42,6 @@
 // ROS
 #include <ros/ros.h>
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-// TODO: Add scope arg type checking for behaviors to param loading//////////////////////////////////
-// Author: Dylan Foster, Date: 2014-02-13////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
 namespace nvbg
 {
   namespace timing
@@ -106,6 +101,11 @@ namespace nvbg
     extern std::set<std::string> const TYPES;
 
     extern std::set<std::string> const GESTURE_MODES;
+
+    extern std::set<std::string> const GESTURE_SYNC_TYPES;
+    extern std::set<std::string> const FACE_SYNC_TYPES;
+    extern std::set<std::string> const HEAD_SYNC_TYPES;
+
   }
   
   namespace timing
