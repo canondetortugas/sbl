@@ -1,5 +1,5 @@
 /***************************************************************************
- *  src/types.cpp
+ *  nodes/realizer_node.cpp
  *  --------------------
  *
  *  Software License Agreement (BSD License)
@@ -36,28 +36,16 @@
  **************************************************************************/
 
 
-#include <nvbg/types.h>
-#include <set>
+#include <nvbg/realizer_node.h>
 
-namespace nvbg
+// Initialize RealizerNode and begin looping.
+int main(int argc, char ** argv)
 {
+  ros::init(argc, argv, "realizer");
 
-  namespace behavior
-  {
-    std::set<std::string> const TYPES = {"gesture", "face", "head"};
+  RealizerNode realizer;
 
-    std::set<std::string> const GESTURE_MODES = {"LEFT_HAND", "RIGHT_HAND", "BOTH_HANDS"};
+  realizer.spin();
 
-    std::set<std::string> const GESTURE_SYNC_TYPES = {"start", "ready", "strokeStart",
-							     "stroke", "strokeEnd", "relax", "end"};
-    std::set<std::string> const FACE_SYNC_TYPES = {"start", "attackPeak", "relax", "end"};
-    std::set<std::string> const HEAD_SYNC_TYPES = {"start", "ready", "strokeStart",
-							  "stroke", "strokeEnd", "relax", "end"};
-  }
-  
-  namespace timing
-  {
-    std::set<std::string> const SCOPE_TYPES = {"speech", "sentence", "phrase"};
-    std::set<std::string> const VALID_STRING_ARGS = {"begin", "end"};
-  }
+  return 0;
 }

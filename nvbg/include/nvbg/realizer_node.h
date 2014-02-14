@@ -1,5 +1,5 @@
 /***************************************************************************
- *  src/types.cpp
+ *  include/nvbg/realizer_node.h
  *  --------------------
  *
  *  Software License Agreement (BSD License)
@@ -36,28 +36,37 @@
  **************************************************************************/
 
 
-#include <nvbg/types.h>
-#include <set>
+#ifndef SBL_NVBG_REALIZER
+#define SBL_NVBG_REALIZER
 
-namespace nvbg
+// ROS
+#include <ros/ros.h>
+
+// uscauv
+#include <uscauv_common/base_node.h>
+
+class RealizerNode: public BaseNode
 {
-
-  namespace behavior
-  {
-    std::set<std::string> const TYPES = {"gesture", "face", "head"};
-
-    std::set<std::string> const GESTURE_MODES = {"LEFT_HAND", "RIGHT_HAND", "BOTH_HANDS"};
-
-    std::set<std::string> const GESTURE_SYNC_TYPES = {"start", "ready", "strokeStart",
-							     "stroke", "strokeEnd", "relax", "end"};
-    std::set<std::string> const FACE_SYNC_TYPES = {"start", "attackPeak", "relax", "end"};
-    std::set<std::string> const HEAD_SYNC_TYPES = {"start", "ready", "strokeStart",
-							  "stroke", "strokeEnd", "relax", "end"};
-  }
   
-  namespace timing
-  {
-    std::set<std::string> const SCOPE_TYPES = {"speech", "sentence", "phrase"};
-    std::set<std::string> const VALID_STRING_ARGS = {"begin", "end"};
-  }
-}
+ public:
+  RealizerNode(): BaseNode("Realizer")
+   {
+   }
+
+ private:
+
+  // Running spin() will cause this function to be called before the node begins looping the spinOnce() function.
+  void spinFirst()
+     {
+	 
+     }  
+
+  // Running spin() will cause this function to get called at the loop rate until this node is killed.
+  void spinOnce()
+     {
+
+     }
+
+};
+
+#endif // SBL_NVBG_REALIZER
