@@ -14,10 +14,12 @@ interjection:
   rules:
     "yes":
       head_nod: [{scope: phrase, sync: start, arg: 0}]
-      
+
 affirmation:
   priority: 2
   rules:
     "yes": 
-      head_nod: [{sync: stokeStart, scope: phrase, arg: 0}, {scope: sentence, sync: stokeEnd, arg: end}]
+      head_nod: [{sync: strokeStart, scope: phrase, arg: 0}, {scope: sentence, sync: strokeEnd, arg: end}]
       brow_raise: [{scope: sentence, sync: start, arg: begin}]
+    "who are you":
+      wave_right_arm: [{sync: strokeEnd, scope: phrase, arg: 0, offset: 0.5}]

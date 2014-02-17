@@ -1,0 +1,2802 @@
+gesture:
+  name: test_sequence_gesture
+  sequence:
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 1.0, roll: 0.0, x: 0.0, y: 0.0, yaw: 0.0, z: 1.0}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 1.0, roll: 0.0, x: 0.0, y: 0.0, yaw: 0.0, z: 1.0}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 1.0, roll: 0.0, x: 0.0, y: 0.0, yaw: 0.0, z: 1.0}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 1.0, roll: 0.0, x: 0.0, y: 0.0, yaw: 0.0, z: 1.0}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 1.0, roll: 0.0, x: 0.0, y: 0.0, yaw: 0.0, z: 1.0}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 1.0, roll: 0.0, x: 0.0, y: 0.0, yaw: 0.0, z: 1.0}
+    syncpoint: start
+    time: 0.0
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9950041652780258, roll: 0.09983341664682815, x: 0.010000000000000002,
+          y: 0.0010000000000000002, yaw: 0.11246291601828488, z: 1.1051709180756477}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9950041652780258, roll: 0.09983341664682815, x: 0.010000000000000002,
+          y: 0.0010000000000000002, yaw: 0.11246291601828488, z: 1.1051709180756477}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9950041652780258, roll: 0.09983341664682815, x: 0.010000000000000002,
+          y: 0.0010000000000000002, yaw: 0.11246291601828488, z: 1.1051709180756477}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9950041652780258, roll: 0.09983341664682815, x: 0.010000000000000002,
+          y: 0.0010000000000000002, yaw: 0.11246291601828488, z: 1.1051709180756477}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9950041652780258, roll: 0.09983341664682815, x: 0.010000000000000002,
+          y: 0.0010000000000000002, yaw: 0.11246291601828488, z: 1.1051709180756477}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9950041652780258, roll: 0.09983341664682815, x: 0.010000000000000002,
+          y: 0.0010000000000000002, yaw: 0.11246291601828488, z: 1.1051709180756477}
+    time: 0.1
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9800665778412416, roll: 0.19866933079506122, x: 0.04000000000000001,
+          y: 0.008000000000000002, yaw: 0.22270258921047842, z: 1.2214027581601699}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9800665778412416, roll: 0.19866933079506122, x: 0.04000000000000001,
+          y: 0.008000000000000002, yaw: 0.22270258921047842, z: 1.2214027581601699}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9800665778412416, roll: 0.19866933079506122, x: 0.04000000000000001,
+          y: 0.008000000000000002, yaw: 0.22270258921047842, z: 1.2214027581601699}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9800665778412416, roll: 0.19866933079506122, x: 0.04000000000000001,
+          y: 0.008000000000000002, yaw: 0.22270258921047842, z: 1.2214027581601699}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9800665778412416, roll: 0.19866933079506122, x: 0.04000000000000001,
+          y: 0.008000000000000002, yaw: 0.22270258921047842, z: 1.2214027581601699}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9800665778412416, roll: 0.19866933079506122, x: 0.04000000000000001,
+          y: 0.008000000000000002, yaw: 0.22270258921047842, z: 1.2214027581601699}
+    time: 0.2
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.955336489125606, roll: 0.2955202066613396, x: 0.09000000000000002,
+          y: 0.027000000000000014, yaw: 0.32862675945912745, z: 1.3498588075760032}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.955336489125606, roll: 0.2955202066613396, x: 0.09000000000000002,
+          y: 0.027000000000000014, yaw: 0.32862675945912745, z: 1.3498588075760032}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.955336489125606, roll: 0.2955202066613396, x: 0.09000000000000002,
+          y: 0.027000000000000014, yaw: 0.32862675945912745, z: 1.3498588075760032}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.955336489125606, roll: 0.2955202066613396, x: 0.09000000000000002,
+          y: 0.027000000000000014, yaw: 0.32862675945912745, z: 1.3498588075760032}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.955336489125606, roll: 0.2955202066613396, x: 0.09000000000000002,
+          y: 0.027000000000000014, yaw: 0.32862675945912745, z: 1.3498588075760032}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.955336489125606, roll: 0.2955202066613396, x: 0.09000000000000002,
+          y: 0.027000000000000014, yaw: 0.32862675945912745, z: 1.3498588075760032}
+    time: 0.30000000000000004
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9210609940028851, roll: 0.3894183423086505, x: 0.16000000000000003,
+          y: 0.06400000000000002, yaw: 0.42839235504666845, z: 1.4918246976412703}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9210609940028851, roll: 0.3894183423086505, x: 0.16000000000000003,
+          y: 0.06400000000000002, yaw: 0.42839235504666845, z: 1.4918246976412703}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9210609940028851, roll: 0.3894183423086505, x: 0.16000000000000003,
+          y: 0.06400000000000002, yaw: 0.42839235504666845, z: 1.4918246976412703}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9210609940028851, roll: 0.3894183423086505, x: 0.16000000000000003,
+          y: 0.06400000000000002, yaw: 0.42839235504666845, z: 1.4918246976412703}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9210609940028851, roll: 0.3894183423086505, x: 0.16000000000000003,
+          y: 0.06400000000000002, yaw: 0.42839235504666845, z: 1.4918246976412703}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9210609940028851, roll: 0.3894183423086505, x: 0.16000000000000003,
+          y: 0.06400000000000002, yaw: 0.42839235504666845, z: 1.4918246976412703}
+    time: 0.4
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8775825618903728, roll: 0.479425538604203, x: 0.25, y: 0.125,
+          yaw: 0.5204998778130465, z: 1.6487212707001282}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8775825618903728, roll: 0.479425538604203, x: 0.25, y: 0.125,
+          yaw: 0.5204998778130465, z: 1.6487212707001282}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8775825618903728, roll: 0.479425538604203, x: 0.25, y: 0.125,
+          yaw: 0.5204998778130465, z: 1.6487212707001282}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8775825618903728, roll: 0.479425538604203, x: 0.25, y: 0.125,
+          yaw: 0.5204998778130465, z: 1.6487212707001282}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8775825618903728, roll: 0.479425538604203, x: 0.25, y: 0.125,
+          yaw: 0.5204998778130465, z: 1.6487212707001282}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8775825618903728, roll: 0.479425538604203, x: 0.25, y: 0.125,
+          yaw: 0.5204998778130465, z: 1.6487212707001282}
+    time: 0.5
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8253356149096782, roll: 0.5646424733950355, x: 0.3600000000000001,
+          y: 0.2160000000000001, yaw: 0.603856090847926, z: 1.822118800390509}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8253356149096782, roll: 0.5646424733950355, x: 0.3600000000000001,
+          y: 0.2160000000000001, yaw: 0.603856090847926, z: 1.822118800390509}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8253356149096782, roll: 0.5646424733950355, x: 0.3600000000000001,
+          y: 0.2160000000000001, yaw: 0.603856090847926, z: 1.822118800390509}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8253356149096782, roll: 0.5646424733950355, x: 0.3600000000000001,
+          y: 0.2160000000000001, yaw: 0.603856090847926, z: 1.822118800390509}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8253356149096782, roll: 0.5646424733950355, x: 0.3600000000000001,
+          y: 0.2160000000000001, yaw: 0.603856090847926, z: 1.822118800390509}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8253356149096782, roll: 0.5646424733950355, x: 0.3600000000000001,
+          y: 0.2160000000000001, yaw: 0.603856090847926, z: 1.822118800390509}
+    time: 0.6000000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.7648421872844884, roll: 0.6442176872376911, x: 0.4900000000000001,
+          y: 0.3430000000000001, yaw: 0.6778011938374184, z: 2.0137527074704766}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.7648421872844884, roll: 0.6442176872376911, x: 0.4900000000000001,
+          y: 0.3430000000000001, yaw: 0.6778011938374184, z: 2.0137527074704766}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.7648421872844884, roll: 0.6442176872376911, x: 0.4900000000000001,
+          y: 0.3430000000000001, yaw: 0.6778011938374184, z: 2.0137527074704766}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.7648421872844884, roll: 0.6442176872376911, x: 0.4900000000000001,
+          y: 0.3430000000000001, yaw: 0.6778011938374184, z: 2.0137527074704766}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.7648421872844884, roll: 0.6442176872376911, x: 0.4900000000000001,
+          y: 0.3430000000000001, yaw: 0.6778011938374184, z: 2.0137527074704766}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.7648421872844884, roll: 0.6442176872376911, x: 0.4900000000000001,
+          y: 0.3430000000000001, yaw: 0.6778011938374184, z: 2.0137527074704766}
+    time: 0.7000000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.6967067093471654, roll: 0.7173560908995228, x: 0.6400000000000001,
+          y: 0.5120000000000001, yaw: 0.7421009647076606, z: 2.225540928492468}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.6967067093471654, roll: 0.7173560908995228, x: 0.6400000000000001,
+          y: 0.5120000000000001, yaw: 0.7421009647076606, z: 2.225540928492468}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.6967067093471654, roll: 0.7173560908995228, x: 0.6400000000000001,
+          y: 0.5120000000000001, yaw: 0.7421009647076606, z: 2.225540928492468}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.6967067093471654, roll: 0.7173560908995228, x: 0.6400000000000001,
+          y: 0.5120000000000001, yaw: 0.7421009647076606, z: 2.225540928492468}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.6967067093471654, roll: 0.7173560908995228, x: 0.6400000000000001,
+          y: 0.5120000000000001, yaw: 0.7421009647076606, z: 2.225540928492468}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.6967067093471654, roll: 0.7173560908995228, x: 0.6400000000000001,
+          y: 0.5120000000000001, yaw: 0.7421009647076606, z: 2.225540928492468}
+    time: 0.8
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.6216099682706644, roll: 0.7833269096274834, x: 0.81,
+          y: 0.7290000000000001, yaw: 0.796908212422832, z: 2.45960311115695}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.6216099682706644, roll: 0.7833269096274834, x: 0.81,
+          y: 0.7290000000000001, yaw: 0.796908212422832, z: 2.45960311115695}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.6216099682706644, roll: 0.7833269096274834, x: 0.81,
+          y: 0.7290000000000001, yaw: 0.796908212422832, z: 2.45960311115695}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.6216099682706644, roll: 0.7833269096274834, x: 0.81,
+          y: 0.7290000000000001, yaw: 0.796908212422832, z: 2.45960311115695}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.6216099682706644, roll: 0.7833269096274834, x: 0.81,
+          y: 0.7290000000000001, yaw: 0.796908212422832, z: 2.45960311115695}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.6216099682706644, roll: 0.7833269096274834, x: 0.81,
+          y: 0.7290000000000001, yaw: 0.796908212422832, z: 2.45960311115695}
+    time: 0.9
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.5403023058681398, roll: 0.8414709848078965, x: 1.0, y: 1.0,
+          yaw: 0.842700792949715, z: 2.718281828459045}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.5403023058681398, roll: 0.8414709848078965, x: 1.0, y: 1.0,
+          yaw: 0.842700792949715, z: 2.718281828459045}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.5403023058681398, roll: 0.8414709848078965, x: 1.0, y: 1.0,
+          yaw: 0.842700792949715, z: 2.718281828459045}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.5403023058681398, roll: 0.8414709848078965, x: 1.0, y: 1.0,
+          yaw: 0.842700792949715, z: 2.718281828459045}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.5403023058681398, roll: 0.8414709848078965, x: 1.0, y: 1.0,
+          yaw: 0.842700792949715, z: 2.718281828459045}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.5403023058681398, roll: 0.8414709848078965, x: 1.0, y: 1.0,
+          yaw: 0.842700792949715, z: 2.718281828459045}
+    syncpoint: strokeStart
+    time: 1.0
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.4535961214255773, roll: 0.8912073600614354, x: 1.2100000000000002,
+          y: 1.3310000000000004, yaw: 0.8802050695740816, z: 3.0041660239464334}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.4535961214255773, roll: 0.8912073600614354, x: 1.2100000000000002,
+          y: 1.3310000000000004, yaw: 0.8802050695740816, z: 3.0041660239464334}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.4535961214255773, roll: 0.8912073600614354, x: 1.2100000000000002,
+          y: 1.3310000000000004, yaw: 0.8802050695740816, z: 3.0041660239464334}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.4535961214255773, roll: 0.8912073600614354, x: 1.2100000000000002,
+          y: 1.3310000000000004, yaw: 0.8802050695740816, z: 3.0041660239464334}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.4535961214255773, roll: 0.8912073600614354, x: 1.2100000000000002,
+          y: 1.3310000000000004, yaw: 0.8802050695740816, z: 3.0041660239464334}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.4535961214255773, roll: 0.8912073600614354, x: 1.2100000000000002,
+          y: 1.3310000000000004, yaw: 0.8802050695740816, z: 3.0041660239464334}
+    time: 1.1
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.3623577544766734, roll: 0.9320390859672264, x: 1.4400000000000004,
+          y: 1.7280000000000009, yaw: 0.9103139782296353, z: 3.320116922736548}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.3623577544766734, roll: 0.9320390859672264, x: 1.4400000000000004,
+          y: 1.7280000000000009, yaw: 0.9103139782296353, z: 3.320116922736548}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.3623577544766734, roll: 0.9320390859672264, x: 1.4400000000000004,
+          y: 1.7280000000000009, yaw: 0.9103139782296353, z: 3.320116922736548}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.3623577544766734, roll: 0.9320390859672264, x: 1.4400000000000004,
+          y: 1.7280000000000009, yaw: 0.9103139782296353, z: 3.320116922736548}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.3623577544766734, roll: 0.9320390859672264, x: 1.4400000000000004,
+          y: 1.7280000000000009, yaw: 0.9103139782296353, z: 3.320116922736548}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.3623577544766734, roll: 0.9320390859672264, x: 1.4400000000000004,
+          y: 1.7280000000000009, yaw: 0.9103139782296353, z: 3.320116922736548}
+    time: 1.2000000000000002
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.26749882862458735, roll: 0.963558185417193, x: 1.6900000000000002,
+          y: 2.197, yaw: 0.9340079449406524, z: 3.6692966676192444}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.26749882862458735, roll: 0.963558185417193, x: 1.6900000000000002,
+          y: 2.197, yaw: 0.9340079449406524, z: 3.6692966676192444}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.26749882862458735, roll: 0.963558185417193, x: 1.6900000000000002,
+          y: 2.197, yaw: 0.9340079449406524, z: 3.6692966676192444}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.26749882862458735, roll: 0.963558185417193, x: 1.6900000000000002,
+          y: 2.197, yaw: 0.9340079449406524, z: 3.6692966676192444}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.26749882862458735, roll: 0.963558185417193, x: 1.6900000000000002,
+          y: 2.197, yaw: 0.9340079449406524, z: 3.6692966676192444}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.26749882862458735, roll: 0.963558185417193, x: 1.6900000000000002,
+          y: 2.197, yaw: 0.9340079449406524, z: 3.6692966676192444}
+    time: 1.3
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.16996714290024081, roll: 0.9854497299884603, x: 1.9600000000000004,
+          y: 2.7440000000000007, yaw: 0.9522851197626487, z: 4.055199966844675}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.16996714290024081, roll: 0.9854497299884603, x: 1.9600000000000004,
+          y: 2.7440000000000007, yaw: 0.9522851197626487, z: 4.055199966844675}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.16996714290024081, roll: 0.9854497299884603, x: 1.9600000000000004,
+          y: 2.7440000000000007, yaw: 0.9522851197626487, z: 4.055199966844675}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.16996714290024081, roll: 0.9854497299884603, x: 1.9600000000000004,
+          y: 2.7440000000000007, yaw: 0.9522851197626487, z: 4.055199966844675}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.16996714290024081, roll: 0.9854497299884603, x: 1.9600000000000004,
+          y: 2.7440000000000007, yaw: 0.9522851197626487, z: 4.055199966844675}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.16996714290024081, roll: 0.9854497299884603, x: 1.9600000000000004,
+          y: 2.7440000000000007, yaw: 0.9522851197626487, z: 4.055199966844675}
+    time: 1.4000000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.0707372016677029, roll: 0.9974949866040544, x: 2.25,
+          y: 3.375, yaw: 0.9661051464753108, z: 4.4816890703380645}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.0707372016677029, roll: 0.9974949866040544, x: 2.25,
+          y: 3.375, yaw: 0.9661051464753108, z: 4.4816890703380645}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.0707372016677029, roll: 0.9974949866040544, x: 2.25,
+          y: 3.375, yaw: 0.9661051464753108, z: 4.4816890703380645}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.0707372016677029, roll: 0.9974949866040544, x: 2.25,
+          y: 3.375, yaw: 0.9661051464753108, z: 4.4816890703380645}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.0707372016677029, roll: 0.9974949866040544, x: 2.25,
+          y: 3.375, yaw: 0.9661051464753108, z: 4.4816890703380645}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.0707372016677029, roll: 0.9974949866040544, x: 2.25,
+          y: 3.375, yaw: 0.9661051464753108, z: 4.4816890703380645}
+    time: 1.5
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.029199522301288815, roll: 0.9995736030415051, x: 2.5600000000000005,
+          y: 4.096000000000001, yaw: 0.976348383344644, z: 4.953032424395115}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.029199522301288815, roll: 0.9995736030415051, x: 2.5600000000000005,
+          y: 4.096000000000001, yaw: 0.976348383344644, z: 4.953032424395115}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.029199522301288815, roll: 0.9995736030415051, x: 2.5600000000000005,
+          y: 4.096000000000001, yaw: 0.976348383344644, z: 4.953032424395115}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.029199522301288815, roll: 0.9995736030415051, x: 2.5600000000000005,
+          y: 4.096000000000001, yaw: 0.976348383344644, z: 4.953032424395115}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.029199522301288815, roll: 0.9995736030415051, x: 2.5600000000000005,
+          y: 4.096000000000001, yaw: 0.976348383344644, z: 4.953032424395115}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.029199522301288815, roll: 0.9995736030415051, x: 2.5600000000000005,
+          y: 4.096000000000001, yaw: 0.976348383344644, z: 4.953032424395115}
+    time: 1.6
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.12884449429552486, roll: 0.9916648104524686, x: 2.8900000000000006,
+          y: 4.913000000000001, yaw: 0.9837904585907746, z: 5.473947391727201}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.12884449429552486, roll: 0.9916648104524686, x: 2.8900000000000006,
+          y: 4.913000000000001, yaw: 0.9837904585907746, z: 5.473947391727201}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.12884449429552486, roll: 0.9916648104524686, x: 2.8900000000000006,
+          y: 4.913000000000001, yaw: 0.9837904585907746, z: 5.473947391727201}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.12884449429552486, roll: 0.9916648104524686, x: 2.8900000000000006,
+          y: 4.913000000000001, yaw: 0.9837904585907746, z: 5.473947391727201}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.12884449429552486, roll: 0.9916648104524686, x: 2.8900000000000006,
+          y: 4.913000000000001, yaw: 0.9837904585907746, z: 5.473947391727201}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.12884449429552486, roll: 0.9916648104524686, x: 2.8900000000000006,
+          y: 4.913000000000001, yaw: 0.9837904585907746, z: 5.473947391727201}
+    time: 1.7000000000000002
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.2272020946930871, roll: 0.9738476308781951, x: 3.24,
+          y: 5.832000000000001, yaw: 0.9890905016357308, z: 6.0496474644129465}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.2272020946930871, roll: 0.9738476308781951, x: 3.24,
+          y: 5.832000000000001, yaw: 0.9890905016357308, z: 6.0496474644129465}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.2272020946930871, roll: 0.9738476308781951, x: 3.24,
+          y: 5.832000000000001, yaw: 0.9890905016357308, z: 6.0496474644129465}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.2272020946930871, roll: 0.9738476308781951, x: 3.24,
+          y: 5.832000000000001, yaw: 0.9890905016357308, z: 6.0496474644129465}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.2272020946930871, roll: 0.9738476308781951, x: 3.24,
+          y: 5.832000000000001, yaw: 0.9890905016357308, z: 6.0496474644129465}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.2272020946930871, roll: 0.9738476308781951, x: 3.24,
+          y: 5.832000000000001, yaw: 0.9890905016357308, z: 6.0496474644129465}
+    time: 1.8
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.3232895668635036, roll: 0.9463000876874145, x: 3.6100000000000003,
+          y: 6.859000000000002, yaw: 0.9927904292352575, z: 6.68589444227927}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.3232895668635036, roll: 0.9463000876874145, x: 3.6100000000000003,
+          y: 6.859000000000002, yaw: 0.9927904292352575, z: 6.68589444227927}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.3232895668635036, roll: 0.9463000876874145, x: 3.6100000000000003,
+          y: 6.859000000000002, yaw: 0.9927904292352575, z: 6.68589444227927}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.3232895668635036, roll: 0.9463000876874145, x: 3.6100000000000003,
+          y: 6.859000000000002, yaw: 0.9927904292352575, z: 6.68589444227927}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.3232895668635036, roll: 0.9463000876874145, x: 3.6100000000000003,
+          y: 6.859000000000002, yaw: 0.9927904292352575, z: 6.68589444227927}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.3232895668635036, roll: 0.9463000876874145, x: 3.6100000000000003,
+          y: 6.859000000000002, yaw: 0.9927904292352575, z: 6.68589444227927}
+    time: 1.9000000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.4161468365471424, roll: 0.9092974268256817, x: 4.0,
+          y: 8.0, yaw: 0.9953222650189527, z: 7.38905609893065}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.4161468365471424, roll: 0.9092974268256817, x: 4.0,
+          y: 8.0, yaw: 0.9953222650189527, z: 7.38905609893065}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.4161468365471424, roll: 0.9092974268256817, x: 4.0,
+          y: 8.0, yaw: 0.9953222650189527, z: 7.38905609893065}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.4161468365471424, roll: 0.9092974268256817, x: 4.0,
+          y: 8.0, yaw: 0.9953222650189527, z: 7.38905609893065}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.4161468365471424, roll: 0.9092974268256817, x: 4.0,
+          y: 8.0, yaw: 0.9953222650189527, z: 7.38905609893065}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.4161468365471424, roll: 0.9092974268256817, x: 4.0,
+          y: 8.0, yaw: 0.9953222650189527, z: 7.38905609893065}
+    time: 2.0
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.5048461045998576, roll: 0.8632093666488737, x: 4.41,
+          y: 9.261000000000001, yaw: 0.997020533343667, z: 8.166169912567652}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.5048461045998576, roll: 0.8632093666488737, x: 4.41,
+          y: 9.261000000000001, yaw: 0.997020533343667, z: 8.166169912567652}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.5048461045998576, roll: 0.8632093666488737, x: 4.41,
+          y: 9.261000000000001, yaw: 0.997020533343667, z: 8.166169912567652}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.5048461045998576, roll: 0.8632093666488737, x: 4.41,
+          y: 9.261000000000001, yaw: 0.997020533343667, z: 8.166169912567652}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.5048461045998576, roll: 0.8632093666488737, x: 4.41,
+          y: 9.261000000000001, yaw: 0.997020533343667, z: 8.166169912567652}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.5048461045998576, roll: 0.8632093666488737, x: 4.41,
+          y: 9.261000000000001, yaw: 0.997020533343667, z: 8.166169912567652}
+    time: 2.1
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.5885011172553458, roll: 0.8084964038195901, x: 4.840000000000001,
+          y: 10.648000000000003, yaw: 0.9981371537020182, z: 9.025013499434122}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.5885011172553458, roll: 0.8084964038195901, x: 4.840000000000001,
+          y: 10.648000000000003, yaw: 0.9981371537020182, z: 9.025013499434122}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.5885011172553458, roll: 0.8084964038195901, x: 4.840000000000001,
+          y: 10.648000000000003, yaw: 0.9981371537020182, z: 9.025013499434122}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.5885011172553458, roll: 0.8084964038195901, x: 4.840000000000001,
+          y: 10.648000000000003, yaw: 0.9981371537020182, z: 9.025013499434122}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.5885011172553458, roll: 0.8084964038195901, x: 4.840000000000001,
+          y: 10.648000000000003, yaw: 0.9981371537020182, z: 9.025013499434122}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.5885011172553458, roll: 0.8084964038195901, x: 4.840000000000001,
+          y: 10.648000000000003, yaw: 0.9981371537020182, z: 9.025013499434122}
+    time: 2.2
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.6662760212798244, roll: 0.74570521217672, x: 5.290000000000001,
+          y: 12.167000000000003, yaw: 0.9988568234026434, z: 9.974182454814724}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.6662760212798244, roll: 0.74570521217672, x: 5.290000000000001,
+          y: 12.167000000000003, yaw: 0.9988568234026434, z: 9.974182454814724}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.6662760212798244, roll: 0.74570521217672, x: 5.290000000000001,
+          y: 12.167000000000003, yaw: 0.9988568234026434, z: 9.974182454814724}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.6662760212798244, roll: 0.74570521217672, x: 5.290000000000001,
+          y: 12.167000000000003, yaw: 0.9988568234026434, z: 9.974182454814724}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.6662760212798244, roll: 0.74570521217672, x: 5.290000000000001,
+          y: 12.167000000000003, yaw: 0.9988568234026434, z: 9.974182454814724}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.6662760212798244, roll: 0.74570521217672, x: 5.290000000000001,
+          y: 12.167000000000003, yaw: 0.9988568234026434, z: 9.974182454814724}
+    time: 2.3000000000000003
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.7373937155412458, roll: 0.6754631805511506, x: 5.760000000000002,
+          y: 13.824000000000007, yaw: 0.999311486103355, z: 11.023176380641605}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.7373937155412458, roll: 0.6754631805511506, x: 5.760000000000002,
+          y: 13.824000000000007, yaw: 0.999311486103355, z: 11.023176380641605}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.7373937155412458, roll: 0.6754631805511506, x: 5.760000000000002,
+          y: 13.824000000000007, yaw: 0.999311486103355, z: 11.023176380641605}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.7373937155412458, roll: 0.6754631805511506, x: 5.760000000000002,
+          y: 13.824000000000007, yaw: 0.999311486103355, z: 11.023176380641605}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.7373937155412458, roll: 0.6754631805511506, x: 5.760000000000002,
+          y: 13.824000000000007, yaw: 0.999311486103355, z: 11.023176380641605}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.7373937155412458, roll: 0.6754631805511506, x: 5.760000000000002,
+          y: 13.824000000000007, yaw: 0.999311486103355, z: 11.023176380641605}
+    time: 2.4000000000000004
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.8011436155469337, roll: 0.5984721441039565, x: 6.25,
+          y: 15.625, yaw: 0.999593047982555, z: 12.182493960703473}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.8011436155469337, roll: 0.5984721441039565, x: 6.25,
+          y: 15.625, yaw: 0.999593047982555, z: 12.182493960703473}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.8011436155469337, roll: 0.5984721441039565, x: 6.25,
+          y: 15.625, yaw: 0.999593047982555, z: 12.182493960703473}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.8011436155469337, roll: 0.5984721441039565, x: 6.25,
+          y: 15.625, yaw: 0.999593047982555, z: 12.182493960703473}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.8011436155469337, roll: 0.5984721441039565, x: 6.25,
+          y: 15.625, yaw: 0.999593047982555, z: 12.182493960703473}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.8011436155469337, roll: 0.5984721441039565, x: 6.25,
+          y: 15.625, yaw: 0.999593047982555, z: 12.182493960703473}
+    time: 2.5
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.8568887533689473, roll: 0.5155013718214642, x: 6.760000000000001,
+          y: 17.576, yaw: 0.9997639655834707, z: 13.463738035001692}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.8568887533689473, roll: 0.5155013718214642, x: 6.760000000000001,
+          y: 17.576, yaw: 0.9997639655834707, z: 13.463738035001692}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.8568887533689473, roll: 0.5155013718214642, x: 6.760000000000001,
+          y: 17.576, yaw: 0.9997639655834707, z: 13.463738035001692}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.8568887533689473, roll: 0.5155013718214642, x: 6.760000000000001,
+          y: 17.576, yaw: 0.9997639655834707, z: 13.463738035001692}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.8568887533689473, roll: 0.5155013718214642, x: 6.760000000000001,
+          y: 17.576, yaw: 0.9997639655834707, z: 13.463738035001692}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.8568887533689473, roll: 0.5155013718214642, x: 6.760000000000001,
+          y: 17.576, yaw: 0.9997639655834707, z: 13.463738035001692}
+    time: 2.6
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9040721420170612, roll: 0.4273798802338298, x: 7.290000000000001,
+          y: 19.683000000000003, yaw: 0.9998656672600594, z: 14.879731724872837}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9040721420170612, roll: 0.4273798802338298, x: 7.290000000000001,
+          y: 19.683000000000003, yaw: 0.9998656672600594, z: 14.879731724872837}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9040721420170612, roll: 0.4273798802338298, x: 7.290000000000001,
+          y: 19.683000000000003, yaw: 0.9998656672600594, z: 14.879731724872837}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9040721420170612, roll: 0.4273798802338298, x: 7.290000000000001,
+          y: 19.683000000000003, yaw: 0.9998656672600594, z: 14.879731724872837}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9040721420170612, roll: 0.4273798802338298, x: 7.290000000000001,
+          y: 19.683000000000003, yaw: 0.9998656672600594, z: 14.879731724872837}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9040721420170612, roll: 0.4273798802338298, x: 7.290000000000001,
+          y: 19.683000000000003, yaw: 0.9998656672600594, z: 14.879731724872837}
+    time: 2.7
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9422223406686583, roll: 0.33498815015590466, x: 7.840000000000002,
+          y: 21.952000000000005, yaw: 0.9999249868053346, z: 16.444646771097055}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9422223406686583, roll: 0.33498815015590466, x: 7.840000000000002,
+          y: 21.952000000000005, yaw: 0.9999249868053346, z: 16.444646771097055}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9422223406686583, roll: 0.33498815015590466, x: 7.840000000000002,
+          y: 21.952000000000005, yaw: 0.9999249868053346, z: 16.444646771097055}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9422223406686583, roll: 0.33498815015590466, x: 7.840000000000002,
+          y: 21.952000000000005, yaw: 0.9999249868053346, z: 16.444646771097055}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9422223406686583, roll: 0.33498815015590466, x: 7.840000000000002,
+          y: 21.952000000000005, yaw: 0.9999249868053346, z: 16.444646771097055}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9422223406686583, roll: 0.33498815015590466, x: 7.840000000000002,
+          y: 21.952000000000005, yaw: 0.9999249868053346, z: 16.444646771097055}
+    time: 2.8000000000000003
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9709581651495907, roll: 0.23924932921398198, x: 8.410000000000002,
+          y: 24.38900000000001, yaw: 0.9999589021219005, z: 18.174145369443067}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9709581651495907, roll: 0.23924932921398198, x: 8.410000000000002,
+          y: 24.38900000000001, yaw: 0.9999589021219005, z: 18.174145369443067}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9709581651495907, roll: 0.23924932921398198, x: 8.410000000000002,
+          y: 24.38900000000001, yaw: 0.9999589021219005, z: 18.174145369443067}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9709581651495907, roll: 0.23924932921398198, x: 8.410000000000002,
+          y: 24.38900000000001, yaw: 0.9999589021219005, z: 18.174145369443067}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9709581651495907, roll: 0.23924932921398198, x: 8.410000000000002,
+          y: 24.38900000000001, yaw: 0.9999589021219005, z: 18.174145369443067}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9709581651495907, roll: 0.23924932921398198, x: 8.410000000000002,
+          y: 24.38900000000001, yaw: 0.9999589021219005, z: 18.174145369443067}
+    time: 2.9000000000000004
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9899924966004454, roll: 0.1411200080598672, x: 9.0,
+          y: 27.0, yaw: 0.9999779095030014, z: 20.085536923187668}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9899924966004454, roll: 0.1411200080598672, x: 9.0,
+          y: 27.0, yaw: 0.9999779095030014, z: 20.085536923187668}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9899924966004454, roll: 0.1411200080598672, x: 9.0,
+          y: 27.0, yaw: 0.9999779095030014, z: 20.085536923187668}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9899924966004454, roll: 0.1411200080598672, x: 9.0,
+          y: 27.0, yaw: 0.9999779095030014, z: 20.085536923187668}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9899924966004454, roll: 0.1411200080598672, x: 9.0,
+          y: 27.0, yaw: 0.9999779095030014, z: 20.085536923187668}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9899924966004454, roll: 0.1411200080598672, x: 9.0,
+          y: 27.0, yaw: 0.9999779095030014, z: 20.085536923187668}
+    time: 3.0
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9991351502732795, roll: 0.04158066243329049, x: 9.610000000000001,
+          y: 29.791000000000004, yaw: 0.9999883513426328, z: 22.197951281441636}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9991351502732795, roll: 0.04158066243329049, x: 9.610000000000001,
+          y: 29.791000000000004, yaw: 0.9999883513426328, z: 22.197951281441636}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9991351502732795, roll: 0.04158066243329049, x: 9.610000000000001,
+          y: 29.791000000000004, yaw: 0.9999883513426328, z: 22.197951281441636}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9991351502732795, roll: 0.04158066243329049, x: 9.610000000000001,
+          y: 29.791000000000004, yaw: 0.9999883513426328, z: 22.197951281441636}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9991351502732795, roll: 0.04158066243329049, x: 9.610000000000001,
+          y: 29.791000000000004, yaw: 0.9999883513426328, z: 22.197951281441636}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9991351502732795, roll: 0.04158066243329049, x: 9.610000000000001,
+          y: 29.791000000000004, yaw: 0.9999883513426328, z: 22.197951281441636}
+    time: 3.1
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9982947757947531, roll: -0.058374143427580086, x: 10.240000000000002,
+          y: 32.76800000000001, yaw: 0.9999939742388483, z: 24.532530197109352}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9982947757947531, roll: -0.058374143427580086, x: 10.240000000000002,
+          y: 32.76800000000001, yaw: 0.9999939742388483, z: 24.532530197109352}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9982947757947531, roll: -0.058374143427580086, x: 10.240000000000002,
+          y: 32.76800000000001, yaw: 0.9999939742388483, z: 24.532530197109352}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9982947757947531, roll: -0.058374143427580086, x: 10.240000000000002,
+          y: 32.76800000000001, yaw: 0.9999939742388483, z: 24.532530197109352}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9982947757947531, roll: -0.058374143427580086, x: 10.240000000000002,
+          y: 32.76800000000001, yaw: 0.9999939742388483, z: 24.532530197109352}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9982947757947531, roll: -0.058374143427580086, x: 10.240000000000002,
+          y: 32.76800000000001, yaw: 0.9999939742388483, z: 24.532530197109352}
+    time: 3.2
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9874797699088649, roll: -0.15774569414324865, x: 10.890000000000002,
+          y: 35.93700000000001, yaw: 0.9999969422902035, z: 27.112638920657893}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9874797699088649, roll: -0.15774569414324865, x: 10.890000000000002,
+          y: 35.93700000000001, yaw: 0.9999969422902035, z: 27.112638920657893}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9874797699088649, roll: -0.15774569414324865, x: 10.890000000000002,
+          y: 35.93700000000001, yaw: 0.9999969422902035, z: 27.112638920657893}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9874797699088649, roll: -0.15774569414324865, x: 10.890000000000002,
+          y: 35.93700000000001, yaw: 0.9999969422902035, z: 27.112638920657893}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9874797699088649, roll: -0.15774569414324865, x: 10.890000000000002,
+          y: 35.93700000000001, yaw: 0.9999969422902035, z: 27.112638920657893}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9874797699088649, roll: -0.15774569414324865, x: 10.890000000000002,
+          y: 35.93700000000001, yaw: 0.9999969422902035, z: 27.112638920657893}
+    time: 3.3000000000000003
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9667981925794609, roll: -0.25554110202683167, x: 11.560000000000002,
+          y: 39.30400000000001, yaw: 0.9999984780066371, z: 29.964100047397025}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9667981925794609, roll: -0.25554110202683167, x: 11.560000000000002,
+          y: 39.30400000000001, yaw: 0.9999984780066371, z: 29.964100047397025}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9667981925794609, roll: -0.25554110202683167, x: 11.560000000000002,
+          y: 39.30400000000001, yaw: 0.9999984780066371, z: 29.964100047397025}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9667981925794609, roll: -0.25554110202683167, x: 11.560000000000002,
+          y: 39.30400000000001, yaw: 0.9999984780066371, z: 29.964100047397025}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9667981925794609, roll: -0.25554110202683167, x: 11.560000000000002,
+          y: 39.30400000000001, yaw: 0.9999984780066371, z: 29.964100047397025}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9667981925794609, roll: -0.25554110202683167, x: 11.560000000000002,
+          y: 39.30400000000001, yaw: 0.9999984780066371, z: 29.964100047397025}
+    time: 3.4000000000000004
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9364566872907963, roll: -0.35078322768961984, x: 12.25,
+          y: 42.875, yaw: 0.9999992569016276, z: 33.11545195869231}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9364566872907963, roll: -0.35078322768961984, x: 12.25,
+          y: 42.875, yaw: 0.9999992569016276, z: 33.11545195869231}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9364566872907963, roll: -0.35078322768961984, x: 12.25,
+          y: 42.875, yaw: 0.9999992569016276, z: 33.11545195869231}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9364566872907963, roll: -0.35078322768961984, x: 12.25,
+          y: 42.875, yaw: 0.9999992569016276, z: 33.11545195869231}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9364566872907963, roll: -0.35078322768961984, x: 12.25,
+          y: 42.875, yaw: 0.9999992569016276, z: 33.11545195869231}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9364566872907963, roll: -0.35078322768961984, x: 12.25,
+          y: 42.875, yaw: 0.9999992569016276, z: 33.11545195869231}
+    time: 3.5
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.896758416334147, roll: -0.44252044329485246, x: 12.96,
+          y: 46.656000000000006, yaw: 0.999999644137007, z: 36.59823444367799}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.896758416334147, roll: -0.44252044329485246, x: 12.96,
+          y: 46.656000000000006, yaw: 0.999999644137007, z: 36.59823444367799}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.896758416334147, roll: -0.44252044329485246, x: 12.96,
+          y: 46.656000000000006, yaw: 0.999999644137007, z: 36.59823444367799}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.896758416334147, roll: -0.44252044329485246, x: 12.96,
+          y: 46.656000000000006, yaw: 0.999999644137007, z: 36.59823444367799}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.896758416334147, roll: -0.44252044329485246, x: 12.96,
+          y: 46.656000000000006, yaw: 0.999999644137007, z: 36.59823444367799}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.896758416334147, roll: -0.44252044329485246, x: 12.96,
+          y: 46.656000000000006, yaw: 0.999999644137007, z: 36.59823444367799}
+    time: 3.6
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.848100031710408, roll: -0.5298361409084934, x: 13.690000000000001,
+          y: 50.653000000000006, yaw: 0.9999998328489421, z: 40.4473043600674}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.848100031710408, roll: -0.5298361409084934, x: 13.690000000000001,
+          y: 50.653000000000006, yaw: 0.9999998328489421, z: 40.4473043600674}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.848100031710408, roll: -0.5298361409084934, x: 13.690000000000001,
+          y: 50.653000000000006, yaw: 0.9999998328489421, z: 40.4473043600674}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.848100031710408, roll: -0.5298361409084934, x: 13.690000000000001,
+          y: 50.653000000000006, yaw: 0.9999998328489421, z: 40.4473043600674}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.848100031710408, roll: -0.5298361409084934, x: 13.690000000000001,
+          y: 50.653000000000006, yaw: 0.9999998328489421, z: 40.4473043600674}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.848100031710408, roll: -0.5298361409084934, x: 13.690000000000001,
+          y: 50.653000000000006, yaw: 0.9999998328489421, z: 40.4473043600674}
+    time: 3.7
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.7909677119144165, roll: -0.6118578909427193, x: 14.440000000000001,
+          y: 54.872000000000014, yaw: 0.9999999229960725, z: 44.701184493300836}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.7909677119144165, roll: -0.6118578909427193, x: 14.440000000000001,
+          y: 54.872000000000014, yaw: 0.9999999229960725, z: 44.701184493300836}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.7909677119144165, roll: -0.6118578909427193, x: 14.440000000000001,
+          y: 54.872000000000014, yaw: 0.9999999229960725, z: 44.701184493300836}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.7909677119144165, roll: -0.6118578909427193, x: 14.440000000000001,
+          y: 54.872000000000014, yaw: 0.9999999229960725, z: 44.701184493300836}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.7909677119144165, roll: -0.6118578909427193, x: 14.440000000000001,
+          y: 54.872000000000014, yaw: 0.9999999229960725, z: 44.701184493300836}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.7909677119144165, roll: -0.6118578909427193, x: 14.440000000000001,
+          y: 54.872000000000014, yaw: 0.9999999229960725, z: 44.701184493300836}
+    time: 3.8000000000000003
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.7259323042001399, roll: -0.6877661591839741, x: 15.210000000000003,
+          y: 59.31900000000002, yaw: 0.9999999652077514, z: 49.40244910553019}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.7259323042001399, roll: -0.6877661591839741, x: 15.210000000000003,
+          y: 59.31900000000002, yaw: 0.9999999652077514, z: 49.40244910553019}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.7259323042001399, roll: -0.6877661591839741, x: 15.210000000000003,
+          y: 59.31900000000002, yaw: 0.9999999652077514, z: 49.40244910553019}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.7259323042001399, roll: -0.6877661591839741, x: 15.210000000000003,
+          y: 59.31900000000002, yaw: 0.9999999652077514, z: 49.40244910553019}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.7259323042001399, roll: -0.6877661591839741, x: 15.210000000000003,
+          y: 59.31900000000002, yaw: 0.9999999652077514, z: 49.40244910553019}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.7259323042001399, roll: -0.6877661591839741, x: 15.210000000000003,
+          y: 59.31900000000002, yaw: 0.9999999652077514, z: 49.40244910553019}
+    time: 3.9000000000000004
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.6536436208636119, roll: -0.7568024953079282, x: 16.0,
+          y: 64.0, yaw: 0.9999999845827421, z: 54.598150033144236}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.6536436208636119, roll: -0.7568024953079282, x: 16.0,
+          y: 64.0, yaw: 0.9999999845827421, z: 54.598150033144236}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.6536436208636119, roll: -0.7568024953079282, x: 16.0,
+          y: 64.0, yaw: 0.9999999845827421, z: 54.598150033144236}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.6536436208636119, roll: -0.7568024953079282, x: 16.0,
+          y: 64.0, yaw: 0.9999999845827421, z: 54.598150033144236}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.6536436208636119, roll: -0.7568024953079282, x: 16.0,
+          y: 64.0, yaw: 0.9999999845827421, z: 54.598150033144236}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.6536436208636119, roll: -0.7568024953079282, x: 16.0,
+          y: 64.0, yaw: 0.9999999845827421, z: 54.598150033144236}
+    time: 4.0
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.5748239465332685, roll: -0.8182771110644108, x: 16.810000000000006,
+          y: 68.92100000000002, yaw: 0.9999999932999724, z: 60.340287597362}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.5748239465332685, roll: -0.8182771110644108, x: 16.810000000000006,
+          y: 68.92100000000002, yaw: 0.9999999932999724, z: 60.340287597362}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.5748239465332685, roll: -0.8182771110644108, x: 16.810000000000006,
+          y: 68.92100000000002, yaw: 0.9999999932999724, z: 60.340287597362}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.5748239465332685, roll: -0.8182771110644108, x: 16.810000000000006,
+          y: 68.92100000000002, yaw: 0.9999999932999724, z: 60.340287597362}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.5748239465332685, roll: -0.8182771110644108, x: 16.810000000000006,
+          y: 68.92100000000002, yaw: 0.9999999932999724, z: 60.340287597362}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.5748239465332685, roll: -0.8182771110644108, x: 16.810000000000006,
+          y: 68.92100000000002, yaw: 0.9999999932999724, z: 60.340287597362}
+    time: 4.1000000000000005
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.4902608213406994, roll: -0.8715757724135882, x: 17.64,
+          y: 74.08800000000001, yaw: 0.9999999971445058, z: 66.68633104092515}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.4902608213406994, roll: -0.8715757724135882, x: 17.64,
+          y: 74.08800000000001, yaw: 0.9999999971445058, z: 66.68633104092515}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.4902608213406994, roll: -0.8715757724135882, x: 17.64,
+          y: 74.08800000000001, yaw: 0.9999999971445058, z: 66.68633104092515}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.4902608213406994, roll: -0.8715757724135882, x: 17.64,
+          y: 74.08800000000001, yaw: 0.9999999971445058, z: 66.68633104092515}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.4902608213406994, roll: -0.8715757724135882, x: 17.64,
+          y: 74.08800000000001, yaw: 0.9999999971445058, z: 66.68633104092515}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.4902608213406994, roll: -0.8715757724135882, x: 17.64,
+          y: 74.08800000000001, yaw: 0.9999999971445058, z: 66.68633104092515}
+    time: 4.2
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.40079917207997545, roll: -0.9161659367494549, x: 18.49,
+          y: 79.50699999999999, yaw: 0.9999999988065282, z: 73.69979369959579}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.40079917207997545, roll: -0.9161659367494549, x: 18.49,
+          y: 79.50699999999999, yaw: 0.9999999988065282, z: 73.69979369959579}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.40079917207997545, roll: -0.9161659367494549, x: 18.49,
+          y: 79.50699999999999, yaw: 0.9999999988065282, z: 73.69979369959579}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.40079917207997545, roll: -0.9161659367494549, x: 18.49,
+          y: 79.50699999999999, yaw: 0.9999999988065282, z: 73.69979369959579}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.40079917207997545, roll: -0.9161659367494549, x: 18.49,
+          y: 79.50699999999999, yaw: 0.9999999988065282, z: 73.69979369959579}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.40079917207997545, roll: -0.9161659367494549, x: 18.49,
+          y: 79.50699999999999, yaw: 0.9999999988065282, z: 73.69979369959579}
+    time: 4.3
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.30733286997841935, roll: -0.951602073889516, x: 19.360000000000003,
+          y: 85.18400000000003, yaw: 0.999999999510829, z: 81.45086866496814}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.30733286997841935, roll: -0.951602073889516, x: 19.360000000000003,
+          y: 85.18400000000003, yaw: 0.999999999510829, z: 81.45086866496814}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.30733286997841935, roll: -0.951602073889516, x: 19.360000000000003,
+          y: 85.18400000000003, yaw: 0.999999999510829, z: 81.45086866496814}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.30733286997841935, roll: -0.951602073889516, x: 19.360000000000003,
+          y: 85.18400000000003, yaw: 0.999999999510829, z: 81.45086866496814}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.30733286997841935, roll: -0.951602073889516, x: 19.360000000000003,
+          y: 85.18400000000003, yaw: 0.999999999510829, z: 81.45086866496814}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.30733286997841935, roll: -0.951602073889516, x: 19.360000000000003,
+          y: 85.18400000000003, yaw: 0.999999999510829, z: 81.45086866496814}
+    time: 4.4
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.2107957994307797, roll: -0.977530117665097, x: 20.25,
+          y: 91.125, yaw: 0.9999999998033839, z: 90.01713130052181}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.2107957994307797, roll: -0.977530117665097, x: 20.25,
+          y: 91.125, yaw: 0.9999999998033839, z: 90.01713130052181}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.2107957994307797, roll: -0.977530117665097, x: 20.25,
+          y: 91.125, yaw: 0.9999999998033839, z: 90.01713130052181}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.2107957994307797, roll: -0.977530117665097, x: 20.25,
+          y: 91.125, yaw: 0.9999999998033839, z: 90.01713130052181}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.2107957994307797, roll: -0.977530117665097, x: 20.25,
+          y: 91.125, yaw: 0.9999999998033839, z: 90.01713130052181}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.2107957994307797, roll: -0.977530117665097, x: 20.25,
+          y: 91.125, yaw: 0.9999999998033839, z: 90.01713130052181}
+    time: 4.5
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.11215252693505398, roll: -0.9936910036334645, x: 21.160000000000004,
+          y: 97.33600000000003, yaw: 0.999999999922504, z: 99.48431564193386}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.11215252693505398, roll: -0.9936910036334645, x: 21.160000000000004,
+          y: 97.33600000000003, yaw: 0.999999999922504, z: 99.48431564193386}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.11215252693505398, roll: -0.9936910036334645, x: 21.160000000000004,
+          y: 97.33600000000003, yaw: 0.999999999922504, z: 99.48431564193386}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.11215252693505398, roll: -0.9936910036334645, x: 21.160000000000004,
+          y: 97.33600000000003, yaw: 0.999999999922504, z: 99.48431564193386}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.11215252693505398, roll: -0.9936910036334645, x: 21.160000000000004,
+          y: 97.33600000000003, yaw: 0.999999999922504, z: 99.48431564193386}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.11215252693505398, roll: -0.9936910036334645, x: 21.160000000000004,
+          y: 97.33600000000003, yaw: 0.999999999922504, z: 99.48431564193386}
+    time: 4.6000000000000005
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.01238866346289056, roll: -0.9999232575641008, x: 22.090000000000003,
+          y: 103.82300000000001, yaw: 0.9999999999700474, z: 109.94717245212352}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.01238866346289056, roll: -0.9999232575641008, x: 22.090000000000003,
+          y: 103.82300000000001, yaw: 0.9999999999700474, z: 109.94717245212352}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.01238866346289056, roll: -0.9999232575641008, x: 22.090000000000003,
+          y: 103.82300000000001, yaw: 0.9999999999700474, z: 109.94717245212352}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.01238866346289056, roll: -0.9999232575641008, x: 22.090000000000003,
+          y: 103.82300000000001, yaw: 0.9999999999700474, z: 109.94717245212352}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.01238866346289056, roll: -0.9999232575641008, x: 22.090000000000003,
+          y: 103.82300000000001, yaw: 0.9999999999700474, z: 109.94717245212352}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.01238866346289056, roll: -0.9999232575641008, x: 22.090000000000003,
+          y: 103.82300000000001, yaw: 0.9999999999700474, z: 109.94717245212352}
+    time: 4.7
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.08749898343944727, roll: -0.9961646088358406, x: 23.040000000000006,
+          y: 110.59200000000006, yaw: 0.9999999999886479, z: 121.51041751873497}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.08749898343944727, roll: -0.9961646088358406, x: 23.040000000000006,
+          y: 110.59200000000006, yaw: 0.9999999999886479, z: 121.51041751873497}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.08749898343944727, roll: -0.9961646088358406, x: 23.040000000000006,
+          y: 110.59200000000006, yaw: 0.9999999999886479, z: 121.51041751873497}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.08749898343944727, roll: -0.9961646088358406, x: 23.040000000000006,
+          y: 110.59200000000006, yaw: 0.9999999999886479, z: 121.51041751873497}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.08749898343944727, roll: -0.9961646088358406, x: 23.040000000000006,
+          y: 110.59200000000006, yaw: 0.9999999999886479, z: 121.51041751873497}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.08749898343944727, roll: -0.9961646088358406, x: 23.040000000000006,
+          y: 110.59200000000006, yaw: 0.9999999999886479, z: 121.51041751873497}
+    time: 4.800000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.18651236942257576, roll: -0.9824526126243325, x: 24.010000000000005,
+          y: 117.64900000000003, yaw: 0.999999999995781, z: 134.28977968493552}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.18651236942257576, roll: -0.9824526126243325, x: 24.010000000000005,
+          y: 117.64900000000003, yaw: 0.999999999995781, z: 134.28977968493552}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.18651236942257576, roll: -0.9824526126243325, x: 24.010000000000005,
+          y: 117.64900000000003, yaw: 0.999999999995781, z: 134.28977968493552}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.18651236942257576, roll: -0.9824526126243325, x: 24.010000000000005,
+          y: 117.64900000000003, yaw: 0.999999999995781, z: 134.28977968493552}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.18651236942257576, roll: -0.9824526126243325, x: 24.010000000000005,
+          y: 117.64900000000003, yaw: 0.999999999995781, z: 134.28977968493552}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.18651236942257576, roll: -0.9824526126243325, x: 24.010000000000005,
+          y: 117.64900000000003, yaw: 0.999999999995781, z: 134.28977968493552}
+    time: 4.9
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.28366218546322625, roll: -0.9589242746631385, x: 25.0,
+          y: 125.0, yaw: 0.9999999999984626, z: 148.4131591025766}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.28366218546322625, roll: -0.9589242746631385, x: 25.0,
+          y: 125.0, yaw: 0.9999999999984626, z: 148.4131591025766}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.28366218546322625, roll: -0.9589242746631385, x: 25.0,
+          y: 125.0, yaw: 0.9999999999984626, z: 148.4131591025766}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.28366218546322625, roll: -0.9589242746631385, x: 25.0,
+          y: 125.0, yaw: 0.9999999999984626, z: 148.4131591025766}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.28366218546322625, roll: -0.9589242746631385, x: 25.0,
+          y: 125.0, yaw: 0.9999999999984626, z: 148.4131591025766}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.28366218546322625, roll: -0.9589242746631385, x: 25.0,
+          y: 125.0, yaw: 0.9999999999984626, z: 148.4131591025766}
+    time: 5.0
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.37797774271298107, roll: -0.9258146823277321, x: 26.010000000000005,
+          y: 132.65100000000004, yaw: 0.9999999999994507, z: 164.02190729990184}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.37797774271298107, roll: -0.9258146823277321, x: 26.010000000000005,
+          y: 132.65100000000004, yaw: 0.9999999999994507, z: 164.02190729990184}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.37797774271298107, roll: -0.9258146823277321, x: 26.010000000000005,
+          y: 132.65100000000004, yaw: 0.9999999999994507, z: 164.02190729990184}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.37797774271298107, roll: -0.9258146823277321, x: 26.010000000000005,
+          y: 132.65100000000004, yaw: 0.9999999999994507, z: 164.02190729990184}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.37797774271298107, roll: -0.9258146823277321, x: 26.010000000000005,
+          y: 132.65100000000004, yaw: 0.9999999999994507, z: 164.02190729990184}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.37797774271298107, roll: -0.9258146823277321, x: 26.010000000000005,
+          y: 132.65100000000004, yaw: 0.9999999999994507, z: 164.02190729990184}
+    time: 5.1000000000000005
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.4685166713003771, roll: -0.8834546557201531, x: 27.040000000000003,
+          y: 140.608, yaw: 0.9999999999998075, z: 181.27224187515122}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.4685166713003771, roll: -0.8834546557201531, x: 27.040000000000003,
+          y: 140.608, yaw: 0.9999999999998075, z: 181.27224187515122}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.4685166713003771, roll: -0.8834546557201531, x: 27.040000000000003,
+          y: 140.608, yaw: 0.9999999999998075, z: 181.27224187515122}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.4685166713003771, roll: -0.8834546557201531, x: 27.040000000000003,
+          y: 140.608, yaw: 0.9999999999998075, z: 181.27224187515122}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.4685166713003771, roll: -0.8834546557201531, x: 27.040000000000003,
+          y: 140.608, yaw: 0.9999999999998075, z: 181.27224187515122}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.4685166713003771, roll: -0.8834546557201531, x: 27.040000000000003,
+          y: 140.608, yaw: 0.9999999999998075, z: 181.27224187515122}
+    time: 5.2
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.5543743361791615, roll: -0.8322674422239008, x: 28.090000000000007,
+          y: 148.87700000000007, yaw: 0.9999999999999338, z: 200.33680997479183}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.5543743361791615, roll: -0.8322674422239008, x: 28.090000000000007,
+          y: 148.87700000000007, yaw: 0.9999999999999338, z: 200.33680997479183}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.5543743361791615, roll: -0.8322674422239008, x: 28.090000000000007,
+          y: 148.87700000000007, yaw: 0.9999999999999338, z: 200.33680997479183}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.5543743361791615, roll: -0.8322674422239008, x: 28.090000000000007,
+          y: 148.87700000000007, yaw: 0.9999999999999338, z: 200.33680997479183}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.5543743361791615, roll: -0.8322674422239008, x: 28.090000000000007,
+          y: 148.87700000000007, yaw: 0.9999999999999338, z: 200.33680997479183}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.5543743361791615, roll: -0.8322674422239008, x: 28.090000000000007,
+          y: 148.87700000000007, yaw: 0.9999999999999338, z: 200.33680997479183}
+    time: 5.300000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.6346928759426347, roll: -0.7727644875559871, x: 29.160000000000004,
+          y: 157.46400000000003, yaw: 0.9999999999999777, z: 221.40641620418717}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.6346928759426347, roll: -0.7727644875559871, x: 29.160000000000004,
+          y: 157.46400000000003, yaw: 0.9999999999999777, z: 221.40641620418717}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.6346928759426347, roll: -0.7727644875559871, x: 29.160000000000004,
+          y: 157.46400000000003, yaw: 0.9999999999999777, z: 221.40641620418717}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.6346928759426347, roll: -0.7727644875559871, x: 29.160000000000004,
+          y: 157.46400000000003, yaw: 0.9999999999999777, z: 221.40641620418717}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.6346928759426347, roll: -0.7727644875559871, x: 29.160000000000004,
+          y: 157.46400000000003, yaw: 0.9999999999999777, z: 221.40641620418717}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.6346928759426347, roll: -0.7727644875559871, x: 29.160000000000004,
+          y: 157.46400000000003, yaw: 0.9999999999999777, z: 221.40641620418717}
+    time: 5.4
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.70866977429126, roll: -0.7055403255703919, x: 30.25,
+          y: 166.375, yaw: 0.9999999999999927, z: 244.69193226422038}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.70866977429126, roll: -0.7055403255703919, x: 30.25,
+          y: 166.375, yaw: 0.9999999999999927, z: 244.69193226422038}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.70866977429126, roll: -0.7055403255703919, x: 30.25,
+          y: 166.375, yaw: 0.9999999999999927, z: 244.69193226422038}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.70866977429126, roll: -0.7055403255703919, x: 30.25,
+          y: 166.375, yaw: 0.9999999999999927, z: 244.69193226422038}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.70866977429126, roll: -0.7055403255703919, x: 30.25,
+          y: 166.375, yaw: 0.9999999999999927, z: 244.69193226422038}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.70866977429126, roll: -0.7055403255703919, x: 30.25,
+          y: 166.375, yaw: 0.9999999999999927, z: 244.69193226422038}
+    time: 5.5
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.7755658785102502, roll: -0.6312666378723208, x: 31.360000000000007,
+          y: 175.61600000000004, yaw: 0.9999999999999977, z: 270.42640742615276}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.7755658785102502, roll: -0.6312666378723208, x: 31.360000000000007,
+          y: 175.61600000000004, yaw: 0.9999999999999977, z: 270.42640742615276}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.7755658785102502, roll: -0.6312666378723208, x: 31.360000000000007,
+          y: 175.61600000000004, yaw: 0.9999999999999977, z: 270.42640742615276}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.7755658785102502, roll: -0.6312666378723208, x: 31.360000000000007,
+          y: 175.61600000000004, yaw: 0.9999999999999977, z: 270.42640742615276}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.7755658785102502, roll: -0.6312666378723208, x: 31.360000000000007,
+          y: 175.61600000000004, yaw: 0.9999999999999977, z: 270.42640742615276}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.7755658785102502, roll: -0.6312666378723208, x: 31.360000000000007,
+          y: 175.61600000000004, yaw: 0.9999999999999977, z: 270.42640742615276}
+    time: 5.6000000000000005
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8347127848391598, roll: -0.5506855425976376, x: 32.49,
+          y: 185.193, yaw: 0.9999999999999992, z: 298.8674009670603}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8347127848391598, roll: -0.5506855425976376, x: 32.49,
+          y: 185.193, yaw: 0.9999999999999992, z: 298.8674009670603}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8347127848391598, roll: -0.5506855425976376, x: 32.49,
+          y: 185.193, yaw: 0.9999999999999992, z: 298.8674009670603}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8347127848391598, roll: -0.5506855425976376, x: 32.49,
+          y: 185.193, yaw: 0.9999999999999992, z: 298.8674009670603}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8347127848391598, roll: -0.5506855425976376, x: 32.49,
+          y: 185.193, yaw: 0.9999999999999992, z: 298.8674009670603}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8347127848391598, roll: -0.5506855425976376, x: 32.49,
+          y: 185.193, yaw: 0.9999999999999992, z: 298.8674009670603}
+    time: 5.7
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8855195169413194, roll: -0.4646021794137566, x: 33.64000000000001,
+          y: 195.11200000000008, yaw: 0.9999999999999998, z: 330.2995599096489}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8855195169413194, roll: -0.4646021794137566, x: 33.64000000000001,
+          y: 195.11200000000008, yaw: 0.9999999999999998, z: 330.2995599096489}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8855195169413194, roll: -0.4646021794137566, x: 33.64000000000001,
+          y: 195.11200000000008, yaw: 0.9999999999999998, z: 330.2995599096489}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8855195169413194, roll: -0.4646021794137566, x: 33.64000000000001,
+          y: 195.11200000000008, yaw: 0.9999999999999998, z: 330.2995599096489}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8855195169413194, roll: -0.4646021794137566, x: 33.64000000000001,
+          y: 195.11200000000008, yaw: 0.9999999999999998, z: 330.2995599096489}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8855195169413194, roll: -0.4646021794137566, x: 33.64000000000001,
+          y: 195.11200000000008, yaw: 0.9999999999999998, z: 330.2995599096489}
+    time: 5.800000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9274784307440359, roll: -0.373876664830236, x: 34.81,
+          y: 205.37900000000005, yaw: 0.9999999999999999, z: 365.0374678653289}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9274784307440359, roll: -0.373876664830236, x: 34.81,
+          y: 205.37900000000005, yaw: 0.9999999999999999, z: 365.0374678653289}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9274784307440359, roll: -0.373876664830236, x: 34.81,
+          y: 205.37900000000005, yaw: 0.9999999999999999, z: 365.0374678653289}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9274784307440359, roll: -0.373876664830236, x: 34.81,
+          y: 205.37900000000005, yaw: 0.9999999999999999, z: 365.0374678653289}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9274784307440359, roll: -0.373876664830236, x: 34.81,
+          y: 205.37900000000005, yaw: 0.9999999999999999, z: 365.0374678653289}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9274784307440359, roll: -0.373876664830236, x: 34.81,
+          y: 205.37900000000005, yaw: 0.9999999999999999, z: 365.0374678653289}
+    time: 5.9
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.960170286650366, roll: -0.27941549819892586, x: 36.0,
+          y: 216.0, yaw: 1.0, z: 403.4287934927351}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.960170286650366, roll: -0.27941549819892586, x: 36.0,
+          y: 216.0, yaw: 1.0, z: 403.4287934927351}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.960170286650366, roll: -0.27941549819892586, x: 36.0,
+          y: 216.0, yaw: 1.0, z: 403.4287934927351}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.960170286650366, roll: -0.27941549819892586, x: 36.0,
+          y: 216.0, yaw: 1.0, z: 403.4287934927351}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.960170286650366, roll: -0.27941549819892586, x: 36.0,
+          y: 216.0, yaw: 1.0, z: 403.4287934927351}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.960170286650366, roll: -0.27941549819892586, x: 36.0,
+          y: 216.0, yaw: 1.0, z: 403.4287934927351}
+    time: 6.0
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9832684384425847, roll: -0.18216250427209502, x: 37.21000000000001,
+          y: 226.98100000000005, yaw: 1.0, z: 445.85777008251716}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9832684384425847, roll: -0.18216250427209502, x: 37.21000000000001,
+          y: 226.98100000000005, yaw: 1.0, z: 445.85777008251716}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9832684384425847, roll: -0.18216250427209502, x: 37.21000000000001,
+          y: 226.98100000000005, yaw: 1.0, z: 445.85777008251716}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9832684384425847, roll: -0.18216250427209502, x: 37.21000000000001,
+          y: 226.98100000000005, yaw: 1.0, z: 445.85777008251716}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9832684384425847, roll: -0.18216250427209502, x: 37.21000000000001,
+          y: 226.98100000000005, yaw: 1.0, z: 445.85777008251716}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9832684384425847, roll: -0.18216250427209502, x: 37.21000000000001,
+          y: 226.98100000000005, yaw: 1.0, z: 445.85777008251716}
+    time: 6.1000000000000005
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9965420970232175, roll: -0.0830894028174964, x: 38.440000000000005,
+          y: 238.32800000000003, yaw: 1.0, z: 492.7490410932563}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9965420970232175, roll: -0.0830894028174964, x: 38.440000000000005,
+          y: 238.32800000000003, yaw: 1.0, z: 492.7490410932563}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9965420970232175, roll: -0.0830894028174964, x: 38.440000000000005,
+          y: 238.32800000000003, yaw: 1.0, z: 492.7490410932563}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9965420970232175, roll: -0.0830894028174964, x: 38.440000000000005,
+          y: 238.32800000000003, yaw: 1.0, z: 492.7490410932563}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9965420970232175, roll: -0.0830894028174964, x: 38.440000000000005,
+          y: 238.32800000000003, yaw: 1.0, z: 492.7490410932563}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9965420970232175, roll: -0.0830894028174964, x: 38.440000000000005,
+          y: 238.32800000000003, yaw: 1.0, z: 492.7490410932563}
+    time: 6.2
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9998586363834151, roll: 0.0168139004843506, x: 39.69000000000001,
+          y: 250.04700000000008, yaw: 1.0, z: 544.5719101259294}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9998586363834151, roll: 0.0168139004843506, x: 39.69000000000001,
+          y: 250.04700000000008, yaw: 1.0, z: 544.5719101259294}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9998586363834151, roll: 0.0168139004843506, x: 39.69000000000001,
+          y: 250.04700000000008, yaw: 1.0, z: 544.5719101259294}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9998586363834151, roll: 0.0168139004843506, x: 39.69000000000001,
+          y: 250.04700000000008, yaw: 1.0, z: 544.5719101259294}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9998586363834151, roll: 0.0168139004843506, x: 39.69000000000001,
+          y: 250.04700000000008, yaw: 1.0, z: 544.5719101259294}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9998586363834151, roll: 0.0168139004843506, x: 39.69000000000001,
+          y: 250.04700000000008, yaw: 1.0, z: 544.5719101259294}
+    time: 6.300000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9931849187581926, roll: 0.11654920485049364, x: 40.96000000000001,
+          y: 262.14400000000006, yaw: 1.0, z: 601.8450378720822}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9931849187581926, roll: 0.11654920485049364, x: 40.96000000000001,
+          y: 262.14400000000006, yaw: 1.0, z: 601.8450378720822}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9931849187581926, roll: 0.11654920485049364, x: 40.96000000000001,
+          y: 262.14400000000006, yaw: 1.0, z: 601.8450378720822}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9931849187581926, roll: 0.11654920485049364, x: 40.96000000000001,
+          y: 262.14400000000006, yaw: 1.0, z: 601.8450378720822}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9931849187581926, roll: 0.11654920485049364, x: 40.96000000000001,
+          y: 262.14400000000006, yaw: 1.0, z: 601.8450378720822}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9931849187581926, roll: 0.11654920485049364, x: 40.96000000000001,
+          y: 262.14400000000006, yaw: 1.0, z: 601.8450378720822}
+    time: 6.4
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9765876257280235, roll: 0.21511998808781552, x: 42.25,
+          y: 274.625, yaw: 1.0, z: 665.1416330443618}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9765876257280235, roll: 0.21511998808781552, x: 42.25,
+          y: 274.625, yaw: 1.0, z: 665.1416330443618}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9765876257280235, roll: 0.21511998808781552, x: 42.25,
+          y: 274.625, yaw: 1.0, z: 665.1416330443618}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9765876257280235, roll: 0.21511998808781552, x: 42.25,
+          y: 274.625, yaw: 1.0, z: 665.1416330443618}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9765876257280235, roll: 0.21511998808781552, x: 42.25,
+          y: 274.625, yaw: 1.0, z: 665.1416330443618}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9765876257280235, roll: 0.21511998808781552, x: 42.25,
+          y: 274.625, yaw: 1.0, z: 665.1416330443618}
+    time: 6.5
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9502325919585293, roll: 0.3115413635133787, x: 43.56000000000001,
+          y: 287.4960000000001, yaw: 1.0, z: 735.0951892419732}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9502325919585293, roll: 0.3115413635133787, x: 43.56000000000001,
+          y: 287.4960000000001, yaw: 1.0, z: 735.0951892419732}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9502325919585293, roll: 0.3115413635133787, x: 43.56000000000001,
+          y: 287.4960000000001, yaw: 1.0, z: 735.0951892419732}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9502325919585293, roll: 0.3115413635133787, x: 43.56000000000001,
+          y: 287.4960000000001, yaw: 1.0, z: 735.0951892419732}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9502325919585293, roll: 0.3115413635133787, x: 43.56000000000001,
+          y: 287.4960000000001, yaw: 1.0, z: 735.0951892419732}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9502325919585293, roll: 0.3115413635133787, x: 43.56000000000001,
+          y: 287.4960000000001, yaw: 1.0, z: 735.0951892419732}
+    time: 6.6000000000000005
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9143831482353194, roll: 0.4048499206165983, x: 44.89,
+          y: 300.76300000000003, yaw: 1.0, z: 812.4058251675433}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9143831482353194, roll: 0.4048499206165983, x: 44.89,
+          y: 300.76300000000003, yaw: 1.0, z: 812.4058251675433}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9143831482353194, roll: 0.4048499206165983, x: 44.89,
+          y: 300.76300000000003, yaw: 1.0, z: 812.4058251675433}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.9143831482353194, roll: 0.4048499206165983, x: 44.89,
+          y: 300.76300000000003, yaw: 1.0, z: 812.4058251675433}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.9143831482353194, roll: 0.4048499206165983, x: 44.89,
+          y: 300.76300000000003, yaw: 1.0, z: 812.4058251675433}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.9143831482353194, roll: 0.4048499206165983, x: 44.89,
+          y: 300.76300000000003, yaw: 1.0, z: 812.4058251675433}
+    time: 6.7
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8693974903498248, roll: 0.49411335113860894, x: 46.24000000000001,
+          y: 314.4320000000001, yaw: 1.0, z: 897.8472916504184}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8693974903498248, roll: 0.49411335113860894, x: 46.24000000000001,
+          y: 314.4320000000001, yaw: 1.0, z: 897.8472916504184}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8693974903498248, roll: 0.49411335113860894, x: 46.24000000000001,
+          y: 314.4320000000001, yaw: 1.0, z: 897.8472916504184}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8693974903498248, roll: 0.49411335113860894, x: 46.24000000000001,
+          y: 314.4320000000001, yaw: 1.0, z: 897.8472916504184}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8693974903498248, roll: 0.49411335113860894, x: 46.24000000000001,
+          y: 314.4320000000001, yaw: 1.0, z: 897.8472916504184}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8693974903498248, roll: 0.49411335113860894, x: 46.24000000000001,
+          y: 314.4320000000001, yaw: 1.0, z: 897.8472916504184}
+    time: 6.800000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8157251001253568, roll: 0.5784397643882001, x: 47.61000000000001,
+          y: 328.50900000000007, yaw: 1.0, z: 992.2747156050262}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8157251001253568, roll: 0.5784397643882001, x: 47.61000000000001,
+          y: 328.50900000000007, yaw: 1.0, z: 992.2747156050262}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8157251001253568, roll: 0.5784397643882001, x: 47.61000000000001,
+          y: 328.50900000000007, yaw: 1.0, z: 992.2747156050262}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.8157251001253568, roll: 0.5784397643882001, x: 47.61000000000001,
+          y: 328.50900000000007, yaw: 1.0, z: 992.2747156050262}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.8157251001253568, roll: 0.5784397643882001, x: 47.61000000000001,
+          y: 328.50900000000007, yaw: 1.0, z: 992.2747156050262}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.8157251001253568, roll: 0.5784397643882001, x: 47.61000000000001,
+          y: 328.50900000000007, yaw: 1.0, z: 992.2747156050262}
+    time: 6.9
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.7539022543433046, roll: 0.6569865987187891, x: 49.0,
+          y: 343.0, yaw: 1.0, z: 1096.6331584284585}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.7539022543433046, roll: 0.6569865987187891, x: 49.0,
+          y: 343.0, yaw: 1.0, z: 1096.6331584284585}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.7539022543433046, roll: 0.6569865987187891, x: 49.0,
+          y: 343.0, yaw: 1.0, z: 1096.6331584284585}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.7539022543433046, roll: 0.6569865987187891, x: 49.0,
+          y: 343.0, yaw: 1.0, z: 1096.6331584284585}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.7539022543433046, roll: 0.6569865987187891, x: 49.0,
+          y: 343.0, yaw: 1.0, z: 1096.6331584284585}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.7539022543433046, roll: 0.6569865987187891, x: 49.0,
+          y: 343.0, yaw: 1.0, z: 1096.6331584284585}
+    time: 7.0
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.6845466664428059, roll: 0.7289690401258765, x: 50.41000000000001,
+          y: 357.91100000000006, yaw: 1.0, z: 1211.9670744925775}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.6845466664428059, roll: 0.7289690401258765, x: 50.41000000000001,
+          y: 357.91100000000006, yaw: 1.0, z: 1211.9670744925775}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.6845466664428059, roll: 0.7289690401258765, x: 50.41000000000001,
+          y: 357.91100000000006, yaw: 1.0, z: 1211.9670744925775}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.6845466664428059, roll: 0.7289690401258765, x: 50.41000000000001,
+          y: 357.91100000000006, yaw: 1.0, z: 1211.9670744925775}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.6845466664428059, roll: 0.7289690401258765, x: 50.41000000000001,
+          y: 357.91100000000006, yaw: 1.0, z: 1211.9670744925775}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.6845466664428059, roll: 0.7289690401258765, x: 50.41000000000001,
+          y: 357.91100000000006, yaw: 1.0, z: 1211.9670744925775}
+    time: 7.1000000000000005
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.6083513145322546, roll: 0.7936678638491531, x: 51.84,
+          y: 373.24800000000005, yaw: 1.0, z: 1339.430764394418}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.6083513145322546, roll: 0.7936678638491531, x: 51.84,
+          y: 373.24800000000005, yaw: 1.0, z: 1339.430764394418}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.6083513145322546, roll: 0.7936678638491531, x: 51.84,
+          y: 373.24800000000005, yaw: 1.0, z: 1339.430764394418}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.6083513145322546, roll: 0.7936678638491531, x: 51.84,
+          y: 373.24800000000005, yaw: 1.0, z: 1339.430764394418}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.6083513145322546, roll: 0.7936678638491531, x: 51.84,
+          y: 373.24800000000005, yaw: 1.0, z: 1339.430764394418}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.6083513145322546, roll: 0.7936678638491531, x: 51.84,
+          y: 373.24800000000005, yaw: 1.0, z: 1339.430764394418}
+    time: 7.2
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.5260775173811045, roll: 0.8504366206285648, x: 53.29000000000001,
+          y: 389.0170000000001, yaw: 1.0, z: 1480.2999275845464}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.5260775173811045, roll: 0.8504366206285648, x: 53.29000000000001,
+          y: 389.0170000000001, yaw: 1.0, z: 1480.2999275845464}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.5260775173811045, roll: 0.8504366206285648, x: 53.29000000000001,
+          y: 389.0170000000001, yaw: 1.0, z: 1480.2999275845464}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.5260775173811045, roll: 0.8504366206285648, x: 53.29000000000001,
+          y: 389.0170000000001, yaw: 1.0, z: 1480.2999275845464}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.5260775173811045, roll: 0.8504366206285648, x: 53.29000000000001,
+          y: 389.0170000000001, yaw: 1.0, z: 1480.2999275845464}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.5260775173811045, roll: 0.8504366206285648, x: 53.29000000000001,
+          y: 389.0170000000001, yaw: 1.0, z: 1480.2999275845464}
+    time: 7.300000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.43854732757439036, roll: 0.8987080958116269, x: 54.760000000000005,
+          y: 405.22400000000005, yaw: 1.0, z: 1635.984429995927}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.43854732757439036, roll: 0.8987080958116269, x: 54.760000000000005,
+          y: 405.22400000000005, yaw: 1.0, z: 1635.984429995927}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.43854732757439036, roll: 0.8987080958116269, x: 54.760000000000005,
+          y: 405.22400000000005, yaw: 1.0, z: 1635.984429995927}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.43854732757439036, roll: 0.8987080958116269, x: 54.760000000000005,
+          y: 405.22400000000005, yaw: 1.0, z: 1635.984429995927}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.43854732757439036, roll: 0.8987080958116269, x: 54.760000000000005,
+          y: 405.22400000000005, yaw: 1.0, z: 1635.984429995927}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.43854732757439036, roll: 0.8987080958116269, x: 54.760000000000005,
+          y: 405.22400000000005, yaw: 1.0, z: 1635.984429995927}
+    time: 7.4
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.3466353178350258, roll: 0.9379999767747389, x: 56.25,
+          y: 421.875, yaw: 1.0, z: 1808.0424144560632}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.3466353178350258, roll: 0.9379999767747389, x: 56.25,
+          y: 421.875, yaw: 1.0, z: 1808.0424144560632}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.3466353178350258, roll: 0.9379999767747389, x: 56.25,
+          y: 421.875, yaw: 1.0, z: 1808.0424144560632}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.3466353178350258, roll: 0.9379999767747389, x: 56.25,
+          y: 421.875, yaw: 1.0, z: 1808.0424144560632}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.3466353178350258, roll: 0.9379999767747389, x: 56.25,
+          y: 421.875, yaw: 1.0, z: 1808.0424144560632}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.3466353178350258, roll: 0.9379999767747389, x: 56.25,
+          y: 421.875, yaw: 1.0, z: 1808.0424144560632}
+    time: 7.5
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.25125984258225487, roll: 0.9679196720314865, x: 57.760000000000005,
+          y: 438.9760000000001, yaw: 1.0, z: 1998.195895104119}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.25125984258225487, roll: 0.9679196720314865, x: 57.760000000000005,
+          y: 438.9760000000001, yaw: 1.0, z: 1998.195895104119}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.25125984258225487, roll: 0.9679196720314865, x: 57.760000000000005,
+          y: 438.9760000000001, yaw: 1.0, z: 1998.195895104119}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.25125984258225487, roll: 0.9679196720314865, x: 57.760000000000005,
+          y: 438.9760000000001, yaw: 1.0, z: 1998.195895104119}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.25125984258225487, roll: 0.9679196720314865, x: 57.760000000000005,
+          y: 438.9760000000001, yaw: 1.0, z: 1998.195895104119}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.25125984258225487, roll: 0.9679196720314865, x: 57.760000000000005,
+          y: 438.9760000000001, yaw: 1.0, z: 1998.195895104119}
+    time: 7.6000000000000005
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.15337386203786435, roll: 0.9881682338770004, x: 59.290000000000006,
+          y: 456.533, yaw: 1.0, z: 2208.347991887209}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.15337386203786435, roll: 0.9881682338770004, x: 59.290000000000006,
+          y: 456.533, yaw: 1.0, z: 2208.347991887209}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.15337386203786435, roll: 0.9881682338770004, x: 59.290000000000006,
+          y: 456.533, yaw: 1.0, z: 2208.347991887209}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.15337386203786435, roll: 0.9881682338770004, x: 59.290000000000006,
+          y: 456.533, yaw: 1.0, z: 2208.347991887209}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.15337386203786435, roll: 0.9881682338770004, x: 59.290000000000006,
+          y: 456.533, yaw: 1.0, z: 2208.347991887209}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.15337386203786435, roll: 0.9881682338770004, x: 59.290000000000006,
+          y: 456.533, yaw: 1.0, z: 2208.347991887209}
+    time: 7.7
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: 0.05395542056264886, roll: 0.998543345374605, x: 60.84000000000001,
+          y: 474.55200000000013, yaw: 1.0, z: 2440.6019776245007}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: 0.05395542056264886, roll: 0.998543345374605, x: 60.84000000000001,
+          y: 474.55200000000013, yaw: 1.0, z: 2440.6019776245007}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.05395542056264886, roll: 0.998543345374605, x: 60.84000000000001,
+          y: 474.55200000000013, yaw: 1.0, z: 2440.6019776245007}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: 0.05395542056264886, roll: 0.998543345374605, x: 60.84000000000001,
+          y: 474.55200000000013, yaw: 1.0, z: 2440.6019776245007}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: 0.05395542056264886, roll: 0.998543345374605, x: 60.84000000000001,
+          y: 474.55200000000013, yaw: 1.0, z: 2440.6019776245007}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: 0.05395542056264886, roll: 0.998543345374605, x: 60.84000000000001,
+          y: 474.55200000000013, yaw: 1.0, z: 2440.6019776245007}
+    time: 7.800000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.04600212563953695, roll: 0.998941341839772, x: 62.410000000000004,
+          y: 493.03900000000004, yaw: 1.0, z: 2697.28232826851}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.04600212563953695, roll: 0.998941341839772, x: 62.410000000000004,
+          y: 493.03900000000004, yaw: 1.0, z: 2697.28232826851}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.04600212563953695, roll: 0.998941341839772, x: 62.410000000000004,
+          y: 493.03900000000004, yaw: 1.0, z: 2697.28232826851}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.04600212563953695, roll: 0.998941341839772, x: 62.410000000000004,
+          y: 493.03900000000004, yaw: 1.0, z: 2697.28232826851}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.04600212563953695, roll: 0.998941341839772, x: 62.410000000000004,
+          y: 493.03900000000004, yaw: 1.0, z: 2697.28232826851}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.04600212563953695, roll: 0.998941341839772, x: 62.410000000000004,
+          y: 493.03900000000004, yaw: 1.0, z: 2697.28232826851}
+    time: 7.9
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.14550003380861354, roll: 0.9893582466233818, x: 64.0,
+          y: 512.0, yaw: 1.0, z: 2980.9579870417283}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.14550003380861354, roll: 0.9893582466233818, x: 64.0,
+          y: 512.0, yaw: 1.0, z: 2980.9579870417283}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.14550003380861354, roll: 0.9893582466233818, x: 64.0,
+          y: 512.0, yaw: 1.0, z: 2980.9579870417283}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.14550003380861354, roll: 0.9893582466233818, x: 64.0,
+          y: 512.0, yaw: 1.0, z: 2980.9579870417283}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.14550003380861354, roll: 0.9893582466233818, x: 64.0,
+          y: 512.0, yaw: 1.0, z: 2980.9579870417283}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.14550003380861354, roll: 0.9893582466233818, x: 64.0,
+          y: 512.0, yaw: 1.0, z: 2980.9579870417283}
+    syncpoint: strokeEnd
+    time: 8.0
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.2435441537357911, roll: 0.9698898108450863, x: 65.61,
+          y: 531.4409999999999, yaw: 1.0, z: 3294.4680752838403}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.2435441537357911, roll: 0.9698898108450863, x: 65.61,
+          y: 531.4409999999999, yaw: 1.0, z: 3294.4680752838403}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.2435441537357911, roll: 0.9698898108450863, x: 65.61,
+          y: 531.4409999999999, yaw: 1.0, z: 3294.4680752838403}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.2435441537357911, roll: 0.9698898108450863, x: 65.61,
+          y: 531.4409999999999, yaw: 1.0, z: 3294.4680752838403}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.2435441537357911, roll: 0.9698898108450863, x: 65.61,
+          y: 531.4409999999999, yaw: 1.0, z: 3294.4680752838403}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.2435441537357911, roll: 0.9698898108450863, x: 65.61,
+          y: 531.4409999999999, yaw: 1.0, z: 3294.4680752838403}
+    time: 8.1
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.33915486098383624, roll: 0.9407305566797726, x: 67.24000000000002,
+          y: 551.3680000000002, yaw: 1.0, z: 3640.9503073323585}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.33915486098383624, roll: 0.9407305566797726, x: 67.24000000000002,
+          y: 551.3680000000002, yaw: 1.0, z: 3640.9503073323585}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.33915486098383624, roll: 0.9407305566797726, x: 67.24000000000002,
+          y: 551.3680000000002, yaw: 1.0, z: 3640.9503073323585}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.33915486098383624, roll: 0.9407305566797726, x: 67.24000000000002,
+          y: 551.3680000000002, yaw: 1.0, z: 3640.9503073323585}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.33915486098383624, roll: 0.9407305566797726, x: 67.24000000000002,
+          y: 551.3680000000002, yaw: 1.0, z: 3640.9503073323585}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.33915486098383624, roll: 0.9407305566797726, x: 67.24000000000002,
+          y: 551.3680000000002, yaw: 1.0, z: 3640.9503073323585}
+    time: 8.200000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.4313768449706208, roll: 0.9021718337562933, x: 68.89000000000001,
+          y: 571.7870000000001, yaw: 1.0, z: 4023.872393822313}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.4313768449706208, roll: 0.9021718337562933, x: 68.89000000000001,
+          y: 571.7870000000001, yaw: 1.0, z: 4023.872393822313}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.4313768449706208, roll: 0.9021718337562933, x: 68.89000000000001,
+          y: 571.7870000000001, yaw: 1.0, z: 4023.872393822313}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.4313768449706208, roll: 0.9021718337562933, x: 68.89000000000001,
+          y: 571.7870000000001, yaw: 1.0, z: 4023.872393822313}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.4313768449706208, roll: 0.9021718337562933, x: 68.89000000000001,
+          y: 571.7870000000001, yaw: 1.0, z: 4023.872393822313}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.4313768449706208, roll: 0.9021718337562933, x: 68.89000000000001,
+          y: 571.7870000000001, yaw: 1.0, z: 4023.872393822313}
+    time: 8.3
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.5192886541166856, roll: 0.8545989080882804, x: 70.56,
+          y: 592.7040000000001, yaw: 1.0, z: 4447.066747699858}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.5192886541166856, roll: 0.8545989080882804, x: 70.56,
+          y: 592.7040000000001, yaw: 1.0, z: 4447.066747699858}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.5192886541166856, roll: 0.8545989080882804, x: 70.56,
+          y: 592.7040000000001, yaw: 1.0, z: 4447.066747699858}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.5192886541166856, roll: 0.8545989080882804, x: 70.56,
+          y: 592.7040000000001, yaw: 1.0, z: 4447.066747699858}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.5192886541166856, roll: 0.8545989080882804, x: 70.56,
+          y: 592.7040000000001, yaw: 1.0, z: 4447.066747699858}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.5192886541166856, roll: 0.8545989080882804, x: 70.56,
+          y: 592.7040000000001, yaw: 1.0, z: 4447.066747699858}
+    time: 8.4
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.6020119026848236, roll: 0.7984871126234903, x: 72.25,
+          y: 614.125, yaw: 1.0, z: 4914.768840299134}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.6020119026848236, roll: 0.7984871126234903, x: 72.25,
+          y: 614.125, yaw: 1.0, z: 4914.768840299134}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.6020119026848236, roll: 0.7984871126234903, x: 72.25,
+          y: 614.125, yaw: 1.0, z: 4914.768840299134}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.6020119026848236, roll: 0.7984871126234903, x: 72.25,
+          y: 614.125, yaw: 1.0, z: 4914.768840299134}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.6020119026848236, roll: 0.7984871126234903, x: 72.25,
+          y: 614.125, yaw: 1.0, z: 4914.768840299134}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.6020119026848236, roll: 0.7984871126234903, x: 72.25,
+          y: 614.125, yaw: 1.0, z: 4914.768840299134}
+    time: 8.5
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.6787200473200125, roll: 0.7343970978741133, x: 73.96,
+          y: 636.0559999999999, yaw: 1.0, z: 5431.659591362978}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.6787200473200125, roll: 0.7343970978741133, x: 73.96,
+          y: 636.0559999999999, yaw: 1.0, z: 5431.659591362978}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.6787200473200125, roll: 0.7343970978741133, x: 73.96,
+          y: 636.0559999999999, yaw: 1.0, z: 5431.659591362978}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.6787200473200125, roll: 0.7343970978741133, x: 73.96,
+          y: 636.0559999999999, yaw: 1.0, z: 5431.659591362978}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.6787200473200125, roll: 0.7343970978741133, x: 73.96,
+          y: 636.0559999999999, yaw: 1.0, z: 5431.659591362978}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.6787200473200125, roll: 0.7343970978741133, x: 73.96,
+          y: 636.0559999999999, yaw: 1.0, z: 5431.659591362978}
+    time: 8.6
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.7486466455973999, roll: 0.662969230082182, x: 75.69000000000001,
+          y: 658.5030000000003, yaw: 1.0, z: 6002.912217261029}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.7486466455973999, roll: 0.662969230082182, x: 75.69000000000001,
+          y: 658.5030000000003, yaw: 1.0, z: 6002.912217261029}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.7486466455973999, roll: 0.662969230082182, x: 75.69000000000001,
+          y: 658.5030000000003, yaw: 1.0, z: 6002.912217261029}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.7486466455973999, roll: 0.662969230082182, x: 75.69000000000001,
+          y: 658.5030000000003, yaw: 1.0, z: 6002.912217261029}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.7486466455973999, roll: 0.662969230082182, x: 75.69000000000001,
+          y: 658.5030000000003, yaw: 1.0, z: 6002.912217261029}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.7486466455973999, roll: 0.662969230082182, x: 75.69000000000001,
+          y: 658.5030000000003, yaw: 1.0, z: 6002.912217261029}
+    time: 8.700000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.811093014061656, roll: 0.5849171928917617, x: 77.44000000000001,
+          y: 681.4720000000002, yaw: 1.0, z: 6634.24400627789}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.811093014061656, roll: 0.5849171928917617, x: 77.44000000000001,
+          y: 681.4720000000002, yaw: 1.0, z: 6634.24400627789}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.811093014061656, roll: 0.5849171928917617, x: 77.44000000000001,
+          y: 681.4720000000002, yaw: 1.0, z: 6634.24400627789}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.811093014061656, roll: 0.5849171928917617, x: 77.44000000000001,
+          y: 681.4720000000002, yaw: 1.0, z: 6634.24400627789}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.811093014061656, roll: 0.5849171928917617, x: 77.44000000000001,
+          y: 681.4720000000002, yaw: 1.0, z: 6634.24400627789}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.811093014061656, roll: 0.5849171928917617, x: 77.44000000000001,
+          y: 681.4720000000002, yaw: 1.0, z: 6634.24400627789}
+    time: 8.8
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.8654352092411123, roll: 0.5010208564578846, x: 79.21000000000001,
+          y: 704.969, yaw: 1.0, z: 7331.973539155995}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.8654352092411123, roll: 0.5010208564578846, x: 79.21000000000001,
+          y: 704.969, yaw: 1.0, z: 7331.973539155995}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.8654352092411123, roll: 0.5010208564578846, x: 79.21000000000001,
+          y: 704.969, yaw: 1.0, z: 7331.973539155995}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.8654352092411123, roll: 0.5010208564578846, x: 79.21000000000001,
+          y: 704.969, yaw: 1.0, z: 7331.973539155995}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.8654352092411123, roll: 0.5010208564578846, x: 79.21000000000001,
+          y: 704.969, yaw: 1.0, z: 7331.973539155995}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.8654352092411123, roll: 0.5010208564578846, x: 79.21000000000001,
+          y: 704.969, yaw: 1.0, z: 7331.973539155995}
+    time: 8.9
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9111302618846769, roll: 0.4121184852417566, x: 81.0,
+          y: 729.0, yaw: 1.0, z: 8103.083927575384}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9111302618846769, roll: 0.4121184852417566, x: 81.0,
+          y: 729.0, yaw: 1.0, z: 8103.083927575384}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9111302618846769, roll: 0.4121184852417566, x: 81.0,
+          y: 729.0, yaw: 1.0, z: 8103.083927575384}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9111302618846769, roll: 0.4121184852417566, x: 81.0,
+          y: 729.0, yaw: 1.0, z: 8103.083927575384}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9111302618846769, roll: 0.4121184852417566, x: 81.0,
+          y: 729.0, yaw: 1.0, z: 8103.083927575384}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9111302618846769, roll: 0.4121184852417566, x: 81.0,
+          y: 729.0, yaw: 1.0, z: 8103.083927575384}
+    time: 9.0
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9477216021311119, roll: 0.3190983623493521, x: 82.80999999999999,
+          y: 753.5709999999999, yaw: 1.0, z: 8955.292703482508}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9477216021311119, roll: 0.3190983623493521, x: 82.80999999999999,
+          y: 753.5709999999999, yaw: 1.0, z: 8955.292703482508}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9477216021311119, roll: 0.3190983623493521, x: 82.80999999999999,
+          y: 753.5709999999999, yaw: 1.0, z: 8955.292703482508}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9477216021311119, roll: 0.3190983623493521, x: 82.80999999999999,
+          y: 753.5709999999999, yaw: 1.0, z: 8955.292703482508}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9477216021311119, roll: 0.3190983623493521, x: 82.80999999999999,
+          y: 753.5709999999999, yaw: 1.0, z: 8955.292703482508}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9477216021311119, roll: 0.3190983623493521, x: 82.80999999999999,
+          y: 753.5709999999999, yaw: 1.0, z: 8955.292703482508}
+    time: 9.1
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.974843621404164, roll: 0.22288991410024592, x: 84.64000000000001,
+          y: 778.6880000000002, yaw: 1.0, z: 9897.129058743927}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.974843621404164, roll: 0.22288991410024592, x: 84.64000000000001,
+          y: 778.6880000000002, yaw: 1.0, z: 9897.129058743927}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.974843621404164, roll: 0.22288991410024592, x: 84.64000000000001,
+          y: 778.6880000000002, yaw: 1.0, z: 9897.129058743927}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.974843621404164, roll: 0.22288991410024592, x: 84.64000000000001,
+          y: 778.6880000000002, yaw: 1.0, z: 9897.129058743927}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.974843621404164, roll: 0.22288991410024592, x: 84.64000000000001,
+          y: 778.6880000000002, yaw: 1.0, z: 9897.129058743927}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.974843621404164, roll: 0.22288991410024592, x: 84.64000000000001,
+          y: 778.6880000000002, yaw: 1.0, z: 9897.129058743927}
+    time: 9.200000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9922253254526034, roll: 0.1244544235070617, x: 86.49000000000001,
+          y: 804.3570000000002, yaw: 1.0, z: 10938.019208165191}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9922253254526034, roll: 0.1244544235070617, x: 86.49000000000001,
+          y: 804.3570000000002, yaw: 1.0, z: 10938.019208165191}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9922253254526034, roll: 0.1244544235070617, x: 86.49000000000001,
+          y: 804.3570000000002, yaw: 1.0, z: 10938.019208165191}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9922253254526034, roll: 0.1244544235070617, x: 86.49000000000001,
+          y: 804.3570000000002, yaw: 1.0, z: 10938.019208165191}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9922253254526034, roll: 0.1244544235070617, x: 86.49000000000001,
+          y: 804.3570000000002, yaw: 1.0, z: 10938.019208165191}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9922253254526034, roll: 0.1244544235070617, x: 86.49000000000001,
+          y: 804.3570000000002, yaw: 1.0, z: 10938.019208165191}
+    time: 9.3
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9996930420352065, roll: 0.024775425453357765, x: 88.36000000000001,
+          y: 830.5840000000001, yaw: 1.0, z: 12088.380730216988}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9996930420352065, roll: 0.024775425453357765, x: 88.36000000000001,
+          y: 830.5840000000001, yaw: 1.0, z: 12088.380730216988}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9996930420352065, roll: 0.024775425453357765, x: 88.36000000000001,
+          y: 830.5840000000001, yaw: 1.0, z: 12088.380730216988}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9996930420352065, roll: 0.024775425453357765, x: 88.36000000000001,
+          y: 830.5840000000001, yaw: 1.0, z: 12088.380730216988}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9996930420352065, roll: 0.024775425453357765, x: 88.36000000000001,
+          y: 830.5840000000001, yaw: 1.0, z: 12088.380730216988}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9996930420352065, roll: 0.024775425453357765, x: 88.36000000000001,
+          y: 830.5840000000001, yaw: 1.0, z: 12088.380730216988}
+    time: 9.4
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9971721561963784, roll: -0.0751511204618093, x: 90.25,
+          y: 857.375, yaw: 1.0, z: 13359.726829661873}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9971721561963784, roll: -0.0751511204618093, x: 90.25,
+          y: 857.375, yaw: 1.0, z: 13359.726829661873}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9971721561963784, roll: -0.0751511204618093, x: 90.25,
+          y: 857.375, yaw: 1.0, z: 13359.726829661873}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9971721561963784, roll: -0.0751511204618093, x: 90.25,
+          y: 857.375, yaw: 1.0, z: 13359.726829661873}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9971721561963784, roll: -0.0751511204618093, x: 90.25,
+          y: 857.375, yaw: 1.0, z: 13359.726829661873}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9971721561963784, roll: -0.0751511204618093, x: 90.25,
+          y: 857.375, yaw: 1.0, z: 13359.726829661873}
+    time: 9.5
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9846878557941267, roll: -0.1743267812229814, x: 92.16000000000003,
+          y: 884.7360000000004, yaw: 1.0, z: 14764.781565577294}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9846878557941267, roll: -0.1743267812229814, x: 92.16000000000003,
+          y: 884.7360000000004, yaw: 1.0, z: 14764.781565577294}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9846878557941267, roll: -0.1743267812229814, x: 92.16000000000003,
+          y: 884.7360000000004, yaw: 1.0, z: 14764.781565577294}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9846878557941267, roll: -0.1743267812229814, x: 92.16000000000003,
+          y: 884.7360000000004, yaw: 1.0, z: 14764.781565577294}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9846878557941267, roll: -0.1743267812229814, x: 92.16000000000003,
+          y: 884.7360000000004, yaw: 1.0, z: 14764.781565577294}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9846878557941267, roll: -0.1743267812229814, x: 92.16000000000003,
+          y: 884.7360000000004, yaw: 1.0, z: 14764.781565577294}
+    time: 9.600000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9623648798313097, roll: -0.2717606264109442, x: 94.09000000000002,
+          y: 912.6730000000003, yaw: 1.0, z: 16317.60719801545}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9623648798313097, roll: -0.2717606264109442, x: 94.09000000000002,
+          y: 912.6730000000003, yaw: 1.0, z: 16317.60719801545}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9623648798313097, roll: -0.2717606264109442, x: 94.09000000000002,
+          y: 912.6730000000003, yaw: 1.0, z: 16317.60719801545}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9623648798313097, roll: -0.2717606264109442, x: 94.09000000000002,
+          y: 912.6730000000003, yaw: 1.0, z: 16317.60719801545}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9623648798313097, roll: -0.2717606264109442, x: 94.09000000000002,
+          y: 912.6730000000003, yaw: 1.0, z: 16317.60719801545}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9623648798313097, roll: -0.2717606264109442, x: 94.09000000000002,
+          y: 912.6730000000003, yaw: 1.0, z: 16317.60719801545}
+    time: 9.700000000000001
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9304262721047533, roll: -0.3664791292519284, x: 96.04000000000002,
+          y: 941.1920000000002, yaw: 1.0, z: 18033.744927828524}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9304262721047533, roll: -0.3664791292519284, x: 96.04000000000002,
+          y: 941.1920000000002, yaw: 1.0, z: 18033.744927828524}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9304262721047533, roll: -0.3664791292519284, x: 96.04000000000002,
+          y: 941.1920000000002, yaw: 1.0, z: 18033.744927828524}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.9304262721047533, roll: -0.3664791292519284, x: 96.04000000000002,
+          y: 941.1920000000002, yaw: 1.0, z: 18033.744927828524}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.9304262721047533, roll: -0.3664791292519284, x: 96.04000000000002,
+          y: 941.1920000000002, yaw: 1.0, z: 18033.744927828524}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.9304262721047533, roll: -0.3664791292519284, x: 96.04000000000002,
+          y: 941.1920000000002, yaw: 1.0, z: 18033.744927828524}
+    time: 9.8
+  - frames:
+      left:
+      - child_frame: left_wrist
+        parent_frame: /world
+        transform: {pitch: -0.8891911526253609, roll: -0.45753589377532133, x: 98.01,
+          y: 970.2990000000001, yaw: 1.0, z: 19930.370438230297}
+      - child_frame: left_elbow
+        parent_frame: /world
+        transform: {pitch: -0.8891911526253609, roll: -0.45753589377532133, x: 98.01,
+          y: 970.2990000000001, yaw: 1.0, z: 19930.370438230297}
+      - child_frame: left_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.8891911526253609, roll: -0.45753589377532133, x: 98.01,
+          y: 970.2990000000001, yaw: 1.0, z: 19930.370438230297}
+      right:
+      - child_frame: right_wrist
+        parent_frame: /world
+        transform: {pitch: -0.8891911526253609, roll: -0.45753589377532133, x: 98.01,
+          y: 970.2990000000001, yaw: 1.0, z: 19930.370438230297}
+      - child_frame: right_elbow
+        parent_frame: /world
+        transform: {pitch: -0.8891911526253609, roll: -0.45753589377532133, x: 98.01,
+          y: 970.2990000000001, yaw: 1.0, z: 19930.370438230297}
+      - child_frame: right_shoulder
+        parent_frame: /world
+        transform: {pitch: -0.8891911526253609, roll: -0.45753589377532133, x: 98.01,
+          y: 970.2990000000001, yaw: 1.0, z: 19930.370438230297}
+    time: 9.9
+  type: sequence
+type: gesture

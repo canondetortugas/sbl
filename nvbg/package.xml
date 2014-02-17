@@ -28,10 +28,4 @@
   <run_depend>std_msgs</run_depend>
   <run_depend>bml_cpp</run_depend>
 
-  <!-- Dependencies needed only for running tests. -->
-  <!-- <test_depend>uscauv_common</test_depend> -->
-  <!-- <test_depend>roscpp</test_depend> -->
-  <!-- <test_depend>sbl_msgs</test_depend> -->
-  <!-- <test_depend>bml_cpp</test_depend> -->
-
 </package>

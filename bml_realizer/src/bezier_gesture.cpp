@@ -1,5 +1,5 @@
 /***************************************************************************
- *  nodes/realizer_node.cpp
+ *  src/bezier_gesture.cpp
  *  --------------------
  *
  *  Software License Agreement (BSD License)
@@ -36,16 +36,4 @@
  **************************************************************************/
 
 
-#include <nvbg/realizer_node.h>
-
-// Initialize RealizerNode and begin looping.
-int main(int argc, char ** argv)
-{
-  ros::init(argc, argv, "realizer");
-
-  RealizerNode realizer;
-
-  realizer.spin();
-
-  return 0;
-}
+#include <bml_realizer/bezier_gesture.h>

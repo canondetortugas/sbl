@@ -1,5 +1,5 @@
 /***************************************************************************
- *  include/nvbg/realizer_node.h
+ *  src/realizable.cpp
  *  --------------------
  *
  *  Software License Agreement (BSD License)
@@ -36,37 +36,4 @@
  **************************************************************************/
 
 
-#ifndef SBL_NVBG_REALIZER
-#define SBL_NVBG_REALIZER
-
-// ROS
-#include <ros/ros.h>
-
-// uscauv
-#include <uscauv_common/base_node.h>
-
-class RealizerNode: public BaseNode
-{
-  
- public:
-  RealizerNode(): BaseNode("Realizer")
-   {
-   }
-
- private:
-
-  // Running spin() will cause this function to be called before the node begins looping the spinOnce() function.
-  void spinFirst()
-     {
-	 
-     }  
-
-  // Running spin() will cause this function to get called at the loop rate until this node is killed.
-  void spinOnce()
-     {
-
-     }
-
-};
-
-#endif // SBL_NVBG_REALIZER
+#include <bml_realizer/realizable.h>

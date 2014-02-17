@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package>
+  <name>bml_realizer</name>
+  <version>0.0.0</version>
+  <description>The bml_realizer package</description>
+
+  <maintainer email="turtlecannon@gmail.com">Dylan Foster</maintainer>
+
+  <license>BSD</license>
+
+  <author >Dylan Foster</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>bml_cpp</build_depend>
+  <build_depend>nvbg</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>uscauv_common</build_depend>
+  <build_depend>festival</build_depend>
+  <build_depend>audio_common</build_depend>
+  <run_depend>bml_cpp</run_depend>
+  <run_depend>nvbg</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>uscauv_common</run_depend>
+  <run_depend>festival</run_depend>
+  <run_depend>audio_common</run_depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+  </export>
+</package>
