@@ -39,6 +39,9 @@
 #ifndef SBL_SPEECHREALIZER_SPEECHREALIZER
 #define SBL_SPEECHREALIZER_SPEECHREALIZER
 
+/// getenv
+#include <cstdlib>
+
 // ROS
 #include <ros/ros.h>
 
@@ -56,16 +59,18 @@
 
 #include <std_msgs/String.h>
 #include <speech_realizer/SayText.h>
+#include <speech_realizer/GetWordTimings.h>
 
 typedef std_msgs::String _StringMsg;
 
 typedef speech_realizer::SayText _SayTextService;
+typedef speech_realizer::GetWordTimings _GetWordTimingsService;
 
 class SpeechRealizerNode: public BaseNode
 {
 private:
   ros::NodeHandle nh_rel_;
-  ros::ServiceServer say_text_server_;
+  ros::ServiceServer say_text_server_, get_word_timings_servers_;
   
   bool speak_locally_;
 
@@ -88,6 +93,8 @@ private:
 
     say_text_server_ = nh_rel_.advertiseService("say_text", &SpeechRealizerNode::textServiceCallback, this );
 
+    get_word_timings_servers_ = nh_rel_.advertiseService("get_word_timings", &SpeechRealizerNode::getWordTimingsServiceCallback, this );
+
     festival_initialize(true, fest_heap_size_);
 
   }  
@@ -107,11 +114,79 @@ private:
     EST_String command1 = "(set! utt1 (utt.synth(Utterance Text \"" +
       est_text + "\")))";
 
-    bool success1 = festival_eval_command(command1);
+    if (!festival_eval_command(command1))
+      return false;
 
-    festival_say_text(est_text);
+    if( speak_locally_ )
+      return festival_say_text(est_text);
 
-    return success1;
+    return true;
+  }
+
+  bool getWordTimingsServiceCallback( _GetWordTimingsService::Request & request,
+				      _GetWordTimingsService::Response & response )
+  {
+    typedef speech_realizer::TimedWord _TimedWordMsg;
+
+    EST_String est_text( request.text.c_str() );
+
+    EST_String command1 = "(set! utt1 (utt.synth(Utterance Text \"" +
+      est_text + "\")))";
+
+    char * home = getenv("HOME");
+    
+    if( home == NULL )
+      {
+	ROS_ERROR("Could not find home directory");
+	return false;
+      }
+
+    std::stringstream utt_path;
+    utt_path << home << "/.ros/speech_realizer.utt";
+    EST_String utt_path_est( utt_path.str().c_str() );
+
+    EST_String command2 = "(utt.save utt1 \"" + utt_path_est + "\")";
+
+    if (!festival_eval_command(command1))
+      return false;
+    if( !festival_eval_command(command2))
+      return false;
+    
+    EST_Utterance myUtt;
+    EST_read_status status = myUtt.load(utt_path_est);
+    if( status != EST_read_status::read_ok )
+      {
+	ROS_ERROR("Failed to load utterance file.");
+	return false;
+      }
+
+    EST_Item* s = NULL;
+    for (s = myUtt.relation("Word")->head(); s != 0; s = next(s))
+      {
+	cout << "Word: "   << s->S("name"); 
+	cout << "\tstart: "<< ff_word_start(s);
+	cout << "\tend: "  << ff_word_end(s) << endl;	
+
+	// _TimedWordMsg word;
+	// word.word = s->S("name");
+	// word.begin = ff_word_start(s);
+	// word.end = ff_word_end(s);
+
+	// response.words.push_back(word);
+	
+	//print out features of the word: name, start time, end time
+	// cout << "Word: "   << s->S("name"); 
+	// cout << "\tstart: "<< ff_word_start(s);
+	// cout << "\tend: "  << ff_word_end(s) << endl;	
+
+	// print out the "word_end" feature of the word  <-- does not work
+	//cout << s->A("word_end") << endl;
+
+	
+	
+      }
+
+    return true;
   }
 
 private:

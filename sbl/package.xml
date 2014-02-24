@@ -22,7 +22,9 @@
   <run_depend>xerces</run_depend>
   <run_depend>bml_cpp</run_depend>
   <run_depend>sbl_msgs</run_depend>
-
+  <run_depend>speech_realizer</run_depend>
+  
+  
   <!-- Dependencies needed only for running tests. -->
 
   <export>
