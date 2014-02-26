@@ -6,6 +6,12 @@ project(speech_realizer)
 # This breaks some festival functionality ###################
 #############################################################
 
+#############################################################
+# Another note: You need to find /usr/include/<estools dir>/ling_class/EST_Relation_list.h
+# and change the '#if 0' in it to a '#if 1' so all the functions we need are defined
+# <estools dir> is either 'estools' or 'speech_tools'
+#############################################################
+
 # set(CMAKE_BUILD_TYPE Debug)
 
 # set(CMAKE_VERBOSE_MAKEFILE ON)
