@@ -20,7 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
 )
 
-set(festival_INCLUDE_DIRS /usr/include/estools /usr/include/festival)
+set(festival_INCLUDE_DIRS /usr/include/estools /usr/include/festival /usr/include/speech_tools)
 set(festival_LIBRARIES Festival estools estbase eststring esd ncurses)
 
 add_message_files(FILES
