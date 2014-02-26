@@ -45,7 +45,7 @@ include_directories(
 
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp std_msgs uscauv_common
+  CATKIN_DEPENDS roscpp std_msgs
 )
 
 add_executable( speech_realizer nodes/speech_realizer_node.cpp )
