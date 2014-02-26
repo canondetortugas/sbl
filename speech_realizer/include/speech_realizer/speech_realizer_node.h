@@ -53,10 +53,6 @@
 #include <ling_class/EST_Item.h>
 #include <ling_class/EST_Relation_list.h>
 
-// uscauv
-#include <uscauv_common/base_node.h>
-#include <uscauv_common/param_loader.h>
-
 #include <std_msgs/String.h>
 #include <speech_realizer/SayText.h>
 #include <speech_realizer/GetWordTimings.h>
@@ -66,9 +62,14 @@ typedef std_msgs::String _StringMsg;
 typedef speech_realizer::SayText _SayTextService;
 typedef speech_realizer::GetWordTimings _GetWordTimingsService;
 
-class SpeechRealizerNode: public BaseNode
+class SpeechRealizerNode
 {
 private:
+  
+  const std::string node_name_;
+  double loop_rate_hz_;
+  bool running_;
+
   ros::NodeHandle nh_rel_;
   ros::ServiceServer say_text_server_, get_word_timings_servers_;
   
@@ -79,9 +80,36 @@ private:
   
   
 public:
-  SpeechRealizerNode(): BaseNode("SpeechRealizer"), nh_rel_("~"), 
+  SpeechRealizerNode(): node_name_("SpeechRealizer"), running_(false), nh_rel_("~"), 
 			fest_default_val_float_(0.0f), fest_heap_size_(210000)
   {
+  }
+
+public:
+
+  void spin()
+
+  {
+    ROS_INFO( "Spinning up %s...", node_name_.c_str() );
+    
+    nh_rel_.param<double>( "loop_rate", loop_rate_hz_, double(10) );
+
+    ros::Rate loop_rate( loop_rate_hz_ );
+
+    spinFirst();
+
+    ROS_INFO( "%s is spinning at %.2f Hz.", node_name_.c_str(), loop_rate_hz_ ); 
+    
+    running_ = true;
+
+    while( ros::ok() )
+      {
+	spinOnce();
+	ros::spinOnce();
+	loop_rate.sleep();
+      }
+    
+    return;
   }
 
 private:
@@ -89,7 +117,7 @@ private:
   // Running spin() will cause this function to be called before the node begins looping the spinOnce() function.
   void spinFirst()
   {
-    speak_locally_ = uscauv::param::load<bool>(nh_rel_, "speak_locally", true);
+    nh_rel_.param<bool>( "speak_locally", speak_locally_, true);
 
     say_text_server_ = nh_rel_.advertiseService("say_text", &SpeechRealizerNode::textServiceCallback, this );
 
@@ -154,7 +182,7 @@ private:
     
     EST_Utterance myUtt;
     EST_read_status status = myUtt.load(utt_path_est);
-    if( status != EST_read_status::read_ok )
+    if( status != read_ok )
       {
 	ROS_ERROR("Failed to load utterance file.");
 	return false;
@@ -163,16 +191,16 @@ private:
     EST_Item* s = NULL;
     for (s = myUtt.relation("Word")->head(); s != 0; s = next(s))
       {
-	cout << "Word: "   << s->S("name"); 
-	cout << "\tstart: "<< ff_word_start(s);
-	cout << "\tend: "  << ff_word_end(s) << endl;	
+	ROS_INFO_STREAM("Word: "   << s->S("name") <<
+			"\tstart: "<< ff_word_start(s) <<
+			"\tend: "  << ff_word_end(s) );
 
-	// _TimedWordMsg word;
-	// word.word = s->S("name");
-	// word.begin = ff_word_start(s);
-	// word.end = ff_word_end(s);
+	_TimedWordMsg word;
+	word.word = s->S("name");
+	word.begin = ff_word_start(s);
+	word.end = ff_word_end(s);
 
-	// response.words.push_back(word);
+	response.words.push_back(word);
 	
 	//print out features of the word: name, start time, end time
 	// cout << "Word: "   << s->S("name"); 
