@@ -44,12 +44,9 @@
   <build_depend>festival</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>std_msgs</build_depend>
-  <build_depend>uscauv_common</build_depend>
   <run_depend>festival</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>std_msgs</run_depend>
-  <run_depend>uscauv_common</run_depend>
-
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
