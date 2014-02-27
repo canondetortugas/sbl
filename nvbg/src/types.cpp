@@ -57,7 +57,7 @@ namespace nvbg
   
   namespace timing
   {
-    std::set<std::string> const SCOPE_TYPES = {"speech", "sentence", "phrase"};
-    std::set<std::string> const VALID_STRING_ARGS = {"begin", "end"};
+    std::set<std::string> const TYPES = {"speech", "sentence", "phrase", "word"};
+    std::set<std::string> const POS_ARGS = {"start", "end"};
   }
 }

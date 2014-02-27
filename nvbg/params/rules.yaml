@@ -1,8 +1,10 @@
 # Timings
-# Format [ {scope: <speech/sentence/phrase>, sync: <start/stop/strokeStart/...>, arg: <begin/end/N>}, ...]
-# Scope: What part of the speech is the sync argument relative to? One of [speech, sentence, phrase]
+# Format [ {type: <speech/sentence/phrase/word>, sync: <start/stop/strokeStart/...>, pos: <start/end/>, word_index: <N>, offset: <float>}, ...]
+# Type: What part of the speech is the sync argument relative to? One of [speech, sentence, phrase, word]
 # Sync: BML syncpoint type
-# Arg: Determines what part of the speech the behavior is bound to. If scope is speech or sentence, it can be one of [begin, end]. If the scope is phrase, it is a non-negative word index.
+# pos: Do we sync against the beginning or end of the part of the speech?
+# word_index: If the type is word, this is a word offset from the beginning of the phrase by N
+# Offset: Timing offset in seconds
 
 ##############################################################################################
 # TODO: Figure out if ignoring the list for a single timing works ############################
@@ -13,13 +15,14 @@ interjection:
   priority: 1
   rules:
     "yes":
-      head_nod: [{scope: phrase, sync: start, arg: 0}]
+      head_nod: [{type: phrase, sync: start, pos: start}, {type: phrase, sync: end, pos: end}]
 
 affirmation:
   priority: 2
   rules:
-    "yes": 
-      head_nod: [{sync: strokeStart, scope: phrase, arg: 0}, {scope: sentence, sync: strokeEnd, arg: end}]
-      brow_raise: [{scope: sentence, sync: start, arg: begin}]
+  #   "yes": 
+  #     head_nod: [{sync: strokeStart, type: phrase, word: 0, pos: start}, {type: sentence, sync: strokeEnd, pos: end}]
+  #     brow_raise: [{type: sentence, sync: start, pos: start}]
     "who are you":
-      wave_right_arm: [{sync: strokeEnd, scope: phrase, arg: 0, offset: 0.5}]
+      wave_right_arm: [{sync: strokeEnd, type: word, word_index: 0, pos: start, offset: 0.5}, {type: phrase, sync: start, pos: start}, {type: phrase, sync: end, pos: end}]
+

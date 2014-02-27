@@ -37,3 +37,108 @@
 
 
 #include <nvbg/param_conversions.h>
+
+void postProcessRules( rules::RuleClassMap & rcm, behavior::BehaviorMap & bh )
+{
+  /// A great case for why not to do this sort of thing in C++
+
+  /// Iterate over map from rule class name to rules class info
+  for( rules::RuleClassMap::value_type & rc_it : rcm )
+    {
+      /// Iterate over map from phrase to rules for phrase
+      for( rules::RuleMap::value_type & rm_it : rc_it.second.rules )
+	{
+	  /// Iterate over map from behavior names to timings
+	  rules::Rule::iterator rule_it = rm_it.second.begin();
+	  while( rule_it != rm_it.second.end())
+	    {
+	      behavior::BehaviorMap::const_iterator behavior_it = bh.find( rule_it->first);
+	      std::set<std::string> sync_set;
+	      
+	      if( behavior_it == bh.end())
+		{
+		  ROS_WARN_STREAM("Rule references missing behavior " << brk(rule_it->first) << ".");
+		  rule_it = rm_it.second.erase( rule_it );
+		  continue;
+		}
+	      else
+		{
+		  if( behavior_it->second.type == "gesture" )
+		    sync_set = behavior::GESTURE_SYNC_TYPES;
+		  else if( behavior_it->second.type == "head" )
+		    sync_set = behavior::HEAD_SYNC_TYPES;
+		  else if( behavior_it->second.type == "face" )
+		    sync_set = behavior::FACE_SYNC_TYPES;
+		  else
+		    ROS_ASSERT_MSG(false, "Invalid behavior type");
+		}
+	      
+	      
+	      if( !validateRuleTimings(rule_it->second, sync_set))
+		{
+		  ROS_WARN_STREAM("Behavior " << brk(rule_it->first) <<
+				  " in rule " << brk(rm_it.first) <<
+				  " has invalid timings. Removing...");
+		  /// Remove offending behavior
+		  rule_it = rm_it.second.erase( rule_it );
+		  continue;
+		}
+	      
+		++rule_it;
+	    }
+	}
+    }
+}
+
+/** 
+ * Count occurrences of each sync point type. Make sure there are no duplicates and that start/end exist
+ * 
+ * @param timings Timings to validate
+ * 
+ * @return true if valid, false otherwise
+ */
+bool validateRuleTimings( std::vector<timing::Timing> const & timings, std::set<std::string> sync_types)
+{
+  
+  std::map<std::string, size_t> timing_counts;
+  
+  for( std::set<std::string>::const_iterator type_it = sync_types.begin();
+       type_it != sync_types.end(); ++type_it)
+    {
+      timing_counts.insert( std::make_pair( *type_it, 0));
+    }
+  
+  /// Iterate over timings for behavior
+  for( std::vector<timing::Timing>::value_type const & timing : timings )
+    {
+      /// Should have been validated already
+      if( !sync_types.count( timing.sync ) )
+	return false;
+      
+      ++timing_counts[ timing.sync ];
+    }
+
+  for( std::map<std::string, size_t>::iterator count_it = timing_counts.begin();
+       count_it != timing_counts.end(); ++count_it)
+    {
+      if( count_it->second > 1 )
+	{
+	  ROS_WARN("Duplicate syncpoint types in single behavior");
+	  return false;
+	}
+    }
+
+  if( timing_counts["start"] != 1)
+    {
+      ROS_WARN("Timing contains no start syncpoint");
+      return false;
+    }
+  if( timing_counts["end"] != 1)
+    {
+      ROS_WARN("Timing contains no end syncpoint");
+      return false;
+    }
+
+
+  return true;
+}

@@ -159,9 +159,9 @@ namespace nvbg
 
     /// Add sync point for sentence beginning
     bml::syncType begin_sync, end_sync, s0begin_sync;
-    begin_sync.id("begin");
+    begin_sync.id("start");
     end_sync.id("end");
-    s0begin_sync.id("s0_begin");
+    s0begin_sync.id("s0_start");
 
     xercesc::XMLString::transcode("sync", text_buffer, BUFFER_LEN-1);
     xercesc::DOMElement* begin_element = doc->createElement(text_buffer);
@@ -189,19 +189,26 @@ namespace nvbg
 	if( !parse::isIgnored(token) )
 	  {
 	    /// sync point for the current word
-	    std::stringstream ws;
-	    ws << "w" << added_word_idx;
-	    bml::syncType word_sync;
-	    word_sync.id( ws.str() );
+	    std::stringstream wsb, wse;
+	    wsb << "t" << parse::wordToStartTime(added_word_idx);
+	    wse << "t" << parse::wordToEndTime(added_word_idx);
+
+	    bml::syncType word_begin_sync, word_end_sync;
+	    word_begin_sync.id( wsb.str() );
+	    word_end_sync.id( wse.str() );
 	    
 	    xercesc::XMLString::transcode("sync", text_buffer, BUFFER_LEN-1);
-	    xercesc::DOMElement* ws_element = doc->createElement(text_buffer);
-	    *ws_element << word_sync;
+	    xercesc::DOMElement* wsb_element = doc->createElement(text_buffer);
+	    xercesc::DOMElement* wse_element = doc->createElement(text_buffer);
+	    *wsb_element << word_begin_sync;
+	    *wse_element << word_end_sync;
 
-	    /// word syncpoint
-	    text_element->appendChild(ws_element);
-	    /// word
-	    text_element->appendChild(str_element);	
+	    /// word begin syncpoint
+	    text_element->appendChild(wsb_element);
+	    /// word text
+	    text_element->appendChild(str_element);
+	    /// word end syncpoint
+	    text_element->appendChild(wse_element);
 
 	    /// Add sentence tags for the current sentence
 	    if( token == parse::SENTENCE_END)
@@ -209,7 +216,7 @@ namespace nvbg
 		std::stringstream bstream, estream;
 		estream << "s" << sentence_idx << "_end";
 		++sentence_idx;
-		bstream << "s" << sentence_idx << "_begin";
+		bstream << "s" << sentence_idx << "_start";
 		
 		bml::syncType sbegin_sync, send_sync;
 		send_sync.id( estream.str() );
@@ -368,17 +375,17 @@ namespace nvbg
 			  continue;
 			}
 		      
-		      if ( timing.scope == "speech" )
+		      if ( timing.type == "speech" )
 			{
 			  std::stringstream ts;
-			  /// arg_str is either 'begin' or 'end'
-			  ts << PRIMARY_SPEECH_ID << ":" << timing.arg_str;
+			  /// pos is either 'start' or 'end'
+			  ts << PRIMARY_SPEECH_ID << ":" << timing.pos;
 			  if( timing.offset )
 			    ts << " + " << timing.offset;
 			  
 			  sync.insert (std::make_pair( timing.sync, ts.str() ) );
 			}
-		      else if( timing.scope == "sentence" )
+		      else if( timing.type == "sentence" )
 			{
 			  std::stringstream ts;
 			  
@@ -390,13 +397,14 @@ namespace nvbg
 			  size_t sentence_idx = index_it->second;
 			  
 			  ts << PRIMARY_SPEECH_ID << ":s" << sentence_idx 
-			     << "_" << timing.arg_str;
+			     << "_" << timing.pos;
 			  if( timing.offset )
 			    ts << " + " << timing.offset;
 			  
 			  sync.insert (std::make_pair( timing.sync, ts.str() ) );
 			}
-		      else if( timing.scope == "phrase" )
+		      /// TODO: Add begin/end support
+		      else if( timing.type == "word" )
 			{
 			  /// Get which sentence we're in
 			  parse::IndexMap::iterator sentence_it = ps.char_to_sentence_.find(phrase_idx);
@@ -409,7 +417,7 @@ namespace nvbg
 			  parse::IndexMap::iterator word_it = ps.char_to_word_.find(phrase_idx);
 			  ROS_ASSERT( word_it != ps.char_to_word_.end() );
 
-			  size_t ref_word_idx = word_it->second + timing.arg_idx;
+			  size_t ref_word_idx = word_it->second + timing.word_idx;
 
 			  if( ref_word_idx >= ps.tokens_.size() )
 			    {
@@ -419,17 +427,56 @@ namespace nvbg
 			      continue;
 			    }
 
+			  size_t final_idx;
+			  if( timing.pos == "start")
+			    final_idx = parse::wordToStartTime(ref_word_idx);
+			  else if( timing.pos == "end")
+			    final_idx = parse::wordToEndTime(ref_word_idx);
+			  else
+			    ROS_ASSERT_MSG(false, "Invalid timing pos type");
+			  
 			  std::stringstream ts;
-			  ts << PRIMARY_SPEECH_ID << ":w" << ref_word_idx;
+			  ts << PRIMARY_SPEECH_ID << ":w" << final_idx;
 			  if( timing.offset )
 			    ts << " + " << timing.offset;
 
 			  sync.insert( std::make_pair( timing.sync, ts.str() ) );
 			}
+		      else if(timing.type == "phrase" )
+			{
+			  if(timing.pos == "start")
+			    {
+			      parse::IndexMap::iterator word_it = ps.char_to_word_.find(phrase_idx);
+			      size_t ref_word_idx = word_it->second;
+			      std::stringstream ts;
+			      ts << PRIMARY_SPEECH_ID << ":t" << parse::wordToStartTime(ref_word_idx);
+			      if( timing.offset )
+				ts << " + " << timing.offset;
+			      
+			      sync.insert( std::make_pair( timing.sync, ts.str() ) );
+			      
+			    }
+			  else if(timing.pos == "end")
+			    {
+			      /// Get the last character in the phrase, then get the index of the word containing it.
+			      parse::IndexMap::iterator word_it = ps.char_to_word_.find(phrase_idx + rule_phrase.size()-1);
+			      size_t ref_word_idx = word_it->second;
+			      std::stringstream ts;
+			      ts << PRIMARY_SPEECH_ID << ":t" << parse::wordToEndTime(ref_word_idx);
+			      if( timing.offset )
+				ts << " + " << timing.offset;
+			      
+			      sync.insert( std::make_pair( timing.sync, ts.str() ) );
+			    }
+			  else
+			    {
+			      ROS_ASSERT_MSG(false, "Invalid timing pos type");
+			    }
+			}
 		      else
 			{
 			  /// This should have already been validated
-			  ROS_ASSERT_MSG(false, "Invalid scope argument");
+			  ROS_ASSERT_MSG(false, "Invalid type argument");
 			}
 
 		    }

@@ -44,6 +44,9 @@
 
 #include <set>
 
+/// boost
+#include <boost/tokenizer.hpp>
+
 namespace nvbg
 {
     namespace parse
@@ -86,6 +89,9 @@ namespace nvbg
     parse::ParsedSpeech parseSpeech(std::string const & speech);
     std::string toLower(std::string const & input);
     bool isIgnored(std::string const & word);
+
+    inline size_t wordToStartTime(size_t const & idx){ return 2*idx; }
+    inline size_t wordToEndTime(size_t const & idx){ return 2*idx + 1; }
     
   }
 

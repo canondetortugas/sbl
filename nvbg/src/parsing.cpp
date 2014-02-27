@@ -38,10 +38,6 @@
 
 #include <nvbg/parsing.h>
 
-/// boost
-#include <boost/tokenizer.hpp>
-
-
 namespace nvbg
 {
   namespace parse
@@ -49,7 +45,7 @@ namespace nvbg
     std::string const DELIMITERS = " ,;.:\"!?";
     std::set<char> const IGNORED_DELIMITERS = {' ', '\"'};
     std::string const SENTENCE_END = ".";
-
+    
     /// TODO: Kill leading / trailing whitespace if it exists
     /// TODO: Don't tolwer the original sentence - just save a tolower'd version for strcmp
     parse::ParsedSpeech parseSpeech(std::string const & speech)

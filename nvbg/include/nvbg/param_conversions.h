@@ -49,39 +49,43 @@
 // #define USCAUV_PARAM_LOADER_DISALLOW_EMPTY_VECTORS
 // #define USCAUV_PARAM_LOADER_DISALLOW_EMPTY_MAPS
 #include <uscauv_common/param_loader.h>
+#include <uscauv_common/macros.h>
 
 using namespace uscauv;
 using namespace nvbg;
 
+/// Perform any validation that can't be performed during autoload
+void postProcessRules( rules::RuleClassMap & rcm, behavior::BehaviorMap & bh );
+bool validateRuleTimings( std::vector<timing::Timing> const & timings, std::set<std::string> sync_types);
+
 USCAUV_DECLARE_PARAM_LOADER_CONVERSION(timing::Timing, param,
 
 				       timing::Timing time;
-				       time.scope = param::lookup<std::string>(param, "scope");
+				       time.type = param::lookup<std::string>(param, "type");
 				       
-				       if( !timing::SCOPE_TYPES.count( time.scope ))
+				       if( !timing::TYPES.count( time.type ))
 					 {
-					   throw std::invalid_argument("Invalid scope type");
+					   throw std::invalid_argument("Invalid timing type");
 					 }
 				       
 				       /// We will check if this a valid sync type later when we have context as to the behavior type later.
 				       time.sync = param::lookup<std::string>(param, "sync");
 				       
-				       if( time.scope == "speech" || time.scope == "sentence")
+				       time.pos = param::lookup<std::string>(param, "pos");
+				       
+				       if( !timing::POS_ARGS.count( time.pos ))
 					 {
-					   std::string arg = param::lookup<std::string>(param, "arg");
-					   
-					   if( !timing::VALID_STRING_ARGS.count( arg) )
-					     {
-					       throw std::invalid_argument("Invalid timing argument");
-					     }
-					   
-					   time.arg_str = arg;
-					 }
-				       else
-					 {
-					   time.arg_idx = param::lookup<int>(param, "arg");
+					   throw std::invalid_argument("Invalid timing position argument");
 					 }
 
+				       
+				       if( time.type == "word")
+					 {
+					   time.word_idx = param::lookup<int>(param, "word_index");
+					   if( time.word_idx < 0 )
+					     throw std::invalid_argument("Word index must be non-negative");
+					 }
+				       
 				       /// Quiet
 				       time.offset = param::lookup<double>(param, "offset", 0.0, true);
 				       

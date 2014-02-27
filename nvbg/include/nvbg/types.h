@@ -48,11 +48,11 @@ namespace nvbg
   {
     struct Timing
     {
-      std::string scope;
+      std::string type;
       std::string sync;
-      std::string arg_str;
+      std::string pos;
       double offset;
-      size_t arg_idx;
+      size_t word_idx;
     };
   }
 
@@ -110,8 +110,8 @@ namespace nvbg
   
   namespace timing
   {
-    extern std::set<std::string> const SCOPE_TYPES;
-    extern std::set<std::string> const VALID_STRING_ARGS;
+    extern std::set<std::string> const TYPES;
+    extern std::set<std::string> const POS_ARGS;
   }
 }
 

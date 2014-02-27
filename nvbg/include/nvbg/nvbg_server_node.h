@@ -93,7 +93,9 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
        bml_pub_ = nh_rel_.advertise<std_msgs::String>("bml", 10);
        
        rules_ = uscauv::param::load<rules::RuleClassMap>(nh_base_, "nvbg/rules");
+       
        behaviors_ = uscauv::param::load<behavior::BehaviorMap>(nh_base_, "nvbg/behaviors");
+       postProcessRules(rules_, behaviors_);
 
        /// Various preprocessing things that should be done
        /// TODO: Verify that all behaviors referenced in the rules are actually loaded
