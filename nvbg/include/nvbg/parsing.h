@@ -60,7 +60,7 @@ namespace nvbg
     /// delimiters that don't count as words
     extern std::set<char> const IGNORED_DELIMITERS;
     /// delimiter denoting the end of a sentence (.)
-    extern std::string const SENTENCE_END;
+    extern std::set<char> const SENTENCE_ENDINGS;
     
     /// Map string index to the token containing this index
     typedef std::map<size_t, size_t> IndexMap;
@@ -89,6 +89,7 @@ namespace nvbg
     parse::ParsedSpeech parseSpeech(std::string const & speech);
     std::string toLower(std::string const & input);
     bool isIgnored(std::string const & word);
+    bool isSentenceEnding(std::string const & word);
 
     inline size_t wordToStartTime(size_t const & idx){ return 2*idx; }
     inline size_t wordToEndTime(size_t const & idx){ return 2*idx + 1; }

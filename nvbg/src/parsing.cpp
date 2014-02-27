@@ -42,12 +42,13 @@ namespace nvbg
 {
   namespace parse
   {
+    /// These are used to tell the tokenizer to that a token has finished
     std::string const DELIMITERS = " ,;.:\"!?";
-    std::set<char> const IGNORED_DELIMITERS = {' ', '\"'};
-    std::string const SENTENCE_END = ".";
+    /// These delimiters do not get their own timing tags in BML
+    std::set<char> const IGNORED_DELIMITERS = {' ', '\"', '.', '!', '?', ':', ',', ';'};
+    std::set<char> const SENTENCE_ENDINGS = {'.', '?', '!'};
     
     /// TODO: Kill leading / trailing whitespace if it exists
-    /// TODO: Don't tolwer the original sentence - just save a tolower'd version for strcmp
     parse::ParsedSpeech parseSpeech(std::string const & speech)
     {
       typedef boost::tokenizer<boost::char_separator<char> > _Tokenizer;
@@ -93,7 +94,7 @@ namespace nvbg
 	      ++token_idx;
 	    }
 	  
-	  if( token == SENTENCE_END )
+	  if( isSentenceEnding(token) )
 	    {
 	      // first_word = true;
 	      ++sentence_idx;
@@ -120,6 +121,10 @@ namespace nvbg
     bool isIgnored(std::string const & word)
     {
       return word.size() == 1 && parse::IGNORED_DELIMITERS.count(word.c_str()[0]);
+    }
+    bool isSentenceEnding(std::string const & word)
+    {
+      return word.size() == 1 && parse::SENTENCE_ENDINGS.count(word.c_str()[0]);
     }
 
   }
