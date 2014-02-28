@@ -68,7 +68,7 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
  private:
   
   ros::Subscriber simple_request_sub_;
-  ros::Publisher bml_pub_;
+  ros::Publisher bml_pub_, raw_bml_pub_;
   ros::NodeHandle nh_base_, nh_rel_;
 
   rules::RuleClassMap rules_;
@@ -91,6 +91,7 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 								   &NVBGServerNode::simpleRequestCallback, this);
 
        bml_pub_ = nh_rel_.advertise<std_msgs::String>("bml", 10);
+       raw_bml_pub_ = nh_rel_.advertise<std_msgs::String>("bml_raw", 10);
        
        rules_ = uscauv::param::load<rules::RuleClassMap>(nh_base_, "nvbg/rules");
        
@@ -122,15 +123,21 @@ class NVBGServerNode: public BaseNode, public MultiReconfigure
 	std::stringstream id;
 	id << "request" << request_idx;
 
-	std::string output_str = nvbg::generateBML(msg->text, msg->eca, 
-							   behaviors_, rules_, id.str() );
+	std::string output_proc, output_raw;
+
+	nvbg::generateBML(output_proc, output_raw,
+			  msg->text, msg->eca, 
+			  behaviors_, rules_, id.str() );
 	
-	std_msgs::String output;
-	output.data = output_str;
+	std_msgs::String output, outputr;
+	output.data = output_proc;
+	outputr.data = output_raw;
 	
 	bml_pub_.publish(output);
+	raw_bml_pub_.publish(outputr);
 		
-	ROS_INFO_STREAM(output_str);		
+	ROS_INFO_STREAM("Raw BML: " << output_raw);
+	ROS_INFO_STREAM("Processed BML: " << output_proc);		
       }
     catch (const xml_schema::exception& e)
       {

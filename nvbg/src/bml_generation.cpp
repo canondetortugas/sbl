@@ -35,15 +35,7 @@
  *
  **************************************************************************/
 
-#include <ros/ros.h>
 #include <nvbg/bml_generation.h>
-#include <uscauv_common/macros.h>
-
-/// xerces and pals
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/dom/DOMImplementation.hpp>
-#include <xercesc/dom/DOMImplementationLS.hpp>
-#include <xercesc/dom/DOMWriter.hpp>
 
 namespace nvbg
 {
@@ -289,11 +281,14 @@ namespace nvbg
    * 
    * @return 
    */
-  std::string generateBML(std::string const & text, std::string const & eca,
+  void generateBML(std::string & processed_bml, std::string & raw_bml, 
+		   std::string const & text, std::string const & eca,
 			  nvbg::behavior::BehaviorMap const &behaviors,
 			  nvbg::rules::RuleClassMap const &rule_classes,
 			  std::string request_id)
   {
+    using namespace nvbg;
+    
     /// Map from a sync point type (e.g. stokeStart) to a sync point
     typedef std::map<std::string, std::string> _SyncMap;
   
@@ -311,12 +306,15 @@ namespace nvbg
   
     tree->characterId( eca );
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // Add speech block////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
   
     parse::ParsedSpeech ps = parse::parseSpeech( text );
+
+    std::vector<std::shared_ptr<ConstrainedGesture> > constrained_gestures;
+    std::vector<std::shared_ptr<ConstrainedFace> > constrained_faces;
+    std::vector<std::shared_ptr<ConstrainedHead> > constrained_heads;
   
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // Match rules//////////////////////////////////////////////////////////////////////////////////////
@@ -360,11 +358,15 @@ namespace nvbg
 		    // Resolve behavior syncpoints //////////////////////////////////////////////////////////
 		    /////////////////////////////////////////////////////////////////////////////////////////
 		    _SyncMap sync;
+
+		    size_t start_idx, end_idx;
 		  
 		    for( std::vector<timing::Timing>::const_iterator timing_it = timings.begin(); 
 			 timing_it != timings.end(); ++timing_it )
 		      {
 			timing::Timing const & timing = *timing_it;
+
+			size_t word_idx;
 		      
 			/// Can only have one syncpoint of each type
 			if( sync.find( timing.sync ) != sync.end() )
@@ -384,6 +386,11 @@ namespace nvbg
 			      ts << " + " << timing.offset;
 			  
 			    sync.insert (std::make_pair( timing.sync, ts.str() ) );
+
+			    if( timing.pos == "start")
+			      word_idx = parse::wordToStartTime(0);
+			    else if( timing.pos =="end")
+			      word_idx = parse::wordToEndTime(ps.char_to_word_.at( rule_phrase.size()-1));
 			  }
 			else if( timing.type == "sentence" )
 			  {
@@ -402,6 +409,20 @@ namespace nvbg
 			      ts << " + " << timing.offset;
 			  
 			    sync.insert (std::make_pair( timing.sync, ts.str() ) );
+
+			    if( timing.pos == "start" )
+			      {
+				parse::IndexMap::iterator start_it = ps.sentence_to_start_word_.find(sentence_idx);
+				ROS_ASSERT( start_it != ps.sentence_to_start_word_.end() );
+				word_idx = parse::wordToStartTime(start_it->second);
+			      }
+			    else if( timing.pos == "end" )
+			      {
+				parse::IndexMap::iterator end_it = ps.sentence_to_end_word_.find(sentence_idx);
+				ROS_ASSERT( end_it != ps.sentence_to_end_word_.end() );
+				word_idx = parse::wordToEndTime(end_it->second);
+			      }
+			    
 			  }
 			/// TODO: Add begin/end support
 			else if( timing.type == "word" )
@@ -418,7 +439,7 @@ namespace nvbg
 			    ROS_ASSERT( word_it != ps.char_to_word_.end() );
 
 			    size_t ref_word_idx = word_it->second + timing.word_idx;
-
+			    
 			    if( ref_word_idx >= ps.tokens_.size() )
 			      {
 				ROS_ERROR_STREAM("Invalid word offset for syncpoint" << brk(timing.sync)
@@ -434,9 +455,11 @@ namespace nvbg
 			      final_idx = parse::wordToEndTime(ref_word_idx);
 			    else
 			      ROS_ASSERT_MSG(false, "Invalid timing pos type");
+
+			    word_idx = final_idx;
 			  
 			    std::stringstream ts;
-			    ts << PRIMARY_SPEECH_ID << ":w" << final_idx;
+			    ts << PRIMARY_SPEECH_ID << ":t" << final_idx;
 			    if( timing.offset )
 			      ts << " + " << timing.offset;
 
@@ -447,26 +470,28 @@ namespace nvbg
 			    if(timing.pos == "start")
 			      {
 				parse::IndexMap::iterator word_it = ps.char_to_word_.find(phrase_idx);
-				size_t ref_word_idx = word_it->second;
+				size_t ref_word_idx = parse::wordToStartTime(word_it->second);
 				std::stringstream ts;
-				ts << PRIMARY_SPEECH_ID << ":t" << parse::wordToStartTime(ref_word_idx);
+				ts << PRIMARY_SPEECH_ID << ":t" << ref_word_idx;
 				if( timing.offset )
 				  ts << " + " << timing.offset;
 			      
 				sync.insert( std::make_pair( timing.sync, ts.str() ) );
-			      
+				
+				word_idx =ref_word_idx;
 			      }
 			    else if(timing.pos == "end")
 			      {
 				/// Get the last character in the phrase, then get the index of the word containing it.
 				parse::IndexMap::iterator word_it = ps.char_to_word_.find(phrase_idx + rule_phrase.size()-1);
-				size_t ref_word_idx = word_it->second;
+				size_t ref_word_idx = parse::wordToEndTime(word_it->second);
 				std::stringstream ts;
-				ts << PRIMARY_SPEECH_ID << ":t" << parse::wordToEndTime(ref_word_idx);
+				ts << PRIMARY_SPEECH_ID << ":t" << ref_word_idx;
 				if( timing.offset )
 				  ts << " + " << timing.offset;
 			      
 				sync.insert( std::make_pair( timing.sync, ts.str() ) );
+				word_idx =ref_word_idx;
 			      }
 			    else
 			      {
@@ -479,6 +504,10 @@ namespace nvbg
 			    ROS_ASSERT_MSG(false, "Invalid type argument");
 			  }
 
+			if( timing.sync == "start")
+			  start_idx = word_idx;
+			else if( timing.sync == "end")
+			  end_idx = word_idx;
 		      }
 		  
 		    /////////////////////////////////////////////////////////////////////////////////////////
@@ -498,6 +527,15 @@ namespace nvbg
 			bml::closedSetItem mode(1, behavior.mode );
 			gesture.mode( mode );
 
+			std::shared_ptr<ConstrainedGesture> cg = std::make_shared<ConstrainedGesture>();
+
+			cg->priority = rule_class.priority;
+			cg->mode = behavior.mode;
+			cg->id = id.str();
+			cg->start = start_idx;
+			cg->end = end_idx;
+			constrained_gestures.push_back(cg);
+			
 			for( _SyncMap::const_iterator sync_it = sync.begin(); sync_it != sync.end();
 			     ++sync_it)
 			  {
@@ -537,6 +575,14 @@ namespace nvbg
 		      
 			face.amount( behavior.amount );
 
+			std::shared_ptr<ConstrainedFace> cf = std::make_shared<ConstrainedFace>();
+
+			cf->priority = rule_class.priority;
+			cf->id = id.str();
+			cf->start = start_idx;
+			cf->end = end_idx;
+			constrained_faces.push_back(cf);
+
 			for( _SyncMap::const_iterator sync_it = sync.begin(); sync_it != sync.end();
 			     ++sync_it)
 			  {
@@ -572,6 +618,14 @@ namespace nvbg
 		      
 			head.repetition( behavior.repetition );
 			head.amount( behavior.amount );
+
+			std::shared_ptr<ConstrainedHead> ch = std::make_shared<ConstrainedHead>();
+
+			ch->priority = rule_class.priority;
+			ch->id = id.str();
+			ch->start = start_idx;
+			ch->end = end_idx;
+			constrained_heads.push_back(ch);
 
 			for( _SyncMap::const_iterator sync_it = sync.begin(); sync_it != sync.end();
 			     ++sync_it)
@@ -612,11 +666,14 @@ namespace nvbg
       }
   
     std::shared_ptr<xercesc::DOMDocument> doc = addSpeech(tree, ps);
-    std::string output = serializeXMLDocument( *doc );
-  
-    return output;
-  }
+    
+    raw_bml = serializeXMLDocument( *doc );
 
-  
+    nvbg::resolveConstraints(doc, constrained_gestures);
+    nvbg::resolveConstraints(doc, constrained_faces);
+    nvbg::resolveConstraints(doc, constrained_heads);
+
+    processed_bml = serializeXMLDocument( *doc );
+  }
 
 }

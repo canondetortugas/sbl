@@ -50,12 +50,14 @@
 #include <xercesc/dom/DOMImplementationLS.hpp>
 #include <xercesc/dom/DOMWriter.hpp>
 
+#include <uscauv_common/macros.h>
+
 namespace nvbg
 {
 
   /// Remove behaviors that violate timing constraints from the DOM Document
   template<class __ConstrainedBehavior>
-  std::shared_ptr<xercesc::DOMDocument> resolveConstraints(std::shared_ptr<xercesc::DOMDocument> const & doc, 
+  void resolveConstraints(std::shared_ptr<xercesc::DOMDocument> const& doc, 
 							   std::vector<std::shared_ptr<__ConstrainedBehavior> > const & cb)
   {
     size_t const BUFFER_LEN = 1000;
@@ -67,10 +69,13 @@ namespace nvbg
     typedef std::set<std::string> _BehaviorNameSet;
     
     _BehaviorNameSet offending_behaviors = chooseBehaviorCombination(cb);
+    std::stringstream of;
+    std::copy(offending_behaviors.begin(), offending_behaviors.end(), std::ostream_iterator<std::string>(of, ", "));
+    ROS_INFO_STREAM("Offending behaviors: " << of.str());
 
-    std::shared_ptr<xercesc::DOMDocument> output( doc->cloneNode(true) );
+    // std::shared_ptr<xercesc::DOMDocument> output( doc->cloneNode(true) );
     
-    xercesc::DOMElement* root = output->getDocumentElement();
+    xercesc::DOMElement* root = doc->getDocumentElement();
 
     xercesc::XMLString::transcode( __ConstrainedBehavior::getTagName().c_str(), text_buffer, BUFFER_LEN-1);
     xercesc::DOMNodeList* nodes = root->getElementsByTagName(text_buffer);
@@ -78,21 +83,27 @@ namespace nvbg
     xercesc::XMLString::transcode( "id", text_buffer, BUFFER_LEN-1);
     for(size_t node_idx = 0; node_idx < nodes->getLength(); ++node_idx)
       {
-	xercesc::DOMElement* node = nodes->item(node_idx);
-	XMLCh* const xml_id = node->getAttribute(text_buffer);
+	/// TODO: Verify that the node is actually an element
+	xercesc::DOMElement* node = dynamic_cast<xercesc::DOMElement*>( nodes->item(node_idx) );
+	XMLCh const * xml_id = node->getAttribute(text_buffer);
 	char * id = xercesc::XMLString::transcode(xml_id);
 	std::string id_str(id);
+	
 	ROS_ASSERT_MSG( id_str.size() != 0, "Behavior element has no id attribute");
+	
+	ROS_INFO_STREAM("Processed bml node " << id_str);
 
 	if( offending_behaviors.count(id_str))
 	  {
 	    root->removeChild( node );
+	    ROS_INFO_STREAM("Removing behavior " << brk(id_str));
 	  }
 	
 	xercesc::XMLString::release(&id);
       }
     
-    return output;
+    // return output;
+    return;
   }
   
   /** 
@@ -129,6 +140,8 @@ namespace nvbg
     
     long unsigned int combination = chooseBehaviorCombinationHighestPriority(scores);
 
+    ROS_INFO_STREAM("Chose combination " << combination);
+
     return getRemovedBehaviorIDs(cb, combination);
   }
 
@@ -160,9 +173,9 @@ namespace nvbg
 	std::vector<std::shared_ptr<__ConstrainedBehavior> > candidates = getBehaviorCombination(cb, combination);
 	
 	/// Check every pair of behaviors in this combination for collision
-	for(typename _CBVec::const_iterator cb1_it = candidates.begin; cb1_it != candidates.end(); ++cb1_it)
+	for(typename _CBVec::const_iterator cb1_it = candidates.begin(); cb1_it != candidates.end(); ++cb1_it)
 	  {
-	    for(typename _CBVec::const_iterator cb2_it = cb1_it + 1; cb2_it != candidates.end(); +cb2_it)
+	    for(typename _CBVec::const_iterator cb2_it = cb1_it + 1; cb2_it != candidates.end(); ++cb2_it)
 	      {
 		/// this behavior pair collides, so this combination doesn't get added to the list of valid combinations
 		if( __ConstrainedBehavior::checkCollision( **cb1_it, **cb2_it ))

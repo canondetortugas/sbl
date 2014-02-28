@@ -66,7 +66,9 @@ namespace nvbg
       // std::stringstream ss;
 
       size_t atoken_idx = 0, sentence_idx = 0, char_idx = 0, token_idx = 0;
-      // bool first_word = true;
+
+      ps.sentence_to_start_word_.insert( std::make_pair(0,0) );
+      /// Ignored characters map to the real word following them
       for( _Tokenizer::iterator token_it = tokenizer.begin(); token_it != tokenizer.end(); ++token_it)
 	{
 	  std::string const & token = *token_it;
@@ -82,22 +84,17 @@ namespace nvbg
 	    }
 	  char_idx += token.size();
 	  
-	  // if (first_word)
-	  //   {
-	  //     ps.sentence_to_word_.insert( std::make_pair( sentence_idx, atoken_idx ) );
-	  //     first_word = false;
-	  //   }
 
+	  if( isSentenceEnding(token) )
+	    {
+	      ps.sentence_to_end_word_.insert( std::make_pair(sentence_idx, token_idx));
+	      ++sentence_idx;
+	      ps.sentence_to_start_word_.insert( std::make_pair(sentence_idx, token_idx+1));
+	    }
 	  if (!isIgnored( token ))
 	    {
 	      ps.tokens_.push_back(token);
 	      ++token_idx;
-	    }
-	  
-	  if( isSentenceEnding(token) )
-	    {
-	      // first_word = true;
-	      ++sentence_idx;
 	    }
 	  
 	  ++atoken_idx;

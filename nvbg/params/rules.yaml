@@ -16,13 +16,14 @@ interjection:
   rules:
     "yes":
       head_nod: [{type: phrase, sync: start, pos: start}, {type: phrase, sync: end, pos: end}]
+      head_shake: [{type: phrase, sync: start, pos: start}, {type: phrase, sync: end, pos: end}]
 
 affirmation:
   priority: 2
   rules:
-  #   "yes": 
-  #     head_nod: [{sync: strokeStart, type: phrase, word: 0, pos: start}, {type: sentence, sync: strokeEnd, pos: end}]
-  #     brow_raise: [{type: sentence, sync: start, pos: start}]
+    "yes": 
+      head_nod: [{sync: strokeStart, type: word, word_index: 0, pos: start}, {type: sentence, sync: strokeEnd, pos: end}, {type: phrase, sync: start, pos: start}, {type: phrase, sync: end, pos: end}]
+      brow_raise: [{type: phrase, sync: start, pos: start}, {type: phrase, sync: end, pos: end}]
     "who are you":
       wave_right_arm: [{sync: strokeEnd, type: word, word_index: 0, pos: start, offset: 0.5}, {type: phrase, sync: start, pos: start}, {type: phrase, sync: end, pos: end}]
 

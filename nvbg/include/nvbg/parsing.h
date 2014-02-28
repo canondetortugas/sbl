@@ -76,7 +76,10 @@ namespace nvbg
       /// containing word
       IndexMap word_to_sentence_;
       /// Map from sentence index to the index of the first word in the sentence
-      // IndexMap sentence_to_word_;
+      IndexMap sentence_to_start_word_;
+      /// Note that that for the last sentence, this may map to a word that doesn't exist.
+      /// This is fine because we only use this to check collisions - 
+      IndexMap sentence_to_end_word_;
 
       /// Non-ignored tokens, all tokens
       std::vector<std::string> tokens_, all_tokens_;

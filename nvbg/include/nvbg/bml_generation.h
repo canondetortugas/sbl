@@ -47,6 +47,7 @@
 
 #include <nvbg/types.h>
 #include <nvbg/parsing.h>
+#include <nvbg/resolve_constraints.h>
 
 /// xerces and pals
 #include <xercesc/dom/DOM.hpp>
@@ -62,10 +63,11 @@ namespace nvbg
   xml_schema::namespace_infomap getBMLInfoMap();
   std::shared_ptr<xercesc::DOMDocument> addSpeech(std::shared_ptr<bml::bml> tree, std::string const & ps);
 
-  std::string generateBML(std::string const & text, std::string const & eca,
-					nvbg::behavior::BehaviorMap const &behaviors,
-					nvbg::rules::RuleClassMap const &rule_classes,
-					std::string request_id = "request");
+  void generateBML(std::string & processed_bml, std::string & raw_bml, 
+			  std::string const & text, std::string const & eca,
+			  nvbg::behavior::BehaviorMap const &behaviors,
+			  nvbg::rules::RuleClassMap const &rule_classes,
+			  std::string request_id = "request");
 
   std::string serializeXMLDocument( xercesc::DOMDocument & doc );
   std::string serializeXMLDocument( bml::bml & tree );
