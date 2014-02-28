@@ -44,7 +44,7 @@
 
 namespace nvbg
 {
-
+  
   struct ConstrainedBehavior
   {
     /// Indices of start and end times
@@ -78,9 +78,13 @@ namespace nvbg
       bool const same_arm = (c1.mode == "BOTH_HANDS" || c2.mode == "BOTH_HANDS" ||
 			     (c1.mode == "RIGHT_HAND" && c2.mode == "RIGHT_HAND") ||
 			     (c1.mode == "LEFT_HAND" && c2.mode == "RIGHT_HAND"));
-      
+    
+      /// Gestures collide if they try to use the same arm at the same time
       return same_arm && ConstrainedBehavior::checkCollision(c1, c2);
     }
+    
+    static std::string const getTagName(){ return "gesture";}
+
   };
 
   struct ConstrainedHead: public ConstrainedBehavior
@@ -89,6 +93,8 @@ namespace nvbg
     {
       return ConstrainedBehavior::checkCollision(c1, c2);
     }
+
+    static std::string const getTagName(){ return "head";}
   };
 
   struct ConstrainedFace: public ConstrainedBehavior
@@ -97,6 +103,8 @@ namespace nvbg
     {
       return ConstrainedBehavior::checkCollision(c1, c2);
     }
+
+    static std::string const getTagName(){ return "face";}
   };
     
 

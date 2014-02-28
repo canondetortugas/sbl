@@ -1,5 +1,5 @@
 /***************************************************************************
- *  include/nvbg/bml_generation.h
+ *  src/resolve_constraints.cpp
  *  --------------------
  *
  *  Software License Agreement (BSD License)
@@ -36,40 +36,4 @@
  **************************************************************************/
 
 
-#ifndef SBL_NVBG_BMLGENERATION
-#define SBL_NVBG_BMLGENERATION
-
-// ROS
-#include <ros/ros.h>
-
-/// BML parsing
-#include <bml_cpp/bml-1.0.h>
-
-#include <nvbg/types.h>
-#include <nvbg/parsing.h>
-
-/// xerces and pals
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/dom/DOMImplementation.hpp>
-#include <xercesc/dom/DOMImplementationLS.hpp>
-#include <xercesc/dom/DOMWriter.hpp>
-
-#include <uscauv_common/macros.h>
-
-namespace nvbg
-{
-  int initializeXMLPlatform();
-  xml_schema::namespace_infomap getBMLInfoMap();
-  std::shared_ptr<xercesc::DOMDocument> addSpeech(std::shared_ptr<bml::bml> tree, std::string const & ps);
-
-  std::string generateBML(std::string const & text, std::string const & eca,
-					nvbg::behavior::BehaviorMap const &behaviors,
-					nvbg::rules::RuleClassMap const &rule_classes,
-					std::string request_id = "request");
-
-  std::string serializeXMLDocument( xercesc::DOMDocument & doc );
-  std::string serializeXMLDocument( bml::bml & tree );
-
-}
-
-#endif // SBL_NVBG_BMLGENERATION
+#include <nvbg/resolve_constraints.h>
