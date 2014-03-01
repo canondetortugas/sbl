@@ -138,6 +138,8 @@ namespace nvbg
 
     _CombinationScores scores = scoreBehaviorCombinationsExhaustive(cb);
     
+    
+    
     long unsigned int combination = chooseBehaviorCombinationHighestPriority(scores);
 
     ROS_INFO_STREAM("Chose combination " << combination);
@@ -168,7 +170,7 @@ namespace nvbg
 
     for(long unsigned int combination = 1; combination < n_combinations; ++combination)
       {
-	unsigned int priority;
+	unsigned int priority = 0;
 	
 	std::vector<std::shared_ptr<__ConstrainedBehavior> > candidates = getBehaviorCombination(cb, combination);
 	
