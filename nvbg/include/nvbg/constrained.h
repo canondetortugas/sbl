@@ -104,11 +104,8 @@ namespace nvbg
       return ConstrainedBehavior::checkCollision(c1, c2);
     }
 
-    static std::string const getTagName(){ return "face";}
+    static std::string const getTagName(){ return "faceLexeme";}
   };
-    
-
-    
     
 } // nvbg
 

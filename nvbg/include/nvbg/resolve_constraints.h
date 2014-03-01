@@ -83,9 +83,14 @@ namespace nvbg
     xercesc::XMLString::transcode( "id", text_buffer, BUFFER_LEN-1);
     for(size_t node_idx = 0; node_idx < nodes->getLength(); ++node_idx)
       {
-	/// TODO: Verify that the node is actually an element
-	xercesc::DOMElement* node = dynamic_cast<xercesc::DOMElement*>( nodes->item(node_idx) );
-	XMLCh const * xml_id = node->getAttribute(text_buffer);
+	xercesc::DOMNode* node = nodes->item(node_idx);
+	/// Verify that the node is actually an element
+	if( node->getNodeType() != xercesc::DOMNode::ELEMENT_NODE)
+	  continue;
+
+	xercesc::DOMElement* element = dynamic_cast<xercesc::DOMElement*>( node );
+
+	XMLCh const * xml_id = element->getAttribute(text_buffer);
 	char * id = xercesc::XMLString::transcode(xml_id);
 	std::string id_str(id);
 	
