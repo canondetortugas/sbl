@@ -60,13 +60,12 @@ namespace nvbg
   void resolveConstraints(std::shared_ptr<xercesc::DOMDocument> const& doc, 
 							   std::vector<std::shared_ptr<__ConstrainedBehavior> > const & cb)
   {
+    typedef std::vector<__ConstrainedBehavior> _ConstrainedBehaviorVec;
+    typedef std::set<std::string> _BehaviorNameSet;
+    
     size_t const BUFFER_LEN = 1000;
     XMLCh text_buffer[BUFFER_LEN];
     XMLCh id_buffer[BUFFER_LEN];
-    
-    typedef std::shared_ptr<xercesc::DOMDocument> _DOMPtr;
-    typedef std::vector<__ConstrainedBehavior> _ConstrainedBehaviorVec;
-    typedef std::set<std::string> _BehaviorNameSet;
     
     _BehaviorNameSet offending_behaviors = chooseBehaviorCombination(cb);
     std::stringstream of;
@@ -119,12 +118,12 @@ namespace nvbg
    * 
    * @return 
    */
-  static long unsigned int chooseBehaviorCombinationHighestPriority( std::map<long unsigned int, unsigned int>  & scores )
+  static long unsigned int chooseBehaviorCombinationHighestPriority( std::map<long unsigned int, double>  & scores )
   {
-    typedef std::map<long unsigned int, unsigned int> _CombinationScores;
+    typedef std::map<long unsigned int, double> _CombinationScores;
     _CombinationScores::iterator it = 
-      std::min_element( scores.begin(), scores.end(), [](std::pair<long unsigned int, unsigned int> const & a,
-							 std::pair<long unsigned int, unsigned int> const & b)->bool
+      std::min_element( scores.begin(), scores.end(), [](std::pair<long unsigned int, double> const & a,
+							 std::pair<long unsigned int, double> const & b)->bool
 			{return a.second < b.second; });
 			return it->first;
 			}
@@ -139,11 +138,9 @@ namespace nvbg
   template<class __ConstrainedBehavior>
   std::set<std::string> chooseBehaviorCombination(std::vector<std::shared_ptr<__ConstrainedBehavior> > const & cb)
   {
-    typedef std::map<long unsigned int, unsigned int> _CombinationScores;
+    typedef std::map<long unsigned int, double> _CombinationScores;
 
     _CombinationScores scores = scoreBehaviorCombinationsExhaustive(cb);
-    
-    
     
     long unsigned int combination = chooseBehaviorCombinationHighestPriority(scores);
 
@@ -161,9 +158,9 @@ namespace nvbg
    * @return 
    */
   template<class __ConstrainedBehavior>
-  std::map<long unsigned int, unsigned int> scoreBehaviorCombinationsExhaustive(std::vector<std::shared_ptr<__ConstrainedBehavior> > const & cb)
+  std::map<long unsigned int, double> scoreBehaviorCombinationsExhaustive(std::vector<std::shared_ptr<__ConstrainedBehavior> > const & cb)
   {
-    typedef std::map<long unsigned int, unsigned int> _CombinationScores;
+    typedef std::map<long unsigned int, double> _CombinationScores;
     typedef std::vector<std::shared_ptr<__ConstrainedBehavior> > _CBVec;
 
     if( cb.size() >= 20)
@@ -172,10 +169,15 @@ namespace nvbg
     _CombinationScores scores;
     
     long unsigned int const  n_combinations = static_cast<long unsigned int>(1) << cb.size();
-
+    
+    /// Skip all combination 0 (no behaviors)
     for(long unsigned int combination = 1; combination < n_combinations; ++combination)
       {
-	unsigned int priority = 0;
+	/// Total priority for this combination
+	double priority = 0;
+	
+	/// Number of active behaviors in this combination
+	unsigned int active = 0;
 	
 	std::vector<std::shared_ptr<__ConstrainedBehavior> > candidates = getBehaviorCombination(cb, combination);
 	
@@ -189,9 +191,16 @@ namespace nvbg
 		  goto bailout;
 	      }
 	    priority += (*cb1_it)->priority;
+	    ++active;
 	  }
 
-	scores.insert( std::make_pair( combination, priority ));
+	/// Parens here prevent score from coming into scope if we jump to bailout
+	{
+	  /// lower scores are better
+	  double score = priority / active;
+	  
+	  scores.insert( std::make_pair( combination, score ));
+	}
 	
       bailout:
 	;
