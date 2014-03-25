@@ -1,5 +1,5 @@
 /***************************************************************************
- *  include/bml_realizer/realizable.h
+ *  include/bml_realizer/realizer_node.h
  *  --------------------
  *
  *  Software License Agreement (BSD License)
@@ -36,70 +36,64 @@
  **************************************************************************/
 
 
-#ifndef SBL_BMLREALIZER_REALIZABLE
-#define SBL_BMLREALIZER_REALIZABLE
+#ifndef SBL_BMLREALIZER_REALIZER
+#define SBL_BMLREALIZER_REALIZER
 
 // ROS
 #include <ros/ros.h>
-#include <tf/transform_broadcaster.h>
 
-namespace realizer
+#include <std_msgs/String.h>
+
+// uscauv
+#include <uscauv_common/base_node.h>
+
+#include <nvbg/bml_generation.h>
+
+/// realizer
+#include <bml_realizer/bml_processing.h>
+
+class RealizerNode: public BaseNode
 {
-
-  /**
-   * Realize a behavior of some sort as a function of time index into the behavior.
-   * 
-   */
-   class Realizable
-   {
- 
-   public:
-     typedef std::map<std::string, double> SyncPointMap;
-    
-    public:
-      Realizable()
-       {}
-
-     /// Play back the behavior at time
-     virtual void realize(double const & time) = 0;
-
-     /** 
-      * @return length of the behavior in seconds
-      */
-     virtual double getLength() = 0;
-     
-     /// Map from syncpoints (eg strokeStart) to times at which they occurr
-     virtual SyncPointMap getSyncPoints() = 0;
-     
-    };
-
-  /**
-   * Realize a gesture by publishing tf frames describing it.
-   * 
-   */
-  class RealizableGesture: public Realizable
+private:
+  ros::NodeHandle nh_rel_;
+  ros::Subscriber bml_sub_;
+  
+  
+public:
+  RealizerNode(): BaseNode("Realizer"), nh_rel_("~")
   {
-  protected:
-    std::shared_ptr<tf::TransformBroadcaster> br_;
+  }
 
-  public:
-    RealizableGesture()
-    {
-      br_ = std::make_shared<tf::TransformBroadcaster>();
-    }
-    
-    RealizableGesture(std::shared_ptr<tf::TransformBroadcaster> const & parent): 
-      br_(parent)
-    {}
+private:
 
-    virtual std::string getMode() = 0;
-    virtual void setMode(std::string const &) = 0;
-    
-    // virtual void realize(double const & time) = 0;
-    // virtual double getLength() = 0;
-  };
+  // Running spin() will cause this function to be called before the node begins looping the spinOnce() function.
+  void spinFirst()
+  {
+    bml_sub_ = nh_rel_.subscribe("bml", 1, &RealizerNode::bmlCallback, this);
+   
+    nvbg::initializeXMLPlatform();
+  }  
 
-    
-} // realizer
+  // Running spin() will cause this function to get called at the loop rate until this node is killed.
+  void spinOnce()
+  {
 
-#endif // SBL_BMLREALIZER_REALIZABLE
+  }
+
+  void bmlCallback( std_msgs::String::ConstPtr const & msg)
+  {
+    std::shared_ptr<xercesc::DOMDocument> doc = realizer::parseBML( msg->data );
+
+    if( !doc )
+      {
+	ROS_ERROR("Failed to parse BML document.");
+	return;
+      }
+
+    std::map<std::string, std::string> named_speeches = realizer::extractSpeech(doc);
+
+  }
+
+};
+
+#endif // SBL_BMLREALIZER_REALIZER

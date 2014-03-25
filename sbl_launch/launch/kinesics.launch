@@ -1,0 +1,8 @@
+<launch>
+
+  <remap from="realizer/bml" to="nvbg_server/bml" />
+  <include file="$(find nvbg)/launch/nvbg_bringup.launch" />
+
+  <include file="$(find bml_realizer)/launch/realizer.launch" />
+
+</launch>

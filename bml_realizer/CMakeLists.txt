@@ -30,25 +30,18 @@ catkin_package(
 
 
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
 add_definitions(-DTF_EULER_DEFAULT_ZYX)
 add_library(${PROJECT_NAME}
-  src/realizable.cpp src/sequence_gesture.cpp src/bezier_gesture.cpp
+  src/realizable.cpp src/sequence_gesture.cpp src/bezier_gesture.cpp src/bml_processing.cpp
   )
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 
-#############
-## Testing ##
-#############
+add_executable( realizer nodes/realizer_node.cpp )
+target_link_libraries(realizer ${PROJECT_NAME} ${catkin_LIBRARIES})
 
-## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_bml_realizer.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-# endif()
 
-## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)

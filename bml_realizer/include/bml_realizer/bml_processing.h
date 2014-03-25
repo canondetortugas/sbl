@@ -1,5 +1,5 @@
 /***************************************************************************
- *  include/bml_realizer/realizable.h
+ *  include/bml_realizer/bml_processing.h
  *  --------------------
  *
  *  Software License Agreement (BSD License)
@@ -36,70 +36,36 @@
  **************************************************************************/
 
 
-#ifndef SBL_BMLREALIZER_REALIZABLE
-#define SBL_BMLREALIZER_REALIZABLE
+#ifndef SBL_BMLREALIZER_BMLPROCESSING
+#define SBL_BMLREALIZER_BMLPROCESSING
 
 // ROS
 #include <ros/ros.h>
-#include <tf/transform_broadcaster.h>
+
+#include <uscauv_common/macros.h>
+
+/// xerces nonsense
+#include <xercesc/util/PlatformUtils.hpp>
+
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMImplementation.hpp>
+#include <xercesc/dom/DOMImplementationLS.hpp>
+#include <xercesc/dom/DOMWriter.hpp>
+
+#include <xercesc/framework/StdOutFormatTarget.hpp>
+#include <xercesc/framework/LocalFileFormatTarget.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/util/XMLUni.hpp>
+#include <xercesc/util/OutOfMemoryException.hpp>
 
 namespace realizer
 {
+  /// XML platform must be initialized before this is run
+  std::shared_ptr<xercesc::DOMDocument> parseBML(std::string const & doc_string);
+  
+  std::map<std::string, std::string> extractSpeech( std::shared_ptr<xercesc::DOMDocument> const & doc );
+  
+}
 
-  /**
-   * Realize a behavior of some sort as a function of time index into the behavior.
-   * 
-   */
-   class Realizable
-   {
- 
-   public:
-     typedef std::map<std::string, double> SyncPointMap;
-    
-    public:
-      Realizable()
-       {}
 
-     /// Play back the behavior at time
-     virtual void realize(double const & time) = 0;
-
-     /** 
-      * @return length of the behavior in seconds
-      */
-     virtual double getLength() = 0;
-     
-     /// Map from syncpoints (eg strokeStart) to times at which they occurr
-     virtual SyncPointMap getSyncPoints() = 0;
-     
-    };
-
-  /**
-   * Realize a gesture by publishing tf frames describing it.
-   * 
-   */
-  class RealizableGesture: public Realizable
-  {
-  protected:
-    std::shared_ptr<tf::TransformBroadcaster> br_;
-
-  public:
-    RealizableGesture()
-    {
-      br_ = std::make_shared<tf::TransformBroadcaster>();
-    }
-    
-    RealizableGesture(std::shared_ptr<tf::TransformBroadcaster> const & parent): 
-      br_(parent)
-    {}
-
-    virtual std::string getMode() = 0;
-    virtual void setMode(std::string const &) = 0;
-    
-    // virtual void realize(double const & time) = 0;
-    // virtual double getLength() = 0;
-  };
-
-    
-} // realizer
-
-#endif // SBL_BMLREALIZER_REALIZABLE
+#endif // SBL_BMLREALIZER_BMLPROCESSING

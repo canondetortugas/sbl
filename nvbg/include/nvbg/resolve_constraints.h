@@ -58,14 +58,13 @@ namespace nvbg
   /// Remove behaviors that violate timing constraints from the DOM Document
   template<class __ConstrainedBehavior>
   void resolveConstraints(std::shared_ptr<xercesc::DOMDocument> const& doc, 
-							   std::vector<std::shared_ptr<__ConstrainedBehavior> > const & cb)
+			  std::vector<std::shared_ptr<__ConstrainedBehavior> > const & cb)
   {
     typedef std::vector<__ConstrainedBehavior> _ConstrainedBehaviorVec;
     typedef std::set<std::string> _BehaviorNameSet;
     
     size_t const BUFFER_LEN = 1000;
     XMLCh text_buffer[BUFFER_LEN];
-    XMLCh id_buffer[BUFFER_LEN];
     
     _BehaviorNameSet offending_behaviors = chooseBehaviorCombination(cb);
     std::stringstream of;
@@ -75,7 +74,8 @@ namespace nvbg
     // std::shared_ptr<xercesc::DOMDocument> output( doc->cloneNode(true) );
     
     xercesc::DOMElement* root = doc->getDocumentElement();
-
+    
+    /// Put behavior type (ie gesture, head, etc.) in the buffer
     xercesc::XMLString::transcode( __ConstrainedBehavior::getTagName().c_str(), text_buffer, BUFFER_LEN-1);
     xercesc::DOMNodeList* nodes = root->getElementsByTagName(text_buffer);
     

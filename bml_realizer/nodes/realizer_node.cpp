@@ -1,5 +1,5 @@
 /***************************************************************************
- *  include/bml_realizer/realizable.h
+ *  nodes/realizer_node.cpp
  *  --------------------
  *
  *  Software License Agreement (BSD License)
@@ -36,70 +36,16 @@
  **************************************************************************/
 
 
-#ifndef SBL_BMLREALIZER_REALIZABLE
-#define SBL_BMLREALIZER_REALIZABLE
+#include <bml_realizer/realizer_node.h>
 
-// ROS
-#include <ros/ros.h>
-#include <tf/transform_broadcaster.h>
-
-namespace realizer
+// Initialize RealizerNode and begin looping.
+int main(int argc, char ** argv)
 {
+  ros::init(argc, argv, "realizer");
 
-  /**
-   * Realize a behavior of some sort as a function of time index into the behavior.
-   * 
-   */
-   class Realizable
-   {
- 
-   public:
-     typedef std::map<std::string, double> SyncPointMap;
-    
-    public:
-      Realizable()
-       {}
+  RealizerNode realizer;
 
-     /// Play back the behavior at time
-     virtual void realize(double const & time) = 0;
+  realizer.spin();
 
-     /** 
-      * @return length of the behavior in seconds
-      */
-     virtual double getLength() = 0;
-     
-     /// Map from syncpoints (eg strokeStart) to times at which they occurr
-     virtual SyncPointMap getSyncPoints() = 0;
-     
-    };
-
-  /**
-   * Realize a gesture by publishing tf frames describing it.
-   * 
-   */
-  class RealizableGesture: public Realizable
-  {
-  protected:
-    std::shared_ptr<tf::TransformBroadcaster> br_;
-
-  public:
-    RealizableGesture()
-    {
-      br_ = std::make_shared<tf::TransformBroadcaster>();
-    }
-    
-    RealizableGesture(std::shared_ptr<tf::TransformBroadcaster> const & parent): 
-      br_(parent)
-    {}
-
-    virtual std::string getMode() = 0;
-    virtual void setMode(std::string const &) = 0;
-    
-    // virtual void realize(double const & time) = 0;
-    // virtual double getLength() = 0;
-  };
-
-    
-} // realizer
-
-#endif // SBL_BMLREALIZER_REALIZABLE
+  return 0;
+}

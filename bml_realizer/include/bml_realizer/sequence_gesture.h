@@ -46,6 +46,9 @@
 
 #include <bml_realizer/realizable.h>
 
+#include <uscauv_common/param_loader.h>
+#include <uscauv_common/macros.h>
+
 namespace realizer
 {
 
@@ -99,7 +102,7 @@ namespace realizer
     {
       return storage_->mode_;
     }
-    virtual std::string setMode(std::string const & mode)
+    virtual void setMode(std::string const & mode)
     {
       if( !storage_->force_mode_ )
 	storage_->mode_ = mode;
@@ -120,17 +123,17 @@ namespace realizer
       std::vector<tf::StampedTransform> output;
       ros::Time now = ros::Time::now();
 
-      for( std::vector<tf::StampedTranform>::value_type & transform : frames.left_)
+      for( std::vector<tf::StampedTransform>::value_type & transform : frames.left_)
 	{
 	  transform.stamp_ = now;
 	}
-      for( std::vector<tf::StampedTranform>::value_type & transform : frames.right_)
+      for( std::vector<tf::StampedTransform>::value_type & transform : frames.right_)
 	{
 	  transform.stamp_ = now;
 	}
       
-      br_.sendTransform(frames.left_);
-      br_.sendTransform(frames.right_);
+      br_->sendTransform(frames.left_);
+      br_->sendTransform(frames.right_);
     }
     
   };
@@ -165,9 +168,9 @@ USCAUV_DECLARE_PARAM_LOADER_CONVERSION(tf::StampedTransform, param,
 
 USCAUV_DECLARE_PARAM_LOADER_CONVERSION(realizer::SequenceGesture::GestureFrames, param,
 				       realizer::SequenceGesture::GestureFrames frames;
-				       frames.left_ = uscauv::param::load<std::vector<tf::StampedTransform> >
+				       frames.left_ = uscauv::param::lookup<std::vector<tf::StampedTransform> >
 				       (param, "left", std::vector<tf::StampedTransform>(), true);
-				       frames.right_ = uscauv::param::load<std::vector<tf::StampedTransform> >
+				       frames.right_ = uscauv::param::lookup<std::vector<tf::StampedTransform> >
 				       (param, "right", std::vector<tf::StampedTransform>(), true);
 				       
 				       return frames;
@@ -179,7 +182,8 @@ USCAUV_DECLARE_PARAM_LOADER_CONVERSION(realizer::SequenceGesture::Storage, param
 				       
 				       realizer::SequenceGesture::Storage storage;
 				       
-				       bool use_left = false, use_right = false;
+				       bool use_left = false;
+				       bool use_right = false;
 				       double last_time = -1;
 				       for(size_t idx = 0; idx < param.size(); ++idx)
 					 {
@@ -188,7 +192,7 @@ USCAUV_DECLARE_PARAM_LOADER_CONVERSION(realizer::SequenceGesture::Storage, param
 					     uscauv::param::lookup<realizer::SequenceGesture::GestureFrames>
 					     (param, "frames");
 
-					   double const time = uscauv::param::load<double>(param, "time");
+					   double const time = uscauv::param::lookup<double>(param, "time");
 					   if( idx == 0 && time != 0.0)
 					     {
 					       throw std::invalid_argument("Gesture sequence must start at time zero");
@@ -205,7 +209,7 @@ USCAUV_DECLARE_PARAM_LOADER_CONVERSION(realizer::SequenceGesture::Storage, param
 					   storage.times_.insert(time);
 					   storage.sequence_.insert( std::make_pair(time, frames) );
 
-					   std::string syncpoint = uscauv::param::load<std::string>(param, "syncpoint", "", true);
+					   std::string syncpoint = uscauv::param::lookup<std::string>(param, "syncpoint", "", true);
 					   
 					   if( !nvbg::behavior::GESTURE_SYNC_TYPES.count(syncpoint))
 					     {
@@ -233,8 +237,8 @@ USCAUV_DECLARE_PARAM_LOADER_CONVERSION(realizer::SequenceGesture::Storage, param
 
 				       if( last_time < 0)
 					 {
-					   throw std::invalid_argument("No sequence frames were loaded successfully.")
-					     }
+					   throw std::invalid_argument("No sequence frames were loaded successfully.");
+					 }
 				       else
 					 {
 					   storage.length_ = last_time;
