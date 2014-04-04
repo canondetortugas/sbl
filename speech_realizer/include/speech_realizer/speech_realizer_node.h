@@ -93,12 +93,12 @@ private:
   
   EST_Val fest_default_val_float_;
   int fest_heap_size_;
-  bool festival_init_;
+  // bool festival_init_;
   
   
 public:
-  SpeechRealizerNode(): node_name_("SpeechRealizer"), running_(false), nh_rel_("~"), as_(nh_rel_, "say_text", boost::bind(&SpeechRealizerNode::executeSayTextCallback, this, _1), false),
-			fest_default_val_float_(0.0f), fest_heap_size_(210000), festival_init_(false)
+  SpeechRealizerNode(): node_name_("SpeechRealizer"), running_(false), nh_rel_("~"), as_(nh_rel_, "say_text", false),
+			fest_default_val_float_(0.0f), fest_heap_size_(210000)// , festival_init_(false)
   {
   }
 
@@ -134,13 +134,12 @@ private:
   // Running spin() will cause this function to be called before the node begins looping the spinOnce() function.
   void spinFirst()
   {
-    // say_text_server_ = nh_rel_.advertiseService("say_text", &SpeechRealizerNode::textServiceCallback, this );
-
     get_word_timings_servers_ = nh_rel_.advertiseService("get_word_timings", &SpeechRealizerNode::getWordTimingsServiceCallback, this );
-
+    
+    as_.registerGoalCallback( boost::bind(&SpeechRealizerNode::sayTextGoalCallback, this));
     as_.start();
 
-    // festival_initialize(true, fest_heap_size_);
+    festival_initialize(true, fest_heap_size_);
 
 
     //////////////////////////////////////////////////////////
@@ -172,15 +171,19 @@ private:
 
   /// TODO: Fix threading issues
   /// TODO: Allow goal cancellation
-  void executeSayTextCallback( speech_realizer::SayTextGoalConstPtr const & goal)
+  void sayTextGoalCallback()
   {
-    /// This callback gets its own thread, so we need to call festival_initialize in it and not in the main thread
-    /// Actionlib seems to use the same thread across all callbacks, so we only call festival_initialize once.
-    if(!festival_init_)
-      {
-	festival_initialize(true, fest_heap_size_);
-	festival_init_ = true;
-      }
+    speech_realizer::SayTextGoalConstPtr const & goal = as_.acceptNewGoal();
+    
+    // /// This callback gets its own thread, so we need to call festival_initialize in it and not in the main thread
+    // /// Actionlib seems to use the same thread across all callbacks, so we only call festival_initialize once.
+    // if(!festival_init_)
+    //   {
+    // 	festival_initialize(true, fest_heap_size_);
+    // 	festival_init_ = true;
+    //   }
+
+
     std::vector<_TimedWord> word_timings;
     if( !getWordTimings( goal->text, word_timings))
       {
