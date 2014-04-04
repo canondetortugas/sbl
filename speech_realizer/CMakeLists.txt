@@ -24,7 +24,13 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   message_generation
+  actionlib
+  actionlib_msgs
 )
+find_package(Boost REQUIRED COMPONENTS thread)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(SDL REQUIRED sdl)
 
 set(festival_INCLUDE_DIRS /usr/include/estools /usr/include/festival /usr/include/speech_tools)
 set(festival_LIBRARIES Festival estools estbase eststring esd ncurses)
@@ -34,19 +40,23 @@ add_message_files(FILES
 )
 
 add_service_files(FILES
-  SayText.srv
   GetWordTimings.srv
 )
+
+add_action_files(DIRECTORY action FILES SayText.action)
 
 generate_messages(
   DEPENDENCIES
   std_msgs
+  actionlib_msgs
 )
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${festival_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
+  ${SDL_INCLUDE_DIRS}
 )
 
 catkin_package(
@@ -55,4 +65,4 @@ catkin_package(
 )
 
 add_executable( speech_realizer nodes/speech_realizer_node.cpp )
-target_link_libraries(speech_realizer ${catkin_LIBRARIES} ${festival_LIBRARIES})
+target_link_libraries(speech_realizer ${catkin_LIBRARIES} ${festival_LIBRARIES} ${Boost_LIBRARIES} ${SDL_LIBRARIES} SDL_mixer)

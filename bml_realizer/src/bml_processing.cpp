@@ -48,11 +48,11 @@ namespace realizer
     char * text_buffer;
     
     std::shared_ptr<xercesc::XercesDOMParser> parser = std::make_shared<xercesc::XercesDOMParser>();
-    // parser->setValidationScheme(gValScheme);
-    // parser->setDoNamespaces(gDoNamespaces);
-    // parser->setDoSchema(gDoSchema);
-    // parser->setValidationSchemaFullChecking(gSchemaFullChecking);
-    // parser->setCreateEntityReferenceNodes(gDoCreate);
+    parser->setValidationScheme(xercesc::XercesDOMParser::Val_Auto);
+    parser->setDoNamespaces(false);
+    parser->setDoSchema(false);
+    parser->setValidationSchemaFullChecking(false);
+    parser->setCreateEntityReferenceNodes(false);
 
     // DOMTreeErrorReporter *errReporter = new DOMTreeErrorReporter();
     // parser->setErrorHandler(errReporter);

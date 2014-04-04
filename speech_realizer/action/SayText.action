@@ -1,0 +1,8 @@
+# Goal
+string text
+---
+# No result
+---
+# Feedback
+string current_word
+float64 time

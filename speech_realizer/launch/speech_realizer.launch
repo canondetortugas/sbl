@@ -11,6 +11,5 @@
       name="$(arg name)"
       args="$(arg args)"
       output="screen" />
-
   
 </launch>

@@ -39,6 +39,9 @@
 #ifndef SBL_SPEECHREALIZER_SPEECHREALIZER
 #define SBL_SPEECHREALIZER_SPEECHREALIZER
 
+#include <boost/thread/thread.hpp>
+#include <unistd.h>
+
 /// getenv
 #include <cstdlib>
 
@@ -50,16 +53,28 @@
 
 /// edinburgh sound tools
 #include <EST.h>
+#include <EST_audio.h>
 #include <ling_class/EST_Item.h>
 #include <ling_class/EST_Relation_list.h>
 
+/// speech realizer 
 #include <std_msgs/String.h>
 #include <speech_realizer/SayText.h>
 #include <speech_realizer/GetWordTimings.h>
 
+#include <actionlib/server/simple_action_server.h>
+#include <speech_realizer/SayTextAction.h>
+
+/// Audio playback
+#include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
+
+typedef speech_realizer::SayTextAction _SayText;
+typedef actionlib::SimpleActionServer<_SayText> _ActionServer;
+
 typedef std_msgs::String _StringMsg;
 
-typedef speech_realizer::SayText _SayTextService;
+// typedef speech_realizer::SayText _SayTextService;
 typedef speech_realizer::GetWordTimings _GetWordTimingsService;
 
 class SpeechRealizerNode
@@ -71,17 +86,18 @@ private:
   bool running_;
 
   ros::NodeHandle nh_rel_;
-  ros::ServiceServer say_text_server_, get_word_timings_servers_;
-  
-  bool speak_locally_;
+  ros::ServiceServer get_word_timings_servers_;
 
+  _ActionServer as_;
+  
   EST_Val fest_default_val_float_;
   int fest_heap_size_;
+  bool festival_init_;
   
   
 public:
-  SpeechRealizerNode(): node_name_("SpeechRealizer"), running_(false), nh_rel_("~"), 
-			fest_default_val_float_(0.0f), fest_heap_size_(210000)
+  SpeechRealizerNode(): node_name_("SpeechRealizer"), running_(false), nh_rel_("~"), as_(nh_rel_, "say_text", boost::bind(&SpeechRealizerNode::executeSayTextCallback, this, _1), false),
+			fest_default_val_float_(0.0f), fest_heap_size_(210000), festival_init_(false)
   {
   }
 
@@ -117,13 +133,33 @@ private:
   // Running spin() will cause this function to be called before the node begins looping the spinOnce() function.
   void spinFirst()
   {
-    nh_rel_.param<bool>( "speak_locally", speak_locally_, true);
-
-    say_text_server_ = nh_rel_.advertiseService("say_text", &SpeechRealizerNode::textServiceCallback, this );
+    // say_text_server_ = nh_rel_.advertiseService("say_text", &SpeechRealizerNode::textServiceCallback, this );
 
     get_word_timings_servers_ = nh_rel_.advertiseService("get_word_timings", &SpeechRealizerNode::getWordTimingsServiceCallback, this );
 
+    as_.start();
+
     festival_initialize(true, fest_heap_size_);
+
+
+    //////////////////////////////////////////////////////////
+    // Set up SDL////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+
+    if (SDL_Init(SDL_INIT_AUDIO) != 0)
+      {
+	ROS_ERROR_STREAM( "SDL_Init ERROR: " << SDL_GetError() );
+      }
+
+    // Open Audio device
+    /// Frequency set to 16000 to match festival
+    if (Mix_OpenAudio(16000, AUDIO_S16SYS, 2, 2048) != 0)
+      {
+	ROS_ERROR_STREAM( "Mix_OpenAudio ERROR: " << Mix_GetError());
+      }
+
+    // Set Volume
+    Mix_VolumeMusic(100);
 
   }  
 
@@ -133,44 +169,168 @@ private:
 
   }
 
-  bool textServiceCallback( _SayTextService::Request & request, _SayTextService::Response & response)
+  void executeSayTextCallback( speech_realizer::SayTextGoalConstPtr const & goal)
   {
-    ROS_INFO_STREAM("Saying text: \"" << request.text << "\"");
+    /// This callback gets its own thread, so we need to call festival_initialize in it and not in the main thread
+    /// Actionlib seems to use the same thread across all callbacks, so we only call festival_initialize once.
+    if(!festival_init_)
+      {
+	festival_initialize(true, fest_heap_size_);
+	festival_init_ = true;
+      }
 
-    EST_String est_text( request.text.c_str() );
+    ROS_INFO_STREAM("Saying text: \"" << goal->text << "\"");
+
+    EST_String est_text( goal->text.c_str() );
 
     EST_String command1 = "(set! utt1 (utt.synth(Utterance Text \"" +
       est_text + "\")))";
 
     if (!festival_eval_command(command1))
-      return false;
+      {
+	as_.setAborted();
+	return;
+      }
 
-    if( speak_locally_ )
-      return festival_say_text(est_text);
 
-    return true;
+	EST_Wave audio;
+	EST_Option wave_options;
+	festival_text_to_wave(est_text, audio);
+
+	std::string temp_path = getTempFilePath();
+	if( temp_path == "")
+	  {
+	    as_.setAborted();
+	    return;
+	  }
+
+	std::stringstream wave_path;
+	wave_path << temp_path << "speech_realizer.wav";
+	audio.save(wave_path.str().c_str(), "riff");
+
+	Mix_Music* music = Mix_LoadMUS(wave_path.str().c_str());
+	if(!music)
+	  {
+	    ROS_ERROR("Failed to load speech wav.");
+	    as_.setAborted();
+	    return;
+	  }
+
+	if( Mix_PlayMusic(music, 1) == 0 )
+	  {
+	    unsigned int startTime = SDL_GetTicks();
+
+	    // Wait
+	    while (Mix_PlayingMusic())
+	      {
+		SDL_Delay(1000);
+		std::cout << "Time: " << (SDL_GetTicks() - startTime) / 1000 << std::endl;
+	      }
+
+	  }
+	else
+	  {
+	    ROS_ERROR("Music playback error.");
+	    as_.setAborted();
+	    return;
+	  }
+	
+	as_.setSucceeded();
   }
 
-  bool getWordTimingsServiceCallback( _GetWordTimingsService::Request & request,
-				      _GetWordTimingsService::Response & response )
+  std::string getTempFilePath() const
   {
-    typedef speech_realizer::TimedWord _TimedWordMsg;
-
-    EST_String est_text( request.text.c_str() );
-
-    EST_String command1 = "(set! utt1 (utt.synth(Utterance Text \"" +
-      est_text + "\")))";
-
     char * home = getenv("HOME");
     
     if( home == NULL )
       {
 	ROS_ERROR("Could not find home directory");
-	return false;
+	return std::string();
       }
+    std::stringstream ss;
+    ss << home << "/.ros/";
+    return ss.str();
+  }
+
+  bool getWordTimingsServiceCallback( _GetWordTimingsService::Request & request,
+				      _GetWordTimingsService::Response & response )
+  {
+    return getWordTimings(request.text, response.words );
+    
+    // typedef speech_realizer::TimedWord _TimedWordMsg;
+
+    // EST_String est_text( request.text.c_str() );
+
+    // EST_String command1 = "(set! utt1 (utt.synth(Utterance Text \"" +
+    //   est_text + "\")))";
+
+    // std::string temp_path = getTempFilePath();
+    // if( temp_path == "")
+    //   return false;
+
+    // std::stringstream utt_path;
+    // utt_path << temp_path << "speech_realizer.utt";
+    // EST_String utt_path_est( utt_path.str().c_str() );
+
+    // EST_String command2 = "(utt.save utt1 \"" + utt_path_est + "\")";
+
+    // if (!festival_eval_command(command1))
+    //   return false;
+    // if( !festival_eval_command(command2))
+    //   return false;
+    
+    // EST_Utterance myUtt;
+    // EST_read_status status = myUtt.load(utt_path_est);
+    // if( status != read_ok )
+    //   {
+    // 	ROS_ERROR("Failed to load utterance file.");
+    // 	return false;
+    //   }
+
+    // EST_Item* s = NULL;
+    // for (s = myUtt.relation("Word")->head(); s != 0; s = next(s))
+    //   {
+    // 	ROS_INFO_STREAM("Word: "   << s->S("name") <<
+    // 			"\tstart: "<< ff_word_start(s) <<
+    // 			"\tend: "  << ff_word_end(s) );
+
+    // 	_TimedWordMsg word;
+    // 	word.word = s->S("name");
+    // 	word.begin = ff_word_start(s);
+    // 	word.end = ff_word_end(s);
+
+    // 	response.words.push_back(word);
+	
+    // 	//print out features of the word: name, start time, end time
+    // 	// cout << "Word: "   << s->S("name"); 
+    // 	// cout << "\tstart: "<< ff_word_start(s);
+    // 	// cout << "\tend: "  << ff_word_end(s) << endl;	
+
+    // 	// print out the "word_end" feature of the word  <-- does not work
+    // 	//cout << s->A("word_end") << endl;
+
+	
+	
+    //   }
+
+    // return true;
+  }
+
+  bool getWordTimings(std::string const & text,   std::vector<speech_realizer::TimedWord> & timings)
+  {
+    typedef speech_realizer::TimedWord _TimedWordMsg;
+
+    EST_String est_text(text.c_str() );
+
+    EST_String command1 = "(set! utt1 (utt.synth(Utterance Text \"" +
+      est_text + "\")))";
+
+    std::string temp_path = getTempFilePath();
+    if( temp_path == "")
+      return false;
 
     std::stringstream utt_path;
-    utt_path << home << "/.ros/speech_realizer.utt";
+    utt_path << temp_path << "speech_realizer.utt";
     EST_String utt_path_est( utt_path.str().c_str() );
 
     EST_String command2 = "(utt.save utt1 \"" + utt_path_est + "\")";
@@ -200,7 +360,7 @@ private:
 	word.begin = ff_word_start(s);
 	word.end = ff_word_end(s);
 
-	response.words.push_back(word);
+	timings.push_back(word);
 	
 	//print out features of the word: name, start time, end time
 	// cout << "Word: "   << s->S("name"); 
@@ -215,6 +375,7 @@ private:
       }
 
     return true;
+
   }
 
 private:
