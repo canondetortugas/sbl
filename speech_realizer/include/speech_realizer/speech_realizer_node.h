@@ -73,6 +73,7 @@ typedef speech_realizer::SayTextAction _SayText;
 typedef actionlib::SimpleActionServer<_SayText> _ActionServer;
 
 typedef std_msgs::String _StringMsg;
+typedef speech_realizer::TimedWord _TimedWord;
 
 // typedef speech_realizer::SayText _SayTextService;
 typedef speech_realizer::GetWordTimings _GetWordTimingsService;
@@ -139,7 +140,7 @@ private:
 
     as_.start();
 
-    festival_initialize(true, fest_heap_size_);
+    // festival_initialize(true, fest_heap_size_);
 
 
     //////////////////////////////////////////////////////////
@@ -169,6 +170,8 @@ private:
 
   }
 
+  /// TODO: Fix threading issues
+  /// TODO: Allow goal cancellation
   void executeSayTextCallback( speech_realizer::SayTextGoalConstPtr const & goal)
   {
     /// This callback gets its own thread, so we need to call festival_initialize in it and not in the main thread
@@ -177,6 +180,12 @@ private:
       {
 	festival_initialize(true, fest_heap_size_);
 	festival_init_ = true;
+      }
+    std::vector<_TimedWord> word_timings;
+    if( !getWordTimings( goal->text, word_timings))
+      {
+	as_.setAborted();
+	return;
       }
 
     ROS_INFO_STREAM("Saying text: \"" << goal->text << "\"");
@@ -219,12 +228,37 @@ private:
 	if( Mix_PlayMusic(music, 1) == 0 )
 	  {
 	    unsigned int startTime = SDL_GetTicks();
-
+	    
 	    // Wait
 	    while (Mix_PlayingMusic())
 	      {
-		SDL_Delay(1000);
-		std::cout << "Time: " << (SDL_GetTicks() - startTime) / 1000 << std::endl;
+		if( as_.isPreemptRequested() || ! ros::ok() )
+		  {
+		    Mix_HaltMusic();
+		    as_.setPreempted();
+		    return;
+		  }
+		
+		SDL_Delay(50);
+		double const time = double(SDL_GetTicks() - startTime) / 1000.0;
+		speech_realizer::SayTextFeedback feedback;
+		feedback.time = time;
+		feedback.current_word = "";
+		/// TODO: Get rid of words we've already passed to avoid double-checking.
+		for( std::vector<_TimedWord>::iterator word_it = word_timings.begin(); word_it != word_timings.end();
+		     ++word_it)
+		  {
+		    /// Before first word or between words
+		    if( time < word_it->begin )
+		      break;
+		    else if( time >= word_it->begin && time < word_it->end )
+		      {
+			feedback.current_word = word_it->word;
+			break;
+		      }
+		  }
+		
+		as_.publishFeedback( feedback );
 	      }
 
 	  }
