@@ -65,4 +65,5 @@ catkin_package(
 )
 
 add_executable( speech_realizer nodes/speech_realizer_node.cpp )
+add_dependencies(speech_realizer ${PROJECT_NAME}_generate_messages_cpp)
 target_link_libraries(speech_realizer ${catkin_LIBRARIES} ${festival_LIBRARIES} ${Boost_LIBRARIES} ${SDL_LIBRARIES} SDL_mixer)

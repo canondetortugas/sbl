@@ -95,7 +95,6 @@ private:
   int fest_heap_size_;
   // bool festival_init_;
   
-  
 public:
   SpeechRealizerNode(): node_name_("SpeechRealizer"), running_(false), nh_rel_("~"), as_(nh_rel_, "say_text", false),
 			fest_default_val_float_(0.0f), fest_heap_size_(210000)// , festival_init_(false)
