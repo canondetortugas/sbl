@@ -42,10 +42,19 @@ namespace nvbg
 {
   namespace parse
   {
+    /// Choice of punctuation symbols copied from
+    /// from http://www.cstr.ed.ac.uk/projects/festival/manual/festival_15.html#SEC57
+    /// (defvar token.whitespace " \t\n\r")
+    /// (defvar token.punctuation "\"'`.,:;!?(){}[]")
+    /// (defvar token.prepunctuation "\"'`({[")
+
     /// These are used to tell the tokenizer to that a token has finished
-    std::string const DELIMITERS = " ,;.:\"!?";
-    /// These delimiters do not get their own timing tags in BML
-    std::set<char> const IGNORED_DELIMITERS = {' ', '\"', '.', '!', '?', ':', ',', ';'};
+    std::string const DELIMITERS = " \n\t\r\"\'`.,:;!?(){}[]";
+    /// these delimiters do not get their own timing tags in BML
+    std::set<char> const IGNORED_DELIMITERS = {' ', '\n', '\t', '\r', '\"', '\'',
+					       '`', '.', ',', ':', ';', '!', '?', 
+					       '(', ')', '{', '}', '[', ']' };
+
     std::set<char> const SENTENCE_ENDINGS = {'.', '?', '!'};
     
     /// TODO: Kill leading / trailing whitespace if it exists

@@ -180,13 +180,12 @@ namespace realizer
 	  }
 
 	std::stringstream text_ss;
-	ROS_INFO_STREAM( xercesc::DOMNode::TEXT_NODE);
 
 	////////////////////////////////////////////////////////////
 	// TODO: Change to a real method of filtering whitespace.
 	// Either include a raw text string in all BML documents
 	// or turn on parser validation and use a schema that
-	// specifies ignorable whitespace
+	// specifies ignorable whitespace (and use parser.setIncludeIgnorableWhitespace)
 	// Author: Dylan Foster, Date: 2014-05-26////////////////////
 	////////////////////////////////////////////////////////////
 	

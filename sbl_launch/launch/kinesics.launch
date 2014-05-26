@@ -5,4 +5,6 @@
 
   <include file="$(find bml_realizer)/launch/realizer.launch" />
 
+  <include file="$(find speech_realizer)/launch/speech_realizer.launch" />
+
 </launch>

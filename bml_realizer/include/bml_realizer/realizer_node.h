@@ -49,14 +49,24 @@
 
 #include <nvbg/bml_generation.h>
 
+/// sbl
+#include <speech_realizer/GetWordTimings.h>
+#include <speech_realizer/SayTextAction.h>
+
 /// realizer
 #include <bml_realizer/bml_processing.h>
+
+typedef speech_realizer::SayTextAction _SayText;
+typedef speech_realizer::GetWordTimings _GetWordTimings;
+typedef speech_realizer::TimedWord _TimedWord;
+typedef std::vector<_TimedWord> _TimedWords;
 
 class RealizerNode: public BaseNode
 {
 private:
   ros::NodeHandle nh_rel_;
   ros::Subscriber bml_sub_;
+  ros::ServiceClient word_timings_client_;
   
   
 public:
@@ -69,11 +79,15 @@ private:
   // Running spin() will cause this function to be called before the node begins looping the spinOnce() function.
   void spinFirst()
   {
+    ros::NodeHandle nh;
+
     bml_sub_ = nh_rel_.subscribe("bml", 1, &RealizerNode::bmlCallback, this);
+
+    word_timings_client_ = nh.serviceClient<_GetWordTimings>( "speech_realizer/get_word_timings" );
    
     nvbg::initializeXMLPlatform();
   }  
-
+  
   // Running spin() will cause this function to get called at the loop rate until this node is killed.
   void spinOnce()
   {
@@ -91,6 +105,41 @@ private:
       }
 
     std::map<std::string, std::string> named_speeches = realizer::extractSpeech(doc);
+    
+    std::string speech_name, speech_text;
+    
+    if (named_speeches.size() != 1)
+      
+      {
+	ROS_ERROR("Only BML documents containing a single speech are supported.");
+	return;
+      }
+    else
+      {
+	std::map<std::string, std::string>::const_iterator map_it =named_speeches.begin();
+	speech_name = map_it->first;
+	speech_text = map_it->second;
+      }
+
+    _GetWordTimings srv;
+    srv.request.text = speech_text;
+    if( !word_timings_client_.call(srv) )
+      {
+	ROS_ERROR("Failed to get word timings.");
+	return;
+      }
+    else
+      {
+	std::string pruned_speech = speech_text;
+	  
+	_TimedWords const & words = srv.response.words;
+
+	for( _TimedWords::const_iterator word_it = words.begin(); word_it != words.end(); ++word_it)
+	  {
+	    
+
+	  }
+      }
 
   }
 
