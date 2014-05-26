@@ -83,6 +83,8 @@ namespace nvbg
 
       /// Non-ignored tokens, all tokens
       std::vector<std::string> tokens_, all_tokens_;
+      
+      /// speech is raw input text, processed is same, but lowercase
       std::string speech_, processed_speech_;
     };
 

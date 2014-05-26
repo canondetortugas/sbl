@@ -39,7 +39,8 @@
 
 namespace nvbg
 {
-  std::string const PRIMARY_SPEECH_ID = "speech0";
+  std::string const PROCESSED_SPEECH_ID = "processed";
+  std::string const RAW_SPEECH_ID = "raw";
 
   /** 
    * This must be run before any other BML functions are called
@@ -128,8 +129,8 @@ namespace nvbg
     xercesc::DOMElement* root = doc->getDocumentElement();
     
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    bml::speech speech( PRIMARY_SPEECH_ID );
-    bml::textType speech_text;
+    bml::speech speech( PROCESSED_SPEECH_ID ), raw( RAW_SPEECH_ID );
+    bml::textType speech_text, raw_text;
     
     /// element names aren't preserved when we serialize xsd::bml types
     xercesc::XMLString::transcode("speech", text_buffer, BUFFER_LEN-1);
@@ -138,10 +139,24 @@ namespace nvbg
     *speech_element << speech;
     root->appendChild( speech_element );
 
+    xercesc::DOMElement* rspeech_element = doc->createElement(text_buffer);
+    *rspeech_element << raw;
+    root->appendChild( rspeech_element );
+
     xercesc::XMLString::transcode("text", text_buffer, BUFFER_LEN-1);
     xercesc::DOMElement* text_element = doc->createElement(text_buffer);
     *text_element << speech_text;
     speech_element->appendChild(text_element);
+
+    /// populate a speech element with the raw input text
+    xercesc::DOMElement* rtext_element = doc->createElement(text_buffer);
+    *rtext_element << raw_text;
+    rspeech_element->appendChild(rtext_element);
+    
+    ROS_ASSERT( ps.speech_.size() <= BUFFER_LEN -1 );
+    xercesc::XMLString::transcode(ps.speech_.c_str(), text_buffer, BUFFER_LEN-1);
+    xercesc::DOMText* stext_element = doc->createTextNode(text_buffer);
+    rtext_element->appendChild(stext_element);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     /// Test out xerces text nodes
@@ -171,15 +186,19 @@ namespace nvbg
     for( std::vector<std::string>::const_iterator token_it = ps.all_tokens_.begin();
 	 token_it != ps.all_tokens_.end(); ++token_it )
       {
+	
+
 	std::string const & token = *token_it;
 
 	ROS_ASSERT( token.size() <= BUFFER_LEN -1);
-	xercesc::XMLString::transcode(token.c_str(), text_buffer, BUFFER_LEN-1);
-	xercesc::DOMText* str_element = doc->createTextNode(text_buffer);
+
 
 	/// We don't give word tags to spaces etc.
 	if( !parse::isIgnored(token) )
 	  {
+	    xercesc::XMLString::transcode(token.c_str(), text_buffer, BUFFER_LEN-1);
+	    xercesc::DOMText* str_element = doc->createTextNode(text_buffer);
+	    
 	    /// sync point for the current word
 	    std::stringstream wsb, wse;
 	    wsb << "t" << parse::wordToStartTime(added_word_idx);
@@ -204,10 +223,10 @@ namespace nvbg
 
 	    ++added_word_idx;
 	  }
-	else
-	  {
-	    text_element->appendChild(str_element);
-	  }
+	// else
+	//   {
+	//     text_element->appendChild(str_element);
+	//   }
 
 	/// Add sentence tags for the current sentence
 	if(parse::isSentenceEnding(token))
@@ -381,7 +400,7 @@ namespace nvbg
 			  {
 			    std::stringstream ts;
 			    /// pos is either 'start' or 'end'
-			    ts << PRIMARY_SPEECH_ID << ":" << timing.pos;
+			    ts << PROCESSED_SPEECH_ID << ":" << timing.pos;
 			    if( timing.offset )
 			      ts << " + " << timing.offset;
 			  
@@ -403,7 +422,7 @@ namespace nvbg
 			    ROS_ASSERT( index_it != ps.char_to_sentence_.end() );
 			    size_t sentence_idx = index_it->second;
 			  
-			    ts << PRIMARY_SPEECH_ID << ":s" << sentence_idx 
+			    ts << PROCESSED_SPEECH_ID << ":s" << sentence_idx 
 			       << "_" << timing.pos;
 			    if( timing.offset )
 			      ts << " + " << timing.offset;
@@ -459,7 +478,7 @@ namespace nvbg
 			    word_idx = final_idx;
 			  
 			    std::stringstream ts;
-			    ts << PRIMARY_SPEECH_ID << ":t" << final_idx;
+			    ts << PROCESSED_SPEECH_ID << ":t" << final_idx;
 			    if( timing.offset )
 			      ts << " + " << timing.offset;
 
@@ -472,7 +491,7 @@ namespace nvbg
 				parse::IndexMap::iterator word_it = ps.char_to_word_.find(phrase_idx);
 				size_t ref_word_idx = parse::wordToStartTime(word_it->second);
 				std::stringstream ts;
-				ts << PRIMARY_SPEECH_ID << ":t" << ref_word_idx;
+				ts << PROCESSED_SPEECH_ID << ":t" << ref_word_idx;
 				if( timing.offset )
 				  ts << " + " << timing.offset;
 			      
@@ -486,7 +505,7 @@ namespace nvbg
 				parse::IndexMap::iterator word_it = ps.char_to_word_.find(phrase_idx + rule_phrase.size()-1);
 				size_t ref_word_idx = parse::wordToEndTime(word_it->second);
 				std::stringstream ts;
-				ts << PRIMARY_SPEECH_ID << ":t" << ref_word_idx;
+				ts << PROCESSED_SPEECH_ID << ":t" << ref_word_idx;
 				if( timing.offset )
 				  ts << " + " << timing.offset;
 			      

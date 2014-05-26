@@ -109,6 +109,13 @@ namespace nvbg
 	  ++atoken_idx;
 	}
       ROS_ASSERT(char_idx == input.size());
+
+      /// Catch the case where the last sentence does not have ending punctuation.
+      if( ps.sentence_to_start_word_.size() != ps.sentence_to_end_word_.size() )
+	{
+	  ROS_ASSERT( ps.sentence_to_start_word_.size() == ps.sentence_to_end_word_.size() + 1);
+	  ps.sentence_to_end_word_.insert( std::make_pair(sentence_idx, token_idx) );
+	}
       
       ps.processed_speech_ = toLower(speech);
       ps.speech_ = speech;
