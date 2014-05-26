@@ -180,22 +180,36 @@ namespace realizer
 	  }
 
 	std::stringstream text_ss;
+	ROS_INFO_STREAM( xercesc::DOMNode::TEXT_NODE);
+
+	////////////////////////////////////////////////////////////
+	// TODO: Change to a real method of filtering whitespace.
+	// Either include a raw text string in all BML documents
+	// or turn on parser validation and use a schema that
+	// specifies ignorable whitespace
+	// Author: Dylan Foster, Date: 2014-05-26////////////////////
+	////////////////////////////////////////////////////////////
 	
 	/// Extract raw text by iterating over children of BML text element and skipping non-XML-text elements
 	for(xercesc::DOMNode* text_child = text_node->getFirstChild(); 
 	    text_child != NULL; text_child = text_child->getNextSibling() )
 	  {
-	    ROS_INFO_STREAM("hit element");
-	    if( node->getNodeType() != xercesc::DOMNode::TEXT_NODE)	    
+	    if( text_child->getNodeType() != xercesc::DOMNode::TEXT_NODE)
 	      continue;
-	    ROS_INFO_STREAM("hit text element");
 	    
-	    xercesc::DOMText* text_element = dynamic_cast<xercesc::DOMText*>( text_node );
+	    xercesc::DOMText* text_element = dynamic_cast<xercesc::DOMText*>( text_child );
 	    
-	    XMLCh const * text = text_element->getWholeText();
-	    char * text_str = xercesc::XMLString::transcode(text);
-	    text_ss << text_str;
-	    xercesc::XMLString::release(&text_str);
+	    XMLCh const * text = text_element->getData();
+	    char * text_cstr = xercesc::XMLString::transcode(text);
+	    std::string text_str( text_cstr );
+	    
+	    /// Space between xml tags seems to be included as text nodes - we filter these out
+	    /// they are length 7 due to one newline and 6 spaces
+	    if( text_str.size() < 7 )
+	      continue;
+
+	    text_ss << text_str.substr(0, text_str.size() -7);
+	    xercesc::XMLString::release(&text_cstr);
 	    
 	  }
 	std::pair<std::map<std::string, std::string>::iterator, bool> result = named_speeches.insert( std::make_pair(id_str, text_ss.str() ) );
