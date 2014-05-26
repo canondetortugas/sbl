@@ -48,19 +48,22 @@ namespace realizer
     char * text_buffer;
     
     std::shared_ptr<xercesc::XercesDOMParser> parser = std::make_shared<xercesc::XercesDOMParser>();
+    std::shared_ptr<xercesc::ErrorHandler> error_handler( (xercesc::ErrorHandler*) new xercesc::HandlerBase);
+    
     parser->setValidationScheme(xercesc::XercesDOMParser::Val_Auto);
     parser->setDoNamespaces(false);
     parser->setDoSchema(false);
     parser->setValidationSchemaFullChecking(false);
     parser->setCreateEntityReferenceNodes(false);
 
-    // DOMTreeErrorReporter *errReporter = new DOMTreeErrorReporter();
-    // parser->setErrorHandler(errReporter);
+    parser->setErrorHandler( error_handler.get() );
+
+    xercesc::MemBufInputSource input( (const unsigned char *)doc_string.c_str(), doc_string.size(), "BML Document (in memory)");
     
     bool errorsOccured = false;
     try
       {
-	parser->parse( doc_string.c_str() );
+	parser->parse( input );
       }
     catch (const xercesc::OutOfMemoryException&)
       {
@@ -81,6 +84,7 @@ namespace realizer
     
     catch (const xercesc::DOMException& e)
       {
+	/// TODO: Fix this - broken
 	XMLCh errText[BUFFER_LEN + 1];
 	text_buffer = xercesc::XMLString::transcode(errText);
 	
@@ -94,16 +98,33 @@ namespace realizer
 
 	errorsOccured = true;
       }
+    catch (const xercesc::SAXException& e)
+      {
+	XMLCh errText[BUFFER_LEN + 1];
+	
+	// ROS_ERROR_STREAM("DOM Error during parsing.\n"
+	// 		 << "DOMException code is:  " << e.code );
 
+	text_buffer = xercesc::XMLString::transcode(e.getMessage());
+	ROS_ERROR_STREAM("SAX exception: " << text_buffer );
+	// if (xercesc::DOMImplementation::loadDOMExceptionMsg(e.code, errText, BUFFER_LEN))
+	//   {
+	//     ROS_ERROR_STREAM("Message is: " << text_buffer );
+	//   }
+      
+	xercesc::XMLString::release(&text_buffer);
+
+	errorsOccured = true;
+      }
     catch (...)
       {
-	ROS_ERROR_STREAM( "An error occurred during parsing" );
-	errorsOccured = true;
+    	ROS_ERROR_STREAM( "An error occurred during parsing" );
+    	errorsOccured = true;
       }
 
     if(!errorsOccured)
       {
-	ROS_INFO("NO errors ");
+	ROS_INFO("Parsed BML document successfully.");
 	return std::shared_ptr<xercesc::DOMDocument> ( parser->adoptDocument() );
       }
     else
@@ -164,8 +185,10 @@ namespace realizer
 	for(xercesc::DOMNode* text_child = text_node->getFirstChild(); 
 	    text_child != NULL; text_child = text_child->getNextSibling() )
 	  {
+	    ROS_INFO_STREAM("hit element");
 	    if( node->getNodeType() != xercesc::DOMNode::TEXT_NODE)	    
 	      continue;
+	    ROS_INFO_STREAM("hit text element");
 	    
 	    xercesc::DOMText* text_element = dynamic_cast<xercesc::DOMText*>( text_node );
 	    

@@ -59,7 +59,6 @@
 
 /// speech realizer 
 #include <std_msgs/String.h>
-#include <speech_realizer/SayText.h>
 #include <speech_realizer/GetWordTimings.h>
 
 #include <actionlib/server/simple_action_server.h>

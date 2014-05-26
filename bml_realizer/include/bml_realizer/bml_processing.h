@@ -52,9 +52,12 @@
 #include <xercesc/dom/DOMImplementationLS.hpp>
 #include <xercesc/dom/DOMWriter.hpp>
 
+#include <xercesc/framework/MemBufInputSource.hpp>
+
 #include <xercesc/framework/StdOutFormatTarget.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/util/XMLUni.hpp>
 #include <xercesc/util/OutOfMemoryException.hpp>
 
