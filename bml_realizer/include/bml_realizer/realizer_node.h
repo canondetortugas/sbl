@@ -104,22 +104,19 @@ private:
 	return;
       }
 
-    std::map<std::string, std::string> named_speeches = realizer::extractSpeech(doc);
-    
-    std::string speech_name, speech_text;
-    
-    if (named_speeches.size() != 1)
-      
+    realizer::Speech speech;
+    if( realizer::extractSpeech(doc, speech))
       {
-	ROS_ERROR("Only BML documents containing a single speech are supported.");
+	ROS_ERROR("Failed to extract document speech");
 	return;
       }
-    else
-      {
-	std::map<std::string, std::string>::const_iterator map_it =named_speeches.begin();
-	speech_name = map_it->first;
-	speech_text = map_it->second;
-      }
+
+    ROS_INFO_STREAM("Loaded speech with text " << brk(speech.raw_text_));
+
+    // for( std::string const & ref : speech.words_ )
+    //   ROS_INFO_STREAM("word " << ref << "length " << ref.size() );
+    
+    std::string const & speech_text = speech.raw_text_;
 
     _GetWordTimings srv;
     srv.request.text = speech_text;
@@ -128,18 +125,17 @@ private:
 	ROS_ERROR("Failed to get word timings.");
 	return;
       }
-    else
-      {
-	std::string pruned_speech = speech_text;
-	  
-	_TimedWords const & words = srv.response.words;
+    
+    std::string pruned_speech = speech_text;
+    
+    _TimedWords const & words = srv.response.words;
 
-	for( _TimedWords::const_iterator word_it = words.begin(); word_it != words.end(); ++word_it)
-	  {
+    for( _TimedWords::const_iterator word_it = words.begin(); word_it != words.end(); ++word_it)
+      {
 	    
 
-	  }
       }
+    
 
   }
 

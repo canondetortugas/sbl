@@ -42,6 +42,24 @@
 
 namespace realizer
 {
+  bool validSpeechId(std::string const & id)
+  {
+    return id == "processed" || id == "raw";
+  }
+
+  std::string stripSpaces(std::string const & input)
+  {
+    std::stringstream ss;
+    for(size_t idx = 0; idx < input.size(); ++idx)
+      {
+	char const & c = input[idx];
+
+	if( !(c == ' ' || c == '\n' || c == '\r' || c == '\t') )
+	  ss << c;
+      }
+    return ss.str();
+  }
+
   std::shared_ptr<xercesc::DOMDocument> parseBML(std::string const & doc_string)
   {
     size_t const BUFFER_LEN = 2500;
@@ -84,34 +102,24 @@ namespace realizer
     
     catch (const xercesc::DOMException& e)
       {
-	/// TODO: Fix this - broken
 	XMLCh errText[BUFFER_LEN + 1];
-	text_buffer = xercesc::XMLString::transcode(errText);
-	
 	ROS_ERROR_STREAM("DOM Error during parsing.\n"
 			 << "DOMException code is:  " << e.code );
       
 	if (xercesc::DOMImplementation::loadDOMExceptionMsg(e.code, errText, BUFFER_LEN))
-	  ROS_ERROR_STREAM("Message is: " << text_buffer );
-      
-	xercesc::XMLString::release(&text_buffer);
+	  {	
+	    text_buffer = xercesc::XMLString::transcode(errText);
+	    ROS_ERROR_STREAM("Message is: " << text_buffer );
+	    xercesc::XMLString::release(&text_buffer);
+	  }
 
 	errorsOccured = true;
       }
     catch (const xercesc::SAXException& e)
       {
-	XMLCh errText[BUFFER_LEN + 1];
-	
-	// ROS_ERROR_STREAM("DOM Error during parsing.\n"
-	// 		 << "DOMException code is:  " << e.code );
-
 	text_buffer = xercesc::XMLString::transcode(e.getMessage());
 	ROS_ERROR_STREAM("SAX exception: " << text_buffer );
-	// if (xercesc::DOMImplementation::loadDOMExceptionMsg(e.code, errText, BUFFER_LEN))
-	//   {
-	//     ROS_ERROR_STREAM("Message is: " << text_buffer );
-	//   }
-      
+
 	xercesc::XMLString::release(&text_buffer);
 
 	errorsOccured = true;
@@ -131,9 +139,11 @@ namespace realizer
       return std::shared_ptr<xercesc::DOMDocument> ();
   }
 
-  std::map<std::string, std::string> extractSpeech( std::shared_ptr<xercesc::DOMDocument> const & doc )
+  bool extractSpeech( std::shared_ptr<xercesc::DOMDocument> const & doc, Speech & speech )
   {
-    std::map<std::string, std::string> named_speeches;
+    speech = Speech();
+    
+    bool raw_found = false, processed_found = false;
     
     size_t const BUFFER_LEN = 1000;
     XMLCh text_buffer[BUFFER_LEN+1];
@@ -162,6 +172,37 @@ namespace realizer
 	std::string id_str(id);
 	xercesc::XMLString::release(&id);
 
+	if( !validSpeechId( id_str ) )
+	  {
+	    ROS_WARN_STREAM("Encountered speech element with invalid ID. Ignoring... " << brk(id_str) );
+	    continue;
+	  }
+
+	else if ( id_str == "processed" )
+	  {
+	    if( processed_found )
+	      {
+		ROS_ERROR("Duplicate processed speech element found");
+		return true;
+	      }
+	    else
+	      {
+		processed_found = true;
+	      }
+	  }
+	else if ( id_str == "raw" )
+	  {
+	    if( raw_found )
+	      {
+		ROS_ERROR("Duplicate raw speech element found");
+		return true;
+	      }
+	    else
+	      {
+		raw_found = true;
+	      }
+	  }
+
 	/// Get child text elements (BML text type, not XML text, although BML text has XML text children)
 	xercesc::XMLString::transcode( "text", text_buffer, BUFFER_LEN);
 	xercesc::DOMNodeList* text_nodes = element->getElementsByTagName(text_buffer);
@@ -179,47 +220,117 @@ namespace realizer
 	    continue;
 	  }
 
-	std::stringstream text_ss;
-
-	////////////////////////////////////////////////////////////
-	// TODO: Change to a real method of filtering whitespace.
-	// Either include a raw text string in all BML documents
-	// or turn on parser validation and use a schema that
-	// specifies ignorable whitespace (and use parser.setIncludeIgnorableWhitespace)
-	// Author: Dylan Foster, Date: 2014-05-26////////////////////
-	////////////////////////////////////////////////////////////
-	
-	/// Extract raw text by iterating over children of BML text element and skipping non-XML-text elements
-	for(xercesc::DOMNode* text_child = text_node->getFirstChild(); 
-	    text_child != NULL; text_child = text_child->getNextSibling() )
+	if( id_str == "processed" )
 	  {
-	    if( text_child->getNodeType() != xercesc::DOMNode::TEXT_NODE)
-	      continue;
-	    
-	    xercesc::DOMText* text_element = dynamic_cast<xercesc::DOMText*>( text_child );
-	    
-	    XMLCh const * text = text_element->getData();
-	    char * text_cstr = xercesc::XMLString::transcode(text);
-	    std::string text_str( text_cstr );
-	    
-	    /// Space between xml tags seems to be included as text nodes - we filter these out
-	    /// they are length 7 due to one newline and 6 spaces
-	    if( text_str.size() < 7 )
-	      continue;
 
-	    text_ss << text_str.substr(0, text_str.size() -7);
-	    xercesc::XMLString::release(&text_cstr);
+	    ////////////////////////////////////////////////////////////
+	    // TODO: Change to a real method of filtering whitespace.
+	    // Either include a raw text string in all BML documents
+	    // or turn on parser validation and use a schema that
+	    // specifies ignorable whitespace (and use parser.setIncludeIgnorableWhitespace)
+	    // Author: Dylan Foster, Date: 2014-05-26////////////////////
+	    ////////////////////////////////////////////////////////////
+
+	    bool take_next = false;
+
+	    /// Extract raw text by iterating over children of BML text element and skipping non-XML-text elements
+	    for(xercesc::DOMNode* text_child = text_node->getFirstChild(); 
+		text_child != NULL; text_child = text_child->getNextSibling() )
+	      {
+		if( text_child->getNodeType() == xercesc::DOMNode::TEXT_NODE)
+		  {
+		    xercesc::DOMText* text_element = dynamic_cast<xercesc::DOMText*>( text_child );
 	    
+		    XMLCh const * text = text_element->getData();
+		    char * text_cstr = xercesc::XMLString::transcode(text);
+		    std::string text_str( text_cstr );
+		    xercesc::XMLString::release(&text_cstr);
+
+		    std::string stripped = stripSpaces(text_str);
+
+		    if( stripped.size() )
+		      speech.words_.push_back(stripped);
+		  }
+	      }
+
+
 	  }
-	std::pair<std::map<std::string, std::string>::iterator, bool> result = named_speeches.insert( std::make_pair(id_str, text_ss.str() ) );
+	else if (id_str == "raw" )
+	  {
+	    std::stringstream text_ss;
+	    /// Extract raw text by iterating over children of BML text element and skipping non-XML-text elements
+	    for(xercesc::DOMNode* text_child = text_node->getFirstChild(); 
+		text_child != NULL; text_child = text_child->getNextSibling() )
+	      {
+		if( text_child->getNodeType() != xercesc::DOMNode::TEXT_NODE)
+		  continue;
+
+		xercesc::DOMText* text_element = dynamic_cast<xercesc::DOMText*>( text_child );
+	    
+		XMLCh const * text = text_element->getData();
+		char * text_cstr = xercesc::XMLString::transcode(text);
+		std::string text_str( text_cstr );
+
+		text_ss << text_str;
+
+		xercesc::XMLString::release(&text_cstr);
+	    
+	      }
+
+	    speech.raw_text_ = text_ss.str();
+	  }
+	else
+	  {
+	    ROS_ASSERT(false);
+	  }
+
+	// std::stringstream text_ss;
+
+	// ////////////////////////////////////////////////////////////
+	// // TODO: Change to a real method of filtering whitespace.
+	// // Either include a raw text string in all BML documents
+	// // or turn on parser validation and use a schema that
+	// // specifies ignorable whitespace (and use parser.setIncludeIgnorableWhitespace)
+	// // Author: Dylan Foster, Date: 2014-05-26////////////////////
+	// ////////////////////////////////////////////////////////////
 	
-	if( !result.second )
-	  ROS_WARN_STREAM("Unable to add speech " << brk(id_str) << ". Duplicated ID not allowed.");
+	// /// Extract raw text by iterating over children of BML text element and skipping non-XML-text elements
+	// for(xercesc::DOMNode* text_child = text_node->getFirstChild(); 
+	//     text_child != NULL; text_child = text_child->getNextSibling() )
+	//   {
+	//     if( text_child->getNodeType() != xercesc::DOMNode::TEXT_NODE)
+	//       continue;
+	    
+	//     xercesc::DOMText* text_element = dynamic_cast<xercesc::DOMText*>( text_child );
+	    
+	//     XMLCh const * text = text_element->getData();
+	//     char * text_cstr = xercesc::XMLString::transcode(text);
+	//     std::string text_str( text_cstr );
+	    
+	//     /// Space between xml tags seems to be included as text nodes - we filter these out
+	//     /// they are length 7 due to one newline and 6 spaces
+	//     if( text_str.size() < 7 )
+	//       continue;
+
+	//     text_ss << text_str.substr(0, text_str.size() -7);
+	//     xercesc::XMLString::release(&text_cstr);
+	    
+	//   }
+	// std::pair<std::map<std::string, std::string>::iterator, bool> result = named_speeches.insert( std::make_pair(id_str, text_ss.str() ) );
 	
-	ROS_INFO_STREAM("Loaded speech " << brk(id_str) << " with content " << brk(text_ss.str() ) );
+	// if( !result.second )
+	//   ROS_WARN_STREAM("Unable to add speech " << brk(id_str) << ". Duplicated ID not allowed.");
+	
+	// ROS_INFO_STREAM("Loaded speech " << brk(id_str) << " with content " << brk(text_ss.str() ) );
+      }
+
+    if( !(raw_found && processed_found) )
+      {
+	ROS_ERROR("Couldn't find all required speech blocks");
+	return true;
       }
     
-    return named_speeches;
+    return false;
   }
 
 } /// realizer

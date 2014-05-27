@@ -63,10 +63,28 @@
 
 namespace realizer
 {
+
+  struct Speech
+  {
+    std::string raw_text_;
+    std::vector<std::string> words_;
+  };
+
   /// XML platform must be initialized before this is run
   std::shared_ptr<xercesc::DOMDocument> parseBML(std::string const & doc_string);
   
-  std::map<std::string, std::string> extractSpeech( std::shared_ptr<xercesc::DOMDocument> const & doc );
+  /** 
+   * 
+   * @param doc BML Document
+   * @param speech Speech content
+   * 
+   * @return Zero if successful, non-zero otherwise
+   */
+  bool extractSpeech( std::shared_ptr<xercesc::DOMDocument> const & doc, Speech & speech );
+
+  bool validSpeechId(std::string const & id);
+
+  std::string stripSpaces(std::string const & input);
   
 }
 
