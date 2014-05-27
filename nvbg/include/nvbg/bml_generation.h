@@ -72,6 +72,8 @@ namespace nvbg
   std::string serializeXMLDocument( xercesc::DOMDocument & doc );
   std::string serializeXMLDocument( bml::bml & tree );
 
+  void addConstraint( xercesc::DOMDocument* doc, std::vector<std::string> const & refs);
+
 }
 
 #endif // SBL_NVBG_BMLGENERATION
