@@ -325,7 +325,7 @@ namespace realizer
 
 	std::vector<std::string> references;
 	std::string time;
-	bool time_found;
+	bool time_found = false;
 	
 	DOMNodeList* syncref_nodes = realizer::getNodes( synchronize_element, "sync" );
 	XMLString::transcode( "ref", text_buffer, BUFFER_LEN);
@@ -342,19 +342,29 @@ namespace realizer
 	    xercesc::XMLString::release(&ref_ptr);
 
 	    std::vector<std::string> tokens;
-	    boost::split(tokens, ref, boost::is_any_of(":"));
-	    if( tokens.size() != 2 || tokens.size() != 3)
-	      goto innerfail;
 
+	    boost::split(tokens, ref, boost::is_any_of(":"));
+
+	    if( tokens.size() != 2 && tokens.size() != 3)
+	      {
+		ROS_WARN("Bad token count.");
+		goto innerfail;
+	      }
+	    
 	    if( tokens[0] != nvbg::PROCESSED_SPEECH_ID )
-	      goto innerfail;
+	      {
+		ROS_WARN("Bad speech ID");
+		goto innerfail;
+	      }
 	    
 	    if( tokens.size() == 2)
 	      {
 		std::string const & sref = tokens[1];
-
+		
 		if( sref == "begin" || sref == "end" )
-		  references.push_back( ref );
+		  {
+		    references.push_back( ref );
+		  }
 		else if( sref[0] == 't')
 		  {
 		    if( !time_found )
