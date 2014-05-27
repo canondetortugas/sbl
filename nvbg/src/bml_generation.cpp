@@ -159,26 +159,28 @@ namespace nvbg
     rtext_element->appendChild(stext_element);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Test out xerces text nodes
-    // xercesc::XMLString::transcode("This is a test string", text_buffer, BUFFER_LEN-1);
-    // xercesc::DOMText* str_element = doc->createTextNode(text_buffer);
-    // text_element->appendChild(str_element);
+    std::stringstream begin_stream, sbegin_stream, tbegin_stream;
+    begin_stream << PROCESSED_SPEECH_ID << ":begin";
+    sbegin_stream << PROCESSED_SPEECH_ID << ":s0:begin";
+    tbegin_stream << PROCESSED_SPEECH_ID << ":t0";
 
-    /// Add sync point for sentence beginning
-    bml::syncType begin_sync, end_sync, s0begin_sync;
-    begin_sync.id("start");
-    end_sync.id("end");
-    s0begin_sync.id("s0_start");
+    bml::syncRefType begin_sync, sbegin_sync, tbegin_sync;
+    begin_sync.ref( begin_stream.str() );
+    sbegin_sync.ref( sbegin_stream.str() );
+    tbegin_sync.ref( tbegin_stream.str() );
 
-    xercesc::XMLString::transcode("sync", text_buffer, BUFFER_LEN-1);
-    xercesc::DOMElement* begin_element = doc->createElement(text_buffer);
-    xercesc::DOMElement* end_element = doc->createElement(text_buffer);
-    xercesc::DOMElement* s0begin_element = doc->createElement(text_buffer);
-    *begin_element << begin_sync;
-    *end_element << end_sync;
-    *s0begin_element << s0begin_sync;
-    text_element->appendChild(begin_element);
-    text_element->appendChild(s0begin_element);
+    bml::synchronizeType begin_synchronize;
+    begin_synchronize.sync().push_back( begin_sync );
+    begin_synchronize.sync().push_back( sbegin_sync );
+    begin_synchronize.sync().push_back( tbegin_sync );
+
+    bml::constraintType begin_constraint;
+    begin_constraint.synchronize( begin_synchronize );
+
+    xercesc::XMLString::transcode("constraint", text_buffer, BUFFER_LEN-1);
+    xercesc::DOMElement* begin_constraint_element = doc->createElement(text_buffer);
+    *begin_constraint_element << begin_constraint;
+    root->appendChild( begin_constraint_element );
 
     /// added_word_idx tracks words for which we've added syncpoints
     size_t word_idx = 0, added_word_idx = 0, sentence_idx = 0;
@@ -231,56 +233,98 @@ namespace nvbg
 	/// Add sentence tags for the current sentence
 	if(parse::isSentenceEnding(token))
 	  {
-	    std::stringstream bstream, estream;
-	    estream << "s" << sentence_idx << "_end";
+	    std::stringstream sstream, tstream;
+	    sstream << PROCESSED_SPEECH_ID <<":" << "s" << sentence_idx << ":end";
+	    tstream << PROCESSED_SPEECH_ID << ":" << "t" 
+		    << parse::wordToEndTime(added_word_idx -1); /// the previous word
 	    ++sentence_idx;
-	    bstream << "s" << sentence_idx << "_start";
-		
-	    bml::syncType sbegin_sync, send_sync;
-	    send_sync.id( estream.str() );
-	    sbegin_sync.id( bstream.str() );
 
-	    xercesc::XMLString::transcode("sync", text_buffer, BUFFER_LEN-1);
-	    xercesc::DOMElement* sbegin_element = doc->createElement(text_buffer);
-	    xercesc::DOMElement* send_element = doc->createElement(text_buffer);
+	    bml::syncRefType send_sync, tend_sync;
+	    send_sync.ref( sstream.str() );
+	    tend_sync.ref( tstream.str() );
 
-	    *sbegin_element << sbegin_sync;
-	    *send_element << send_sync;
+	    bml::synchronizeType send_synchronize;
+	    send_synchronize.sync().push_back(send_sync);
+	    send_synchronize.sync().push_back(tend_sync);
 
-	    text_element->appendChild(send_element);
-		
 	    /// Don't start a new sentence if this is the last token
 	    if( token_it + 1 == ps.all_tokens_.end() )
 	      {
 		closed = true;
+		
+		/// Add a sync reference for the end of the entire speech
+		bml::syncRefType end_sync;
+		std::stringstream end_stream;
+		end_stream << PROCESSED_SPEECH_ID << ":end";
+		end_sync.ref( end_stream.str() );
+		send_synchronize.sync().push_back(end_sync);
 	      }
 	    else
 	      {
-		text_element->appendChild(sbegin_element);
+		/// A new sentence is coming, so we make a constraint block for the beginning of it
+		std::stringstream sstream, tstream;
+		sstream << PROCESSED_SPEECH_ID <<":" << "s" << sentence_idx << ":begin";
+		tstream << PROCESSED_SPEECH_ID << ":" << "t" 
+			<< parse::wordToStartTime(added_word_idx); /// the next word
+		
+		bml::syncRefType sbegin_sync, tbegin_sync;
+		sbegin_sync.ref( sstream.str() );
+		tbegin_sync.ref( tstream.str() );
+
+		bml::synchronizeType sbegin_synchronize;
+		sbegin_synchronize.sync().push_back(sbegin_sync);
+		sbegin_synchronize.sync().push_back(tbegin_sync);
+
+		bml::constraintType sbegin_constraint;
+		sbegin_constraint.synchronize( sbegin_synchronize );
+		xercesc::XMLString::transcode("constraint", text_buffer, BUFFER_LEN-1);
+		xercesc::DOMElement* sbegin_constraint_element = doc->createElement(text_buffer);
+		*sbegin_constraint_element << sbegin_constraint;
+		root->appendChild( sbegin_constraint_element );
 	      }
+
+	    bml::constraintType send_constraint;
+	    send_constraint.synchronize( send_synchronize );
+	    xercesc::XMLString::transcode("constraint", text_buffer, BUFFER_LEN-1);
+	    xercesc::DOMElement* send_constraint_element = doc->createElement(text_buffer);
+	    *send_constraint_element << send_constraint;
+	    root->appendChild( send_constraint_element );
+	    
 	  }
 	
 	++word_idx;
       }
-
+    
     /// Add end tag for final sentence if we haven't already
+    /// TODO: Add ref for sentence end
     if( !closed )
       {
 	/// final sentence sync
-	bml::syncType sf_end_sync;
-	std::stringstream id;
-	id << "s" << sentence_idx << "_end";
-	sf_end_sync.id( id.str() );
-	
-	xercesc::XMLString::transcode("sync", text_buffer, BUFFER_LEN-1);
+	bml::syncRefType sf_end_sync, end_sync, tend_sync;
+	std::stringstream sf_end_stream, end_stream, tend_stream;
+	tend_stream << PROCESSED_SPEECH_ID << ":" << "t" << parse::wordToEndTime(added_word_idx-1);
+	sf_end_stream << PROCESSED_SPEECH_ID << ":" << "s" << sentence_idx << ":end";
+	end_stream << PROCESSED_SPEECH_ID << ":end";
+	tend_sync.ref( tend_stream.str() );
+	sf_end_sync.ref( sf_end_stream.str() );
+	end_sync.ref( end_stream.str() );
+
+	bml::synchronizeType end_synchronize;
+	end_synchronize.sync().push_back(sf_end_sync);
+	end_synchronize.sync().push_back(end_sync);
+	end_synchronize.sync().push_back(tend_sync);
+	bml::constraintType end_constraint;
+	end_constraint.synchronize( end_synchronize );
+
+	xercesc::XMLString::transcode("constraint", text_buffer, BUFFER_LEN-1);
 	xercesc::DOMElement* sf_element = doc->createElement(text_buffer);
-	*sf_element << sf_end_sync;
+	*sf_element << end_constraint;
 	
-	text_element->appendChild(sf_element);
+	root->appendChild(sf_element);
       }
 
     /// Add end-of-sentence sync point
-    text_element->appendChild(end_element);
+    // text_element->appendChild(end_element);
 
     std::shared_ptr<xercesc::DOMDocument> result( doc.release() );
 
