@@ -44,6 +44,10 @@
 
 #include <uscauv_common/macros.h>
 
+#include <nvbg/bml_generation.h>
+
+#include <boost/algorithm/string.hpp>
+
 /// xerces nonsense
 #include <xercesc/util/PlatformUtils.hpp>
 
@@ -63,6 +67,7 @@
 
 namespace realizer
 {
+  extern size_t const BUFFER_LEN; 
 
   struct Speech
   {
@@ -82,9 +87,22 @@ namespace realizer
    */
   bool extractSpeech( std::shared_ptr<xercesc::DOMDocument> const & doc, Speech & speech );
 
+  /** 
+   * 
+   * @param doc BML document
+   * @param string 
+   * @param syncref_to_time Map from sync reference to time index
+   * 
+   * @return Zero if successful, non-zero otherwise
+   */
+  bool extractConstraints( std::shared_ptr<xercesc::DOMDocument> const & doc, 
+			   std::map<std::string, std::string> & syncref_to_time );
+
   bool validSpeechId(std::string const & id);
 
   std::string stripSpaces(std::string const & input);
+
+  xercesc::DOMNodeList* getNodes(xercesc::DOMElement* doc, std::string const & type);
   
 }
 

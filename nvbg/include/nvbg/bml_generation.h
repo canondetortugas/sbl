@@ -59,6 +59,9 @@
 
 namespace nvbg
 {
+  extern std::string const PROCESSED_SPEECH_ID;
+  extern std::string const RAW_SPEECH_ID;
+
   int initializeXMLPlatform();
   xml_schema::namespace_infomap getBMLInfoMap();
   std::shared_ptr<xercesc::DOMDocument> addSpeech(std::shared_ptr<bml::bml> tree, std::string const & ps);
